@@ -44,7 +44,7 @@
                 </r:RibbonGroup>
                 
                 <r:RibbonGroup Header="Test">
-                    <r:RibbonButton Label="Zeige Tabellen Tab" LargeImageSource="../Images/LargeIcon.png" Click="RibbonButton_Click">
+                    <r:RibbonButton Name="btnTest" Label="Zeige Tabellen Tab" LargeImageSource="../Images/LargeIcon.png" Click="RibbonButton_Click">
                         <r:RibbonButton.ControlSizeDefinition>
                             <r:RibbonControlSizeDefinition ImageSize="Large" />
                         </r:RibbonButton.ControlSizeDefinition>

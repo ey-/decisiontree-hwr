@@ -10,7 +10,7 @@ namespace DecisionTree.GUI
     /// Dazu die benötigen Methoden hier Aufnehmen und in der entsprechenden
     /// Fensterklasse implementieren.
     /// </summary>
-    interface IMainWindow
+    public interface IMainWindow
     {
     }
 }
