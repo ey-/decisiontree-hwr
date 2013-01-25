@@ -32,13 +32,16 @@ namespace DecisionTree
 
         private void RibbonButton_Click(object sender, RoutedEventArgs e)
         {
-            if (this.grpTable.Visibility != System.Windows.Visibility.Visible)
+            if (sender == btnTest)
             {
-                this.grpTable.Visibility = System.Windows.Visibility.Visible;
-            }
-            else
-            {
-                this.grpTable.Visibility = System.Windows.Visibility.Hidden;
+                if (this.grpTable.Visibility != System.Windows.Visibility.Visible)
+                {
+                    this.grpTable.Visibility = System.Windows.Visibility.Visible;
+                }
+                else
+                {
+                    this.grpTable.Visibility = System.Windows.Visibility.Hidden;
+                }
             }
         }
     }
