@@ -13,6 +13,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Microsoft.Windows.Controls.Ribbon;
 using DecisionTree.GUI;
+using DecisionTree.Logic;
 
 namespace DecisionTree
 {
@@ -21,15 +22,26 @@ namespace DecisionTree
     /// </summary>
     public partial class MainWindow : RibbonWindow, IMainWindow
     {
+        IBusinessLogic mBusinessLogic;
+
+        /*********************************************************************/
+        /// <summary>
+        /// 
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();
 
-            // Insert code required on object creation below this point.
-
-
+            mBusinessLogic = CBusinessLogic.getInstance();
+            mBusinessLogic.registerWindow(this);
         }
-
+        
+        /*********************************************************************/
+        /// <summary>
+        /// Wird aufgerufen wenn eine Button im Ribbonelement geklickt wird.
+        /// </summary>
+        /// <param name="sender">Welcher Button geklickt wurde</param>
+        /// <param name="e">irgendwelche Parameter</param>
         private void RibbonButton_Click(object sender, RoutedEventArgs e)
         {
             if (sender == btnTest)
@@ -44,5 +56,7 @@ namespace DecisionTree
                 }
             }
         }
+
+        
     }
 }

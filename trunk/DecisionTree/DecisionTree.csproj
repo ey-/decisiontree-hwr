@@ -37,7 +37,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;TESTDATA</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -98,6 +98,17 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Logic\CBusinessLogic.cs" />
+    <Compile Include="Logic\IBusinessLogic.cs" />
+    <Compile Include="Storage\CAttributeType.cs" />
+    <Compile Include="Storage\CAttributeValue.cs" />
+    <Compile Include="Storage\CTableEntry.cs" />
+    <Compile Include="Storage\CValueList.cs" />
+    <Compile Include="Storage\TableData\CDBDataReader.cs" />
+    <Compile Include="Storage\CTableEntryList.cs" />
+    <Compile Include="Storage\TableData\CSQLiteConnection.cs" />
+    <Compile Include="Storage\TableData\CTableConstants.cs" />
+    <Compile Include="Storage\TableData\CTableDataManager.cs" />
     <Compile Include="Storage\TreeData\ITreeHandler.cs" />
     <Compile Include="Storage\TableData\IDBDataReader.cs" />
     <Compile Include="GUI\IMainWindow.cs" />
@@ -107,7 +118,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Logik\IBusinessLogic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
