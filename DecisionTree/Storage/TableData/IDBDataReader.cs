@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace DecisionTree.Storage
+namespace DecisionTree.Storage.TableData
 {
     /// <summary>
     /// Schnittstelle für den Datenzugriff auf die Tabellendaten.
@@ -12,5 +12,12 @@ namespace DecisionTree.Storage
     /// </summary>
     public interface IDBDataReader
     {
+        /*********************************************************************/
+        /// <summary>
+        /// Ließt alle Einträge der Tabelle aus und gibt diese zurück
+        /// </summary>
+        /// <returns>Liste mit allen Tabelleneinträgen</returns>
+        CTableEntryList getAllEntries();
+
     }
 }

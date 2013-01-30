@@ -3,6 +3,8 @@ using System.Text;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using DecisionTree;
+using DecisionTree.Storage.TableData;
 
 namespace TestDecisionTree
 {
@@ -10,9 +12,9 @@ namespace TestDecisionTree
     /// Zusammenfassungsbeschreibung für UnitTest1
     /// </summary>
     [TestClass]
-    public class Test
+    public class CTestSQLiteConnection
     {
-        public Test()
+        public CTestSQLiteConnection()
         {
             //
             // TODO: Konstruktorlogik hier hinzufügen
@@ -60,11 +62,9 @@ namespace TestDecisionTree
         #endregion
 
         [TestMethod]
-        public void TestMethod1()
+        public void construktorTest()
         {
-            //
-            // TODO: Testlogik hier hinzufügen
-            //
+            CSQLiteConnection connection = new CSQLiteConnection();
         }
     }
 }
