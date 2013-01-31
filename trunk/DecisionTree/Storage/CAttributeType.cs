@@ -28,6 +28,9 @@ namespace DecisionTree.Storage
         /// <summary>
         /// Konstruktor
         /// </summary>
+        /// <param name="name">Name des Attributes (In der Tabelle Spaltenüberschrift)</param>
+        /// <param name="dataType">Datentyp des Attributes</param>
+        /// <param name="bTargetAttribute">Zielattribut (ja, nein)</param>
         public CAttributeType(string name, E_DATATYPE dataType, bool bTargetAttribute)
         {
             mName = name;

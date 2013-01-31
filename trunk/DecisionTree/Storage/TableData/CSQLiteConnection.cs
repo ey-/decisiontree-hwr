@@ -32,7 +32,7 @@ namespace DecisionTree.Storage.TableData
 #if DEBUG
             // Im Debugbetrieb verwenden wir eine Datenbank auf der Festplatte.
             // Dazu müssen wir relativ zur exe den Datenbankpfad ermitteln
-            string exePath = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
+            string exePath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
             
             // wenn die Datenbankdatei noch nicht existiert, legen wir die jetzt an
             if (File.Exists(exePath + DATABASE_PATH) == false)
