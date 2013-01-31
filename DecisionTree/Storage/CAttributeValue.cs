@@ -22,8 +22,8 @@ namespace DecisionTree.Storage
         /// Konstruktor um einen Stringwert zu speichern
         /// </summary>
         /// <param name="type">Beschreibung von welchem Typ die Varialbe ist</param>
-        /// <param name="sEntryIndex"></param>
-        /// <param name="sValue"></param>
+        /// <param name="sEntryIndex">ID des Eintrags aus der DB um den Eintrag eindeutig identifizieren zu können</param>
+        /// <param name="sValue">Wert im Stringformat</param>
         public CAttributeValue(CAttributeType type, string sEntryIndex, string sValue)
         {
             mAttributeType = type;

@@ -5,6 +5,8 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using DecisionTree;
 using DecisionTree.Storage.TableData;
+using System.Data.SQLite;
+
 
 namespace TestDecisionTree
 {
@@ -14,57 +16,43 @@ namespace TestDecisionTree
     [TestClass]
     public class CTestSQLiteConnection
     {
+        private const string TABLE_TEST = "test";
+
         public CTestSQLiteConnection()
         {
-            //
-            // TODO: Konstruktorlogik hier hinzufügen
-            //
         }
 
-        private TestContext testContextInstance;
-
-        /// <summary>
-        ///Ruft den Textkontext mit Informationen über
-        ///den aktuellen Testlauf sowie Funktionalität für diesen auf oder legt diese fest.
-        ///</summary>
-        public TestContext TestContext
-        {
-            get
-            {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
-        }
-
-        #region Zusätzliche Testattribute
-        //
-        // Sie können beim Schreiben der Tests folgende zusätzliche Attribute verwenden:
-        //
-        // Verwenden Sie ClassInitialize, um vor Ausführung des ersten Tests in der Klasse Code auszuführen.
-        // [ClassInitialize()]
-        // public static void MyClassInitialize(TestContext testContext) { }
-        //
-        // Verwenden Sie ClassCleanup, um nach Ausführung aller Tests in einer Klasse Code auszuführen.
-        // [ClassCleanup()]
-        // public static void MyClassCleanup() { }
-        //
-        // Mit TestInitialize können Sie vor jedem einzelnen Test Code ausführen. 
-        // [TestInitialize()]
-        // public void MyTestInitialize() { }
-        //
-        // Mit TestCleanup können Sie nach jedem einzelnen Test Code ausführen.
-        // [TestCleanup()]
-        // public void MyTestCleanup() { }
-        //
-        #endregion
 
         [TestMethod]
         public void construktorTest()
         {
             CSQLiteConnection connection = new CSQLiteConnection();
+        }
+
+
+        [TestMethod]
+        public void executionText()
+        {
+            CSQLiteConnection connection = new CSQLiteConnection();
+
+            string sqlCommand = "DROP TABLE IF EXISTS " + TABLE_TEST;
+            Assert.IsTrue(connection.sqlExecuteStatement(sqlCommand));
+
+            sqlCommand = "CREATE TABLE " + TABLE_TEST + " (id INTEGER PRIMARY KEY, testAttr TEXT)";
+            Assert.IsTrue(connection.sqlExecuteStatement(sqlCommand));
+
+            sqlCommand = "INSERT INTO " + TABLE_TEST + " (id, testAttr) VALUES (1, 'asd'), (2, 'qwe'), (3, 'yxc')";
+            Assert.IsTrue(connection.sqlExecuteStatement(sqlCommand));
+
+            SQLiteDataReader reader;
+            sqlCommand = "SELECT * FROM " + TABLE_TEST;
+            Assert.IsTrue(connection.sqlRequestStatement(sqlCommand, out reader));
+
+            int count = 0;
+            while (reader.Read() == true)
+            {
+                count++;
+            }
         }
     }
 }

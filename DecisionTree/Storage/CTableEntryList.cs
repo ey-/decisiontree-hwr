@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Collections;
 
-namespace DecisionTree.Storage.TableData
+namespace DecisionTree.Storage
 {
     /// <summary>
     /// Liste Datenbankeinträgen.
@@ -70,9 +70,12 @@ namespace DecisionTree.Storage.TableData
             {
                 foreach (CTableEntry entry in mEntryList)
                 {
-                    if (entry[0].EntryIndex == entryIndex)
+                    if (entry.Size > 0)
                     {
-                        return entry;
+                        if (entry[0].EntryIndex == entryIndex)
+                        {
+                            return entry;
+                        }
                     }
                 }
                 return null;

@@ -108,7 +108,7 @@
     <Compile Include="Storage\CTableEntryList.cs" />
     <Compile Include="Storage\TableData\CSQLiteConnection.cs" />
     <Compile Include="Storage\TableData\CTableConstants.cs" />
-    <Compile Include="Storage\TableData\CTableDataManager.cs" />
+    <Compile Include="Storage\CTableDataManager.cs" />
     <Compile Include="Storage\TreeData\ITreeHandler.cs" />
     <Compile Include="Storage\TableData\IDBDataReader.cs" />
     <Compile Include="GUI\IMainWindow.cs" />
