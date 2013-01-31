@@ -19,5 +19,13 @@ namespace DecisionTree.Storage.TableData
         /// <returns>Liste mit allen Tabelleneinträgen</returns>
         CTableEntryList getAllEntries();
 
+        /*********************************************************************/
+        /// <summary>
+        /// fügt neuen leeren Datensatz in die Datenbak ein und gibt diesen zurück
+        /// </summary>
+        /// <returns>leerer Datenbankeintrag</returns>
+        CTableEntry insertEntry();
+
     }
+    
 }

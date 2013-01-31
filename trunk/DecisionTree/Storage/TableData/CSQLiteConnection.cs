@@ -29,7 +29,11 @@ namespace DecisionTree.Storage.TableData
         /// </summary>
         public CSQLiteConnection()
         {
-#if DEBUG
+#if TEST || RELEASE
+            // Im Releasebetrieb verwenden wir eine Inmemory Datenbank.
+            // Daher muss der Pfad zur exe nicht angegeben werden.
+            string exePath = "";
+#else
             // Im Debugbetrieb verwenden wir eine Datenbank auf der Festplatte.
             // Dazu müssen wir relativ zur exe den Datenbankpfad ermitteln
             string exePath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
@@ -37,12 +41,19 @@ namespace DecisionTree.Storage.TableData
             // wenn die Datenbankdatei noch nicht existiert, legen wir die jetzt an
             if (File.Exists(exePath + DATABASE_PATH) == false)
             {
-                SQLiteConnection.CreateFile(exePath + DATABASE_PATH);
+                //string exePath = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
+                exePath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+
+                // wenn die Datenbankdatei noch nicht existiert, legen wir die jetzt an
+                if (File.Exists(exePath + DATABASE_PATH) == false)
+                {
+                    SQLiteConnection.CreateFile(exePath + DATABASE_PATH);
+                }
             }
-#else
-            // Im Releasebetrieb verwenden wir eine Inmemory Datenbank.
-            // Daher muss der Pfad zur exe nicht angegeben werden.
-            string exePath = "";
+            catch
+            { 
+               exePath = ""; 
+            }            
 #endif
 
             string databaseSource = DATABASE_SOURCE;

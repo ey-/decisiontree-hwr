@@ -74,5 +74,33 @@ namespace DecisionTree.Storage.TableData
             return entryList;
         }
 
+        /*********************************************************************/
+        /// <summary>
+        /// fügt neuen leeren Datensatz in die Datenbak ein und gibt diesen zurück
+        /// </summary>
+        /// <returns>leerer Datenbankeintrag</returns>
+        public CTableEntry insertEntry()
+        {
+            string sSQLCommand = "INSERT INTO "+ CTableConstants.TABLE_ATTRIBUTES +" (id) VALUES(NULL)";
+            mConnection.sqlExecuteStatement(sSQLCommand);
+            //nimmt die letzte Zeile der DB 
+            sSQLCommand = "SELECT *  FROM DataTable ORDER BY id DESC LIMIT 1";   
+            SQLiteDataReader reader;
+            //sendet den Request ab und  packt die Zeile in den Reader
+            mConnection.sqlRequestStatement(sSQLCommand, out reader);
+            {
+                while (reader.Read()) //für jede Zeile
+                {
+                    //für jede Spalte arbeite er jedes element einzeln ab 
+                    for (int field = 0; field < reader.FieldCount; field++) 
+                    {
+                        Console.Write(reader[field] + " ");
+                    }
+                    Console.Write("\n");
+                }
+            }
+            return null;
+
+        }
     }
 }

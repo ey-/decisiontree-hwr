@@ -4,7 +4,7 @@
         xmlns:r="clr-namespace:Microsoft.Windows.Controls.Ribbon;assembly=RibbonControlsLibrary"
         Title="MainWindow"
 		x:Name="RibbonWindow"
-		Width="640" Height="480">
+		Width="720" Height="450">
 
 	<Grid x:Name="LayoutRoot">
         <Grid.RowDefinitions>
