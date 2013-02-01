@@ -21,6 +21,9 @@ namespace DecisionTree.Logic
         // Schnittstellen zur Datenhaltung
         protected IDBDataReader mTableReader = new CDBDataReader();
 
+        //TableLogic
+        protected CTableLogic mTableLogic = new CTableLogic();
+
         /*********************************************************************/
         /// <summary>
         /// Konstruktor
@@ -46,6 +49,20 @@ namespace DecisionTree.Logic
         public void registerWindow(GUI.IMainWindow mainWindow)
         {
             mMainWindow = mainWindow;
+        }
+        /*********************************************************************/
+        /// <summary>
+        /// Gibt alle Tabellendaten zurück
+        /// </summary>
+        /// <returns>CTableEntryList</returns>
+        public CTableEntryList getAllTableData()
+        {
+            return mTableLogic.getAllTableData();
+        }
+
+        public void loadCSV()
+        {
+
         }
 
         

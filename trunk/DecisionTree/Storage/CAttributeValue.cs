@@ -85,6 +85,24 @@ namespace DecisionTree.Storage
         {
             get { return mFloatValue; }
         }
+        /*********************************************************************/
+        /// <summary>
+        /// Overrides ToString-Function
+        /// </summary>
+        /// <returns>string</returns>
+        public override string ToString()
+        {
+            switch (mAttributeType.DataType)
+            {
+                case E_DATATYPE.E_STRING:
+                    return mStringValue;
+                case E_DATATYPE.E_FLOAT:
+                    return mFloatValue.ToString();
+                case E_DATATYPE.E_INT: 
+                    return mIntegerValue.ToString();
+            }
+            return msEntryIndex;
+        }
    
     }// class
 } // namespace

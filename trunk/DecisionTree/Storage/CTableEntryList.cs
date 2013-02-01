@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Collections;
+using System.Collections.ObjectModel;
 
 namespace DecisionTree.Storage
 {
@@ -10,9 +11,8 @@ namespace DecisionTree.Storage
     /// Liste Datenbankeinträgen.
     /// Es werden nur Lesezugeriffe zugelassen. Schreiben in die Datenbank
     /// </summary>
-    public class CTableEntryList : IEnumerable
+    public class CTableEntryList : ObservableCollection<CTableEntry>, IEnumerable
     {
-        List<CTableEntry> mEntryList = new List<CTableEntry>();
 
         /*********************************************************************/
         /// <summary>
@@ -20,7 +20,7 @@ namespace DecisionTree.Storage
         /// </summary>
         public CTableEntryList()
         { }
-
+        
         /*********************************************************************/
         /// <summary>
         /// Fügt einen Eintrag in die Liste ein. (Ein Eintrag entspricht in der Tabelle einer Zeile
@@ -28,7 +28,7 @@ namespace DecisionTree.Storage
         /// <param name="entry"></param>
         public void addEntry(CTableEntry entry)
         {
-            mEntryList.Add(entry);
+            this.Add(entry);
         }
 
         /*********************************************************************/
@@ -37,10 +37,11 @@ namespace DecisionTree.Storage
         /// </summary>
         public int Size
         {
-            get { return mEntryList.Count; }
+
+            get { return this.Count; }
         }
 
-        /*********************************************************************/
+        /*********************************************************************
         /// <summary>
         /// Zugriff auf einen Tabelleneintrag in der Liste per Index
         /// </summary>
@@ -68,7 +69,7 @@ namespace DecisionTree.Storage
         {
             get
             {
-                foreach (CTableEntry entry in mEntryList)
+                foreach (CTableEntry entry in this)
                 {
                     if (entry.Size > 0)
                     {
@@ -82,7 +83,7 @@ namespace DecisionTree.Storage
             }
         }
 
-        /*********************************************************************/
+        /*********************************************************************
         /// <summary>
         /// Methode zum Iterieren per foreach
         /// </summary>
@@ -93,6 +94,6 @@ namespace DecisionTree.Storage
             {
                 yield return value;
             }
-        }
+        }*/
     }
 }

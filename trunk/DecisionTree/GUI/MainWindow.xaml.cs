@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -14,6 +15,9 @@ using System.Windows.Shapes;
 using Microsoft.Windows.Controls.Ribbon;
 using DecisionTree.GUI;
 using DecisionTree.Logic;
+using DecisionTree.Storage.TableData;
+using DecisionTree.Storage;
+using System.Data;
 
 namespace DecisionTree
 {
@@ -31,11 +35,19 @@ namespace DecisionTree
         public MainWindow()
         {
             InitializeComponent();
-
             mBusinessLogic = CBusinessLogic.getInstance();
             mBusinessLogic.registerWindow(this);
+            DataContext = this;
         }
-        
+        /*********************************************************************/
+        /// <summary>
+        /// provisorische Funktion evtll. to delete
+        /// </summary>
+        public CTableEntryList TableEntryList
+        {
+            get { return mBusinessLogic.getAllTableData(); }
+            set {  }
+        }
         /*********************************************************************/
         /// <summary>
         /// Wird aufgerufen wenn eine Button im Ribbonelement geklickt wird.
@@ -54,6 +66,31 @@ namespace DecisionTree
                 {
                     this.grpTable.Visibility = System.Windows.Visibility.Hidden;
                 }
+            }
+
+            
+        }
+        /*********************************************************************/
+        /// <summary>
+        /// Wird aufgerufen wenn eine MenuItem geklickt wird.
+        /// </summary>
+        /// <param name="sender">Welcher Button geklickt wurde</param>
+        /// <param name="e">"irgendwelche Parameter" (Arne)</param>
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender == exitApplication)
+            {
+                Application.Current.Shutdown();
+            }
+
+            if (sender == openFile)
+            {
+                MessageBox.Show("Diese Funktion wurde noch nicht implementiert");
+            }
+
+            if (sender == saveFile)
+            {
+                MessageBox.Show("Diese Funktion wurde noch nicht implementiert");
             }
         }
 
