@@ -16,7 +16,8 @@ namespace DecisionTree.Storage
         /// Konstruktor
         /// </summary>
         public CTableEntry()
-        { 
+        {
+
         }
     }
 }

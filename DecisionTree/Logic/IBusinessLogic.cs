@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using DecisionTree.GUI;
+using System.Collections.ObjectModel;
+using DecisionTree.Storage;
+using DecisionTree.Storage.TableData;
 
 namespace DecisionTree.Logic
 {
@@ -18,5 +21,8 @@ namespace DecisionTree.Logic
         /// </summary>
         /// <param name="mainWindow">Interface zum MainWindow</param>
         void registerWindow(IMainWindow mainWindow);
+        CTableEntryList getAllTableData();
+
+
     }
 }
