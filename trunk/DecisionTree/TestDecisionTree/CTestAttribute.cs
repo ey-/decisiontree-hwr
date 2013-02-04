@@ -13,7 +13,11 @@ namespace TestDecisionTree
         [TestMethod]
         public void testTypes()
         {
-            CAttributeType typeNumber = new CAttributeType("Number", E_DATATYPE.E_INT, true );
+            CAttributeType typeNumber = new CAttributeType(0);
+
+            Assert.IsTrue(typeNumber.Used == false);
+
+            typeNumber.setUsed("Number", E_DATATYPE.E_INT, true);
 
             Assert.IsTrue(typeNumber.DataType == E_DATATYPE.E_INT);
             Assert.IsTrue(typeNumber.Name == "Number");
@@ -23,9 +27,12 @@ namespace TestDecisionTree
         [TestMethod]
         public void testAttributeGeneration()
         {
-            CAttributeType typeNumber = new CAttributeType("Number", E_DATATYPE.E_INT, false);
-            CAttributeType typeString = new CAttributeType("String", E_DATATYPE.E_STRING, false);
-            CAttributeType typeFloat = new CAttributeType("Float", E_DATATYPE.E_FLOAT, false);
+            CAttributeType typeNumber = new CAttributeType(0); 
+            typeNumber.setUsed("Number", E_DATATYPE.E_INT, false);
+            CAttributeType typeString = new CAttributeType(0); 
+            typeString.setUsed("String", E_DATATYPE.E_STRING, false);
+            CAttributeType typeFloat = new CAttributeType(0); 
+            typeFloat.setUsed("Float", E_DATATYPE.E_FLOAT, false);
             
             // Attributwerte mit unterschiedlichen Typen erstellen
             CAttributeValue[] values = new CAttributeValue[10];
@@ -68,9 +75,12 @@ namespace TestDecisionTree
         {
             CValueList valueList = new CValueList();
 
-            CAttributeType typeNumber = new CAttributeType("Number", E_DATATYPE.E_INT, false);
-            CAttributeType typeString = new CAttributeType("String", E_DATATYPE.E_STRING, false);
-            CAttributeType typeFloat = new CAttributeType("Float", E_DATATYPE.E_FLOAT, false);
+            CAttributeType typeNumber = new CAttributeType(0); 
+            typeNumber.setUsed("Number", E_DATATYPE.E_INT, false);
+            CAttributeType typeString = new CAttributeType(0); 
+            typeString.setUsed("String", E_DATATYPE.E_STRING, false);
+            CAttributeType typeFloat = new CAttributeType(0);
+            typeFloat.setUsed("Float", E_DATATYPE.E_FLOAT, false);
 
             // Attributwerte mit unterschiedlichen Typen erstellen und in die Liste einfügen
             for (int i = 0; i < 10; i++)
@@ -100,6 +110,7 @@ namespace TestDecisionTree
             // Zugriff per Index auf ein Element
             valueList[0].ToString();
         }
+
 
     } // class
 } // namespace

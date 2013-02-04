@@ -12,7 +12,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <r:Ribbon x:Name="Ribbon">
+        <r:Ribbon x:Name="Ribbon" SelectionChanged="Ribbon_SelectionChanged">
             <r:Ribbon.ApplicationMenu>
                 <r:RibbonApplicationMenu SmallImageSource="..\Images\SmallIcon.png">
                     <r:RibbonApplicationMenuItem Header="Datei öffnen"
@@ -64,7 +64,8 @@
 
             <r:RibbonTab Header="Tabellenansicht" ContextualTabGroupHeader="Tabellenansicht">
                 <r:RibbonGroup Header="">
-                    <r:RibbonButton Label="asd" />
+                    <r:RibbonButton Name="btnAddColumn" Label="addColumn" Click="RibbonButtonTableView_Click" />
+                    <r:RibbonButton Name="btnRemoveColumn" Label="removeColumn" Click="RibbonButtonTableView_Click" />
                 </r:RibbonGroup>
             </r:RibbonTab>
 
@@ -83,7 +84,13 @@
             </Grid.ColumnDefinitions>
             
             <Label Grid.Column="0" Content="Tabelle" />
-            <DataGrid ItemsSource="{Binding TableEntryList}" Name="datagrid1">
+            <!--  -->
+            <DataGrid ItemsSource="{Binding TableEntryList}" AutoGenerateColumns="False" Name="datagrid1"  >
+                <DataGrid.Columns>
+                    <!--<DataGridTextColumn Binding="{Binding Path=Attribute1.TableValue}" Visibility="{Binding Path=Attribute1.AttributeType.ColumnVisibility}" Header="{Binding Path=Attribute1.AttributeType.Name}" />-->
+                    <!--<DataGridTextColumn Binding="{Binding Path=Attribute2.TableValue}" Visibility="{Binding Path=Attribute2.AttributeType.ColumnVisibility}" Header="{Binding Path=Attribute2.AttributeType.Name}" />-->
+                    <!-- <DataGridTextColumn Binding="{Binding Path=}" />-->
+                </DataGrid.Columns>
             </DataGrid>
         </Grid>
     </Grid>

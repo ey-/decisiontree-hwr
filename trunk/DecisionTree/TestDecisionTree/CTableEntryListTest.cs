@@ -33,7 +33,7 @@ namespace TestDecisionTree
 
             for (int i = 0; i < 10; i++)
             {
-                CTableEntry entry = new CTableEntry();
+                CTableEntry entry = new CTableEntry(i.ToString());
                 list.addEntry(entry);
             }
 
@@ -47,11 +47,12 @@ namespace TestDecisionTree
         public void ItemTestString()
         {
             CTableEntryList list = new CTableEntryList();
-            CAttributeType attrType = new CAttributeType("asd", E_DATATYPE.E_STRING, false);
+            CAttributeType attrType = new CAttributeType(0); 
+            attrType.setUsed("asd", E_DATATYPE.E_STRING, false);
             
             for (int i = 0; i < 10; i++)
             {
-                CTableEntry entry = new CTableEntry();
+                CTableEntry entry = new CTableEntry(i.ToString());
                 entry.addValue(new CAttributeValue(attrType, i.ToString(), i.ToString()));
                 list.addEntry(entry);
             }
@@ -71,11 +72,12 @@ namespace TestDecisionTree
         public void ItemTestIndex()
         {
             CTableEntryList list = new CTableEntryList();
-            CAttributeType attrType = new CAttributeType("asd", E_DATATYPE.E_STRING, false);
+            CAttributeType attrType = new CAttributeType(0); 
+            attrType.setUsed("asd", E_DATATYPE.E_STRING, false);
             
             for (int i = 0; i < 10; i++)
             {
-                CTableEntry entry = new CTableEntry();
+                CTableEntry entry = new CTableEntry(i.ToString());
                 entry.addValue(new CAttributeValue(attrType, i.ToString(), i.ToString()));
                 list.addEntry(entry);
             }
@@ -98,7 +100,7 @@ namespace TestDecisionTree
 
             for (int i = 1; i <= 10; i++)
             {
-                list.addEntry(new CTableEntry());
+                list.addEntry(new CTableEntry(i.ToString()));
                 Assert.IsTrue(list.Size == i);
             }
         }

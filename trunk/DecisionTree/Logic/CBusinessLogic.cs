@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using DecisionTree.GUI;
 using DecisionTree.Storage.TableData;
+using DecisionTree.Storage;
 
 namespace DecisionTree.Logic
 {
@@ -17,10 +18,7 @@ namespace DecisionTree.Logic
         
         // Interfaces zur GUI
         protected IMainWindow mMainWindow = null;
-
-        // Schnittstellen zur Datenhaltung
-        protected IDBDataReader mTableReader = new CDBDataReader();
-
+        
         //TableLogic
         protected CTableLogic mTableLogic = new CTableLogic();
 
@@ -65,6 +63,23 @@ namespace DecisionTree.Logic
 
         }
 
-        
+        /*********************************************************************/
+        /// <summary>
+        /// Testweise Methode zum hinzufügen eines weiteren Attributes zur Tabelle
+        /// </summary>
+        public CAttributeType addAttribute()
+        {
+            return mTableLogic.addAttribute();
+        }
+
+        /*********************************************************************/
+        /// <summary>
+        /// Testweise Methode zum löschen des letzten Attributes zur Tabelle
+        /// </summary>
+        public bool removeAttribute(string attributeName)
+        {
+            return mTableLogic.removeAttribute(attributeName);
+        }
+
     }// class
 } // namespace

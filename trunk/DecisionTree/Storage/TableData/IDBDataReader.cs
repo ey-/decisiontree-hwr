@@ -26,6 +26,21 @@ namespace DecisionTree.Storage.TableData
         /// <returns>leerer Datenbankeintrag</returns>
         CTableEntry insertEntry();
 
+        /*********************************************************************/
+        /// <summary>
+        /// fügt eine Spalte zur Tabelle hinzu.
+        /// </summary>
+        /// <param name="name">Name/Überschrift der Spalte</param>
+        /// <returns>Erfolg beim anlegen</returns>
+        CAttributeType addColumn(string name);
+
+        /*********************************************************************/
+        /// <summary>
+        /// löscht eine Spalte der Tabelle 
+        /// </summary>
+        /// <param name="name">Name/Überschrift der Spalte</param>
+        /// <returns>Erfolg beim anlegen</returns>
+        bool removeColumn(string name);
     }
     
 }

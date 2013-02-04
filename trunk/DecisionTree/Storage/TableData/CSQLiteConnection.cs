@@ -49,11 +49,7 @@ namespace DecisionTree.Storage.TableData
                 {
                     SQLiteConnection.CreateFile(exePath + DATABASE_PATH);
                 }
-            }
-            catch
-            { 
-               exePath = ""; 
-            }            
+            }       
 #endif
 
             string databaseSource = DATABASE_SOURCE;
