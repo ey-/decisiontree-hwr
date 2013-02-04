@@ -21,8 +21,24 @@ namespace DecisionTree.Logic
         /// </summary>
         /// <param name="mainWindow">Interface zum MainWindow</param>
         void registerWindow(IMainWindow mainWindow);
+
+        /*********************************************************************/
+        /// <summary>
+        /// gibt die Liste mit allen Datensätzen zurück
+        /// </summary>
+        /// <returns>Liste mit allen Datensätzen</returns>
         CTableEntryList getAllTableData();
 
+        /*********************************************************************/
+        /// <summary>
+        /// Testweise Methode zum hinzufügen eines weiteren Attributes zur Tabelle
+        /// </summary>
+        CAttributeType addAttribute();
 
+        /*********************************************************************/
+        /// <summary>
+        /// Testweise Methode zum löschen des letzten Attributes zur Tabelle
+        /// </summary>
+        bool removeAttribute(string attributeName);
     }
 }

@@ -94,6 +94,34 @@ namespace DecisionTree
             }
         }
 
+        private void RibbonButtonTableView_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender.Equals(btnAddColumn) == true)
+            {
+                CAttributeType type = mBusinessLogic.addAttribute();
+                DataGridTextColumn column = new DataGridTextColumn();
+                column.Header = type.Name;
+                column.Binding = new Binding("[ " + type.Index + "].TableValue");
+                datagrid1.Columns.Add(column);
+            }
+            else if (sender.Equals(btnRemoveColumn) == true)
+            {
+                if (datagrid1.CurrentColumn != null)
+                {
+                    DataGridColumn column = datagrid1.CurrentColumn;
+                    if (mBusinessLogic.removeAttribute((string)column.Header) == true)
+                    {
+                        datagrid1.Columns.Remove(column);
+                    }
+                }
+            }
+        }
+
+        private void Ribbon_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
         
     }
 }

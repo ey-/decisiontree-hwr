@@ -11,7 +11,7 @@ namespace DecisionTree.Storage.TableData
         public const int MAX_ENTRY_COUNT = 1000;
 
         public const string TABLE_ATTRIBUTES = "DataTable";
-        public const string TABLE_ATTRIBUTE_TYPES = "AttributeTypesTable";
+        //public const string TABLE_ATTRIBUTE_TYPES = "AttributeTypesTable";
 
         // Spaltennamen für die AttributTypesTabelle
         public const string ATTR_TYPES_NAME = "name";

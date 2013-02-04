@@ -13,14 +13,16 @@ namespace DecisionTree.Storage.TableData
     public class CTableDataManager
     {
         CSQLiteConnection mConnection;
+        List<CAttributeType> mAttributeTypeList;
 
         /*********************************************************************/
         /// <summary>
         /// Konstruktor
         /// </summary>
-        public CTableDataManager(CSQLiteConnection connection)
+        public CTableDataManager(CSQLiteConnection connection, List<CAttributeType> attributeTypeList)
         {
             mConnection = connection;
+            mAttributeTypeList = attributeTypeList;
         }
 
         /*********************************************************************/
@@ -35,7 +37,7 @@ namespace DecisionTree.Storage.TableData
                 "id INTEGER PRIMARY KEY AUTOINCREMENT, ";
             for (int attribute = 0; attribute < CTableConstants.MAX_ATTRIBUTE_COUNT; attribute++)
             {
-                sSQLCommand += CTableConstants.ATTR_X + (attribute + 1) + " TEXT";
+                sSQLCommand += CTableConstants.ATTR_X + attribute + " TEXT";
                 if (attribute < CTableConstants.MAX_ATTRIBUTE_COUNT - 1)
                 {
                     sSQLCommand += ", ";
@@ -44,6 +46,16 @@ namespace DecisionTree.Storage.TableData
             sSQLCommand += ")";
             mConnection.sqlExecuteStatement(sSQLCommand);
 
+            
+            // jetzt die Attributtypen vorbereiten
+            mAttributeTypeList.Clear();
+            for (int attributeIndex = 0; attributeIndex < CTableConstants.MAX_ATTRIBUTE_COUNT; attributeIndex++)
+            {
+                mAttributeTypeList.Add(new CAttributeType(attributeIndex));
+            }
+
+            #region AttributeTypeTabelle (Alt, aber vllt brauchen wir es doch nochmal)
+            /*
             // feststellen ob die Tabelle an und für sich existiert
             sSQLCommand = "SELECT * FROM " + CTableConstants.TABLE_ATTRIBUTE_TYPES;
             bool bAttrTypeTableAvailabe = (mConnection.sqlExecuteStatement(sSQLCommand) == true);
@@ -83,6 +95,8 @@ namespace DecisionTree.Storage.TableData
                     "('', 0, '" + CTableConstants.ATTR_X + "16', 0, 0) ";
                 mConnection.sqlExecuteStatement(sSQLCommand);
             }
+            */
+            #endregion
         }
 
         /*********************************************************************/
@@ -92,23 +106,32 @@ namespace DecisionTree.Storage.TableData
         /// <param name="name"></param>
         /// <param name="targetAttribute"></param>
         /// <returns></returns>
-        public bool addTableAttribute(string sName, bool bTargetAttribute = false)
+        public CAttributeType addTableAttribute(string sName, bool bTargetAttribute = false)
         {
-            if (isAttributExistent(sName) == true)
+            if (isAttributExistent(sName) == false)
             {
-                return false;
+                CAttributeType attrType = getNextAvailableAttibuteType();
+
+                if (attrType != null)
+                {
+                    attrType.setUsed(sName, E_DATATYPE.E_STRING, bTargetAttribute);
+                    return attrType;
+                }
             }
 
-            string sInternalName = getNextAvailableAttributname();
-
+            return null;
+            #region altcode .. kann eventuell noch gebraucht werden
+            /*
             string sSQLCommand = "UPDATE " + CTableConstants.TABLE_ATTRIBUTE_TYPES + " SET " +
                 CTableConstants.ATTR_TYPES_NAME + "='" + sName + "', " +
                 CTableConstants.ATTR_TYPES_USED + "=1, " +
                 CTableConstants.ATTR_TYPES_TARGET_ATTR + "=" + Convert.ToInt16(bTargetAttribute) + 
                 " WHERE " + CTableConstants.ATTR_TYPES_INTERNAL_NAME + "='" + sInternalName + "'";
             mConnection.sqlExecuteStatement(sSQLCommand);
-
+            
             return true;
+             */
+            #endregion
         }
 
         /*********************************************************************/
@@ -124,6 +147,24 @@ namespace DecisionTree.Storage.TableData
                 return false;
             }
 
+            foreach (CAttributeType type in mAttributeTypeList)
+            {
+                if ((type.Name == sName) && (type.Used == true))
+                {
+                    // der Typ soll nicht mehr verwendet werden
+                    type.setUnused();
+
+                    // jetzt noch die Daten der Spalte in der Datenbank aufräumen
+                    string sSQLCommand = "UPDATE " + CTableConstants.TABLE_ATTRIBUTES + " SET " + type.InternalName + "=''";
+                    mConnection.sqlExecuteStatement(sSQLCommand);
+
+                    return true;
+                }
+            }
+            return false;
+
+            #region altcode .. kann eventuell noch gebraucht werden
+            /*
             string sSQLCommand = "SELECT " + CTableConstants.ATTR_TYPES_INTERNAL_NAME + " FROM " + CTableConstants.TABLE_ATTRIBUTE_TYPES;
             SQLiteDataReader reader;
             if (mConnection.sqlRequestStatement(sSQLCommand, out reader) == false)
@@ -157,6 +198,8 @@ namespace DecisionTree.Storage.TableData
             mConnection.sqlExecuteStatement(sSQLCommand);
 
             return true;
+             */
+            #endregion
         }
 
         /*********************************************************************/
@@ -167,6 +210,17 @@ namespace DecisionTree.Storage.TableData
         /// <returns>Attribut ist bereits vorhanden oder nicht</returns>
         protected bool isAttributExistent(string sName)
         {
+            foreach (CAttributeType type in mAttributeTypeList)
+            {
+                if ((type.Used == true) && (type.Name == sName))
+                {
+                    return true;
+                }
+            }
+            return false;
+
+            #region altcode .. kann eventuell noch gebraucht werden
+            /*
             SQLiteDataReader reader;
 
             // zuerst prüfen ob bereits ein Attribut mit diesem Namen existiert
@@ -187,7 +241,8 @@ namespace DecisionTree.Storage.TableData
 
             // wir brauchen den Reader nicht mehr
             closeReader(reader);
-            return false;
+            return false;*/
+            #endregion
         }
 
         /*********************************************************************/
@@ -195,22 +250,16 @@ namespace DecisionTree.Storage.TableData
         /// holt den nächsten verfügbaren Attributnamen
         /// </summary>
         /// <returns>Nächster Verfügbarer Attributname</returns>
-        protected string getNextAvailableAttributname()
+        protected CAttributeType getNextAvailableAttibuteType()
         {
-            string retString = "";
-
-            string sSQLCommand = "SELECT " + CTableConstants.ATTR_TYPES_INTERNAL_NAME + " FROM " + CTableConstants.TABLE_ATTRIBUTE_TYPES + " WHERE " + CTableConstants.ATTR_TYPES_USED + "=0";
-            SQLiteDataReader reader;
-            if (mConnection.sqlRequestStatement(sSQLCommand, out reader) == true)
+            foreach (CAttributeType type in mAttributeTypeList)
             {
-                if (reader.Read() == true)
+                if (type.Used == false)
                 {
-                    retString = (string)reader[0];
+                    return type;
                 }
             }
-
-            closeReader(reader);
-            return retString;
+            return null;
         }
 
         /*********************************************************************/

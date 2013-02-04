@@ -50,6 +50,30 @@ namespace DecisionTree.Storage
             get { return mAttributeType; }
         }
 
+        public string TableValue
+        {
+            get
+            {
+                switch (mAttributeType.DataType)
+                {
+                    case E_DATATYPE.E_STRING: return mStringValue;
+                    case E_DATATYPE.E_INT: return mIntegerValue.ToString();
+                    case E_DATATYPE.E_FLOAT: return mFloatValue.ToString();
+                }
+                return "";
+            }
+            // ToDo : Änderung auch in die Datenbank schreiben 
+            set
+            {
+                switch (mAttributeType.DataType)
+                {
+                    case E_DATATYPE.E_STRING: mStringValue = value; break;
+                    case E_DATATYPE.E_INT: mIntegerValue = Convert.ToInt32(value); break;
+                    case E_DATATYPE.E_FLOAT: mFloatValue = Convert.ToSingle(value); break;
+                }
+            }
+        }
+
         /*********************************************************************/
         /// <summary>
         /// Index des Eintrags zu dem der Wert gehört
