@@ -53,7 +53,7 @@ namespace TestDecisionTree
             for (int i = 0; i < 10; i++)
             {
                 CTableEntry entry = new CTableEntry(i.ToString());
-                entry.addValue(new CAttributeValue(attrType, i.ToString(), i.ToString()));
+                entry.addValue(new CAttributeValue(attrType, i.ToString(), i.ToString(), null));
                 list.addEntry(entry);
             }
 
@@ -78,7 +78,7 @@ namespace TestDecisionTree
             for (int i = 0; i < 10; i++)
             {
                 CTableEntry entry = new CTableEntry(i.ToString());
-                entry.addValue(new CAttributeValue(attrType, i.ToString(), i.ToString()));
+                entry.addValue(new CAttributeValue(attrType, i.ToString(), i.ToString(), null));
                 list.addEntry(entry);
             }
 
