@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using DecisionTree.Storage.TableData;
 
 namespace DecisionTree.Storage
 {
@@ -17,15 +18,20 @@ namespace DecisionTree.Storage
         int mIntegerValue;
         float mFloatValue;
 
+        IDBDataReader mDBAccess;
+
         /*********************************************************************/
         /// <summary>
-        /// Konstruktor um einen Stringwert zu speichern
+        /// Konstruktor um einen Attributwert zu speichern
         /// </summary>
         /// <param name="type">Beschreibung von welchem Typ die Varialbe ist</param>
         /// <param name="sEntryIndex">ID des Eintrags aus der DB um den Eintrag eindeutig identifizieren zu können</param>
         /// <param name="sValue">Wert im Stringformat</param>
-        public CAttributeValue(CAttributeType type, string sEntryIndex, string sValue)
+        /// <param name="dbAccess">Interface für den Zugriff auf die Datenbank, damit Werte geändert werden können</param>
+        public CAttributeValue(CAttributeType type, string sEntryIndex, string sValue, IDBDataReader dbAccess)
         {
+            mDBAccess = dbAccess;
+
             mAttributeType = type;
             msEntryIndex = sEntryIndex;
 
@@ -50,6 +56,9 @@ namespace DecisionTree.Storage
             get { return mAttributeType; }
         }
 
+        /// <summary>
+        /// Zugriff auf Wert der in der Tabelle dargestellt wird
+        /// </summary>
         public string TableValue
         {
             get
@@ -62,14 +71,18 @@ namespace DecisionTree.Storage
                 }
                 return "";
             }
-            // ToDo : Änderung auch in die Datenbank schreiben 
             set
             {
-                switch (mAttributeType.DataType)
+                // zuerst unten in der Datenbank ändern
+                if (mDBAccess.updateAttributeValue(this, value) == true)
                 {
-                    case E_DATATYPE.E_STRING: mStringValue = value; break;
-                    case E_DATATYPE.E_INT: mIntegerValue = Convert.ToInt32(value); break;
-                    case E_DATATYPE.E_FLOAT: mFloatValue = Convert.ToSingle(value); break;
+                    // jetzt auch wirklich in den Daten ändern
+                    switch (mAttributeType.DataType)
+                    {
+                        case E_DATATYPE.E_STRING: mStringValue = value; break;
+                        case E_DATATYPE.E_INT: mIntegerValue = Convert.ToInt32(value); break;
+                        case E_DATATYPE.E_FLOAT: mFloatValue = Convert.ToSingle(value); break;
+                    }
                 }
             }
         }

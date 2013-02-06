@@ -28,7 +28,7 @@ namespace DecisionTree.Storage.TableData
             
             mTableManager.setUpDatabase();
 
-            createTestData();
+            //createTestData();
         }
 
         /*********************************************************************/
@@ -198,7 +198,7 @@ namespace DecisionTree.Storage.TableData
                         default:
                             //if (mAttributeTypeList[field - 1].Used == true)
                             {
-                                tableEntry.addValue(new CAttributeValue(mAttributeTypeList[field - 1], tableEntry.Index, reader[field].ToString()));
+                                tableEntry.addValue(new CAttributeValue(mAttributeTypeList[field - 1], tableEntry.Index, reader[field].ToString(), this));
                             }
                             // die Normalen Attribute
                             break;
@@ -230,5 +230,22 @@ namespace DecisionTree.Storage.TableData
         {
             return mTableManager.removeTableAttribute(name);
         }
+
+        /*********************************************************************/
+        /// <summary>
+        /// Aktualisert den Wert eines Attributes in der Datenbank auf den übergebenen Wert
+        /// </summary>
+        /// <param name="attribute">Attribute mit aktualisiertem Wert</param>
+        /// <param name="newValue">Wert auf den das Attribut gesetzt werden soll</param>
+        /// <returns>Erfolg der Aktualisierung</returns>
+        public bool updateAttributeValue(CAttributeValue attribute, string newValue)
+        {
+            string sSQLCommand = "UPDATE " + CTableConstants.TABLE_ATTRIBUTES + 
+                " SET " + attribute.AttributeType.InternalName + "='" + newValue + "'" +
+                " WHERE id='" + attribute.EntryIndex + "'";
+
+            return mConnection.sqlExecuteStatement(sSQLCommand);
+        }
+
     }
 }

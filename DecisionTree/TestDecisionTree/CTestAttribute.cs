@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using DecisionTree.Storage;
+using DecisionTree.Storage.TableData;
 
 namespace TestDecisionTree
 {
@@ -41,13 +42,13 @@ namespace TestDecisionTree
                 switch (i%2)
                 {
                     case 0:
-                        values[i] = new CAttributeValue(typeString, i.ToString(), i.ToString());
+                        values[i] = new CAttributeValue(typeString, i.ToString(), i.ToString(), null);
                         break;
                     case 1:
-                        values[i] = new CAttributeValue(typeNumber, i.ToString(), i.ToString());
+                        values[i] = new CAttributeValue(typeNumber, i.ToString(), i.ToString(), null);
                         break;
                     case 2:
-                        values[i] = new CAttributeValue(typeFloat, i.ToString(), i.ToString());
+                        values[i] = new CAttributeValue(typeFloat, i.ToString(), i.ToString(), null);
                         break;
                 }
             }
@@ -88,13 +89,13 @@ namespace TestDecisionTree
                 switch (i % 2)
                 {
                     case 0:
-                        valueList.addValue(new CAttributeValue(typeString, i.ToString(), i.ToString()));
+                        valueList.addValue(new CAttributeValue(typeString, i.ToString(), i.ToString(), null));
                         break;
                     case 1:
-                        valueList.addValue(new CAttributeValue(typeNumber, i.ToString(), i.ToString()));
+                        valueList.addValue(new CAttributeValue(typeNumber, i.ToString(), i.ToString(), null));
                         break;
                     case 2:
-                        valueList.addValue(new CAttributeValue(typeFloat, i.ToString(), i.ToString()));
+                        valueList.addValue(new CAttributeValue(typeFloat, i.ToString(), i.ToString(), null));
                         break;
                 }
             }

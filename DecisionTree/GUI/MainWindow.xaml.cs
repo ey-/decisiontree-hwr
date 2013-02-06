@@ -96,6 +96,7 @@ namespace DecisionTree
 
         private void RibbonButtonTableView_Click(object sender, RoutedEventArgs e)
         {
+            // Spalte hinzufügen Button
             if (sender.Equals(btnAddColumn) == true)
             {
                 CAttributeType type = mBusinessLogic.addAttribute();
@@ -104,6 +105,7 @@ namespace DecisionTree
                 column.Binding = new Binding("[ " + type.Index + "].TableValue");
                 datagrid1.Columns.Add(column);
             }
+            // selektierte Spalte löschen Button
             else if (sender.Equals(btnRemoveColumn) == true)
             {
                 if (datagrid1.CurrentColumn != null)

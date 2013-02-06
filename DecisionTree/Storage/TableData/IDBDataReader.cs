@@ -41,6 +41,15 @@ namespace DecisionTree.Storage.TableData
         /// <param name="name">Name/Überschrift der Spalte</param>
         /// <returns>Erfolg beim anlegen</returns>
         bool removeColumn(string name);
+
+        /*********************************************************************/
+        /// <summary>
+        /// Aktualisert den Wert eines Attributes in der Datenbank auf den übergebenen Wert
+        /// </summary>
+        /// <param name="attribute">Attribute mit aktualisiertem Wert</param>
+        /// <param name="newValue">Wert auf den das Attribut gesetzt werden soll</param>
+        /// <returns>Erfolg der Aktualisierung</returns>
+        bool updateAttributeValue(CAttributeValue attribute, string newValue);
     }
     
 }
