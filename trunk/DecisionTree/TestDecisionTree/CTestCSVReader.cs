@@ -22,12 +22,12 @@ namespace TestDecisionTree
             string exePath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
             string csvFile = exePath + TEST_CSV_FILE_PATH;
 
-            IDBDataReader mDBAccess = new CDBDataReader();
-            CCSVReader csvReader = new CCSVReader(mDBAccess);
+            IDBDataReader dbAccess = new CDBDataReader();
+            CCSVReader csvReader = new CCSVReader(dbAccess);
 
             csvReader.insertFileDataToDatabase(csvFile);
 
-            CTableEntryList entrys = mDBAccess.getAllEntries();
+            CTableEntryList entrys = dbAccess.getAllEntries();
 
             Assert.IsTrue(entrys.Count == 8);
 
