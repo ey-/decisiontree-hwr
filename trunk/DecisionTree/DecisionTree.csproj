@@ -99,6 +99,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Logic\CBusinessLogic.cs" />
+    <Compile Include="Logic\CCSVReader.cs" />
     <Compile Include="Logic\CTableLogic.cs" />
     <Compile Include="Logic\IBusinessLogic.cs" />
     <Compile Include="Storage\CAttributeType.cs" />

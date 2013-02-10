@@ -37,10 +37,9 @@ namespace DecisionTree.Storage.TableData
         /// </summary>
         private void createTestData()
         {
-            string sSQLCommand = "DELETE FROM " + CTableConstants.TABLE_ATTRIBUTES;
-            mConnection.sqlExecuteStatement(sSQLCommand);
+            clearDatabase();
 
-            sSQLCommand = "INSERT INTO " + CTableConstants.TABLE_ATTRIBUTES + " (id";
+            string sSQLCommand = "INSERT INTO " + CTableConstants.TABLE_ATTRIBUTES + " (id";
 
             for (int attribute = 0; attribute < CTableConstants.MAX_ATTRIBUTE_COUNT; attribute++)
             {
@@ -247,5 +246,18 @@ namespace DecisionTree.Storage.TableData
             return mConnection.sqlExecuteStatement(sSQLCommand);
         }
 
+        /*********************************************************************/
+        /// <summary>
+        /// Leert komplett alle Einträge der Datenbank und löscht die Spalten.
+        /// </summary>
+        public void clearDatabase()
+        {
+            // Alle Datensätze aus der Datenbank löschen
+            string sSQLCommand = "DELETE FROM " + CTableConstants.TABLE_ATTRIBUTES;
+            mConnection.sqlExecuteStatement(sSQLCommand);
+
+            // Datenbank neu aufsetzen
+            mTableManager.setUpDatabase();
+        }
     }
 }
