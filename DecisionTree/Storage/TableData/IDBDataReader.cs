@@ -50,6 +50,12 @@ namespace DecisionTree.Storage.TableData
         /// <param name="newValue">Wert auf den das Attribut gesetzt werden soll</param>
         /// <returns>Erfolg der Aktualisierung</returns>
         bool updateAttributeValue(CAttributeValue attribute, string newValue);
+
+        /*********************************************************************/
+        /// <summary>
+        /// Leert komplett alle Einträge der Datenbank und löscht die Spalten.
+        /// </summary>
+        void clearDatabase();
     }
     
 }
