@@ -18,6 +18,8 @@ using DecisionTree.Logic;
 using DecisionTree.Storage.TableData;
 using DecisionTree.Storage;
 using System.Data;
+using Microsoft.Win32;
+using System.IO;
 
 namespace DecisionTree
 {
@@ -38,7 +40,10 @@ namespace DecisionTree
             mBusinessLogic = CBusinessLogic.getInstance();
             mBusinessLogic.registerWindow(this);
             DataContext = this;
+
+            viewTableBtn.IsChecked = true;
         }
+
         /*********************************************************************/
         /// <summary>
         /// provisorische Funktion evtll. to delete
@@ -48,28 +53,7 @@ namespace DecisionTree
             get { return mBusinessLogic.getAllTableData(); }
             set {  }
         }
-        /*********************************************************************/
-        /// <summary>
-        /// Wird aufgerufen wenn eine Button im Ribbonelement geklickt wird.
-        /// </summary>
-        /// <param name="sender">Welcher Button geklickt wurde</param>
-        /// <param name="e">irgendwelche Parameter</param>
-        private void RibbonButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender == btnTest)
-            {
-                if (this.grpTable.Visibility != System.Windows.Visibility.Visible)
-                {
-                    this.grpTable.Visibility = System.Windows.Visibility.Visible;
-                }
-                else
-                {
-                    this.grpTable.Visibility = System.Windows.Visibility.Hidden;
-                }
-            }
 
-            
-        }
         /*********************************************************************/
         /// <summary>
         /// Wird aufgerufen wenn eine MenuItem geklickt wird.
@@ -85,15 +69,27 @@ namespace DecisionTree
 
             if (sender == openFile)
             {
-                MessageBox.Show("Diese Funktion wurde noch nicht implementiert");
+                OpenFileDialog openDlg = new OpenFileDialog();
+                if (openDlg.ShowDialog() == true)
+                {
+                    mBusinessLogic.openCSVFile(openDlg.FileName);
+                }
             }
 
             if (sender == saveFile)
             {
-                MessageBox.Show("Diese Funktion wurde noch nicht implementiert");
+                SaveFileDialog saveDlg = new SaveFileDialog();
+                if (saveDlg.ShowDialog() == true)
+                {
+                    mBusinessLogic.saveCSVFile(saveDlg.FileName);
+                }
             }
         }
 
+        /*********************************************************************/
+        /// <summary>
+        /// Wird aufgrufen wenn ein Button von der Tabellenansicht geklickt wurde
+        /// </summary>
         private void RibbonButtonTableView_Click(object sender, RoutedEventArgs e)
         {
             // Spalte hinzufügen Button
@@ -119,9 +115,51 @@ namespace DecisionTree
             }
         }
 
-        private void Ribbon_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        /*********************************************************************/
+        /// <summary>
+        /// Wird bei Klick auf den Ansichtswechsel durchgeführt
+        /// </summary>
+        private void viewToggleButton_Checked(object sender, RoutedEventArgs e)
         {
+            if (sender == viewTableBtn)
+            {
+                viewTable.Visible = true;
+                viewTreeInteractiv.Visible = false;
+                viewTreeAutomatic.Visible = false;
 
+                grpTable.Visibility = System.Windows.Visibility.Visible;
+                grpTreeInteractive.Visibility = System.Windows.Visibility.Hidden;
+                grpTreeAutomatic.Visibility = System.Windows.Visibility.Hidden;
+
+                viewTreeInteractivBtn.IsChecked = false;
+                viewTreeAutomaticBtn.IsChecked = false;
+            }
+            else if (sender == viewTreeInteractivBtn)
+            {
+                viewTable.Visible = false;
+                viewTreeInteractiv.Visible = true;
+                viewTreeAutomatic.Visible = false;
+
+                grpTable.Visibility = System.Windows.Visibility.Hidden;
+                grpTreeInteractive.Visibility = System.Windows.Visibility.Visible;
+                grpTreeAutomatic.Visibility = System.Windows.Visibility.Hidden;
+                
+                viewTableBtn.IsChecked = false;
+                viewTreeAutomaticBtn.IsChecked = false;
+            }
+            else if (sender == viewTreeAutomaticBtn)
+            {
+                viewTable.Visible = false;
+                viewTreeInteractiv.Visible = false;
+                viewTreeAutomatic.Visible = true;
+
+                grpTable.Visibility = System.Windows.Visibility.Hidden;
+                grpTreeInteractive.Visibility = System.Windows.Visibility.Hidden;
+                grpTreeAutomatic.Visibility = System.Windows.Visibility.Visible;
+                
+                viewTableBtn.IsChecked = false;
+                viewTreeInteractivBtn.IsChecked = false;
+            }
         }
 
         

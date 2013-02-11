@@ -12,7 +12,7 @@ namespace DecisionTree.Logic
     /// </summary>
     public class CTableLogic
     {
-        protected IDBDataReader mTableReader = new CDBDataReader();
+        protected IDBDataReader mDBAccess = new CDBDataReader();
 
         // Testweise .. Der name der Spalte muss später von der GUI kommen
         int NUM_COLUMNS = 0;
@@ -24,7 +24,7 @@ namespace DecisionTree.Logic
         /// <returns>CTableEntryList</returns>
         public CTableEntryList getAllTableData()
         {
-            return mTableReader.getAllEntries();
+            return mDBAccess.getAllEntries();
         }
 
         /*********************************************************************/
@@ -36,7 +36,7 @@ namespace DecisionTree.Logic
             // Testweise .. Der name der Spalte muss später von der GUI kommen
             NUM_COLUMNS++;
             string name = "Column" + NUM_COLUMNS.ToString();
-            return mTableReader.addColumn(name);
+            return mDBAccess.addColumn(name);
             //return name;
         }
 
@@ -46,11 +46,33 @@ namespace DecisionTree.Logic
         /// </summary>
         public bool removeAttribute(string attributeName)
         {
-            return mTableReader.removeColumn(attributeName);
+            return mDBAccess.removeColumn(attributeName);
 
             // Testweise .. Der name der Spalte muss später von der GUI kommen
             //mTableReader.addColumn("Column" + NUM_COLUMNS.ToString());
             //NUM_COLUMNS--;
+        }
+
+        /*********************************************************************/
+        /// <summary>
+        /// Öffnet eine CSV-Datei und fügt den Inhalt in die Datenbank ein
+        /// </summary>
+        /// <param name="filePath">Pfad der CSV-Datei</param>
+        public void openCSVFile(string filePath)
+        {
+            CCSVReader csvReader = new CCSVReader(mDBAccess);
+            csvReader.insertFileDataToDatabase(filePath);
+        }
+
+        /*********************************************************************/
+        /// <summary>
+        /// Speichert eine CSV-Datei und fügt den Inhalt der Datenbank ein
+        /// </summary>
+        /// <param name="filePath">Pfad zum Speicherort</param>
+        public void saveCSVFile(string filePath)
+        {
+            CCSVWriter csvWriter = new CCSVWriter(mDBAccess);
+            csvWriter.saveDatabaseToCSV(filePath);
         }
     }
 }

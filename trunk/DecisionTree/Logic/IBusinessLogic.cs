@@ -39,6 +39,23 @@ namespace DecisionTree.Logic
         /// <summary>
         /// Testweise Methode zum löschen des letzten Attributes zur Tabelle
         /// </summary>
+        /// <param name="attributeName">Name des Attributes welches gelöscht  
+        /// werden soll</param>
+        /// <returns>Erfolg des Löschens</returns>
         bool removeAttribute(string attributeName);
+
+        /*********************************************************************/
+        /// <summary>
+        /// Öffnet eine CSV-Datei und fügt den Inhalt in die Datenbank ein
+        /// </summary>
+        /// <param name="filePath">Pfad der CSV-Datei</param>
+        void openCSVFile(string filePath);
+
+        /*********************************************************************/
+        /// <summary>
+        /// Speichert eine CSV-Datei und fügt den Inhalt der Datenbank ein
+        /// </summary>
+        /// <param name="filePath">Pfad zum Speicherort</param>
+        void saveCSVFile(string filePath);
     }
 }

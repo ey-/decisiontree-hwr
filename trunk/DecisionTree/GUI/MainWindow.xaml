@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:r="clr-namespace:Microsoft.Windows.Controls.Ribbon;assembly=RibbonControlsLibrary"
         xmlns:toolkit="http://schemas.microsoft.com/wpf/2008/toolkit"
+        xmlns:extended="clr-namespace:DecisionTree.GUI"
         Title="MainWindow"
 		x:Name="RibbonWindow"
 		Width="720" Height="450">
@@ -12,7 +13,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <r:Ribbon x:Name="Ribbon" SelectionChanged="Ribbon_SelectionChanged">
+        <r:Ribbon x:Name="Ribbon" >
             <r:Ribbon.ApplicationMenu>
                 <r:RibbonApplicationMenu SmallImageSource="..\Images\SmallIcon.png">
                     <r:RibbonApplicationMenuItem Header="Datei öffnen"
@@ -35,63 +36,84 @@
                                     Header="Ansichtwechsel">
                     
                     <r:RibbonToggleButton 
-                        Name="viewTable" 
+                        Name="viewTableBtn" 
                         Label="Tabellenansicht"
                         LargeImageSource="../Images/LargeIcon.png"
+                        Checked="viewToggleButton_Checked"
                          />
                     <r:RibbonToggleButton 
-                        Name="viewTreeInteractiv" 
+                        Name="viewTreeInteractivBtn" 
                         Label="Baum Interaktiv"
                         LargeImageSource="../Images/LargeIcon.png"
+                        Checked="viewToggleButton_Checked"
                          />
                     <r:RibbonToggleButton 
-                        Name="viewTreAutomatic" 
+                        Name="viewTreeAutomaticBtn" 
                         Label="Baum Automatisch"
                         LargeImageSource="../Images/LargeIcon.png"
+                        Checked="viewToggleButton_Checked"
                          />
-                   
                 </r:RibbonGroup>
                 
                 <r:RibbonGroup Header="Test">
-                    <r:RibbonButton Name="btnTest" Label="Zeige Tabellen Tab" LargeImageSource="../Images/LargeIcon.png" Click="RibbonButton_Click">
-                        <r:RibbonButton.ControlSizeDefinition>
-                            <r:RibbonControlSizeDefinition ImageSize="Large" />
-                        </r:RibbonButton.ControlSizeDefinition>
-                    </r:RibbonButton>
+                    
                 </r:RibbonGroup>
 
             </r:RibbonTab>
 
             <r:RibbonTab Header="Tabellenansicht" ContextualTabGroupHeader="Tabellenansicht">
-                <r:RibbonGroup Header="">
+                <r:RibbonGroup Header="Debug">
                     <r:RibbonButton Name="btnAddColumn" Label="addColumn" Click="RibbonButtonTableView_Click" />
                     <r:RibbonButton Name="btnRemoveColumn" Label="removeColumn" Click="RibbonButtonTableView_Click" />
+                </r:RibbonGroup>
+            </r:RibbonTab>
+
+            <r:RibbonTab Header="Baum Interaktiv" ContextualTabGroupHeader="Baum Interaktiv">
+                <r:RibbonGroup Header="Debug">
+                    <r:RibbonTextBox Label="Testausgabe" />
+                </r:RibbonGroup>
+            </r:RibbonTab>
+
+            <r:RibbonTab Header="Baum Automatisch" ContextualTabGroupHeader="Baum Automatisch">
+                <r:RibbonGroup Header="">
+                    <r:RibbonTextBox Label="Testausgabe" />
                 </r:RibbonGroup>
             </r:RibbonTab>
 
             <!-- Festlegen welche Tabs Kontextbezogen sind -->
             <r:Ribbon.ContextualTabGroups>
                 <r:RibbonContextualTabGroup x:Name="grpTable" Header="Tabellenansicht" Visibility="Visible" Background="Brown" />
+                <r:RibbonContextualTabGroup x:Name="grpTreeInteractive" Header="Baum Interaktiv" Visibility="Visible" Background="Aqua" />
+                <r:RibbonContextualTabGroup x:Name="grpTreeAutomatic" Header="Baum Automatisch" Visibility="Visible" Background="Yellow" />
             </r:Ribbon.ContextualTabGroups>
         </r:Ribbon>
 
         <!-- Die Verschiedenen Ansichten -->
         <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1000*" IsEnabled="True" />
-                <ColumnDefinition Width="*" IsEnabled="False"/>
-                <ColumnDefinition Width="*" IsEnabled="False"/>
+            <Grid.ColumnDefinitions >
+                <extended:CColumnDefinitionWithVisibility x:Name="viewTable" Width="100*"/>
+                <extended:CColumnDefinitionWithVisibility x:Name="viewTreeInteractiv" Width="100*"/>
+                <extended:CColumnDefinitionWithVisibility x:Name="viewTreeAutomatic" Width="100*"/>
             </Grid.ColumnDefinitions>
-            
-            <Label Grid.Column="0" Content="Tabelle" />
-            <!--  -->
-            <DataGrid ItemsSource="{Binding TableEntryList}" AutoGenerateColumns="False" Name="datagrid1"  >
-                <DataGrid.Columns>
-                    <!--<DataGridTextColumn Binding="{Binding Path=Attribute1.TableValue}" Visibility="{Binding Path=Attribute1.AttributeType.ColumnVisibility}" Header="{Binding Path=Attribute1.AttributeType.Name}" />-->
-                    <!--<DataGridTextColumn Binding="{Binding Path=Attribute2.TableValue}" Visibility="{Binding Path=Attribute2.AttributeType.ColumnVisibility}" Header="{Binding Path=Attribute2.AttributeType.Name}" />-->
-                    <!-- <DataGridTextColumn Binding="{Binding Path=}" />-->
-                </DataGrid.Columns>
-            </DataGrid>
+
+            <!-- Ansichten -->
+            <ContentControl Grid.Column="0" >
+                <DataGrid  ItemsSource="{Binding TableEntryList}" AutoGenerateColumns="False" Name="datagrid1"  >
+                    <DataGrid.Columns>
+                        <!--<DataGridTextColumn Binding="{Binding Path=Attribute1.TableValue}" Visibility="{Binding Path=Attribute1.AttributeType.ColumnVisibility}" Header="{Binding Path=Attribute1.AttributeType.Name}" />-->
+                        <!--<DataGridTextColumn Binding="{Binding Path=Attribute2.TableValue}" Visibility="{Binding Path=Attribute2.AttributeType.ColumnVisibility}" Header="{Binding Path=Attribute2.AttributeType.Name}" />-->
+                        <!-- <DataGridTextColumn Binding="{Binding Path=}" />-->
+                    </DataGrid.Columns>
+                </DataGrid>
+            </ContentControl>
+
+            <ContentControl Grid.Column="1" >
+                <Label Content="Baum Interaktiv" />
+            </ContentControl>
+
+            <ContentControl Grid.Column="2" >
+                <Label Content="Baum Automatisch" />
+            </ContentControl>
         </Grid>
     </Grid>
 </r:RibbonWindow>
