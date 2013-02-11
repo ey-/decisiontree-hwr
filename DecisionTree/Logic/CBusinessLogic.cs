@@ -81,5 +81,24 @@ namespace DecisionTree.Logic
             return mTableLogic.removeAttribute(attributeName);
         }
 
+        /*********************************************************************/
+        /// <summary>
+        /// Öffnet eine CSV-Datei und fügt den Inhalt in die Datenbank ein
+        /// </summary>
+        /// <param name="filePath">Pfad der CSV-Datei</param>
+        public void openCSVFile(string filePath)
+        {
+            mTableLogic.openCSVFile(filePath);
+        }
+
+        /*********************************************************************/
+        /// <summary>
+        /// Speichert eine CSV-Datei und fügt den Inhalt der Datenbank ein
+        /// </summary>
+        /// <param name="filePath">Pfad zum Speicherort</param>
+        public void saveCSVFile(string filePath)
+        {
+            mTableLogic.saveCSVFile(filePath);
+        }
     }// class
 } // namespace

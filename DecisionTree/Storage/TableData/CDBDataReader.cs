@@ -49,7 +49,7 @@ namespace DecisionTree.Storage.TableData
 
             sSQLCommand += ") VALUES ";
 
-            for (int entry = 0; entry < 5; entry++)
+            for (int entry = 0; entry < 50; entry++)
             {
                 if (entry != 0) sSQLCommand += ", ";
 

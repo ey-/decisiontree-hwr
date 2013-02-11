@@ -98,6 +98,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="GUI\CColumnDefinitionWithVisibility.cs" />
     <Compile Include="Logic\CBusinessLogic.cs" />
     <Compile Include="Logic\CCSVReader.cs" />
     <Compile Include="Logic\CCSVWriter.cs">
