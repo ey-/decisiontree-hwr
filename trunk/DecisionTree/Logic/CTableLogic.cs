@@ -74,5 +74,14 @@ namespace DecisionTree.Logic
             CCSVWriter csvWriter = new CCSVWriter(mDBAccess);
             csvWriter.saveDatabaseToCSV(filePath);
         }
+
+        /*********************************************************************/
+        /// <summary>
+        /// Testweise Methode zum hinzufügen einer neuen Zeile/Row zur Tabelle
+        /// </summary>
+        public void addRow()
+        {
+            mTableReader.addRow();
+        }
     }
 }

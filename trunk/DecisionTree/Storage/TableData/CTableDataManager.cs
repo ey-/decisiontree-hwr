@@ -204,6 +204,14 @@ namespace DecisionTree.Storage.TableData
 
         /*********************************************************************/
         /// <summary>
+        /// fügt eine neue Zeile in die Tabelle ein 
+        /// </summary>
+        /// <param name="sName"></param>
+        /// <returns></returns>
+       
+
+        /*********************************************************************/
+        /// <summary>
         /// Prüft ob eine Attribut mit den übergebenen Namen bereits existert
         /// </summary>
         /// <param name="sName">Name des Attributes</param>

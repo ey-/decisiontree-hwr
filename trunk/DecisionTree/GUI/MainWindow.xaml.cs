@@ -113,6 +113,11 @@ namespace DecisionTree
                     }
                 }
             }
+            else if (sender.Equals(btnAddRow) == true)
+            {
+                 mBusinessLogic.addDataset();
+                
+            }
         }
 
         /*********************************************************************/

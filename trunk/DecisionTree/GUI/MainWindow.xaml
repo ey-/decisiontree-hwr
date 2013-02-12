@@ -65,6 +65,7 @@
                 <r:RibbonGroup Header="Debug">
                     <r:RibbonButton Name="btnAddColumn" Label="addColumn" Click="RibbonButtonTableView_Click" />
                     <r:RibbonButton Name="btnRemoveColumn" Label="removeColumn" Click="RibbonButtonTableView_Click" />
+                    <r:RibbonButton Name="btnAddRow" Label="addRow" Click="RibbonButtonTableView_Click" />
                 </r:RibbonGroup>
             </r:RibbonTab>
 
