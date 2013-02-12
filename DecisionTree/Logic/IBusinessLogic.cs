@@ -57,5 +57,15 @@ namespace DecisionTree.Logic
         /// </summary>
         /// <param name="filePath">Pfad zum Speicherort</param>
         void saveCSVFile(string filePath);
+
+        /*********************************************************************/
+        /// <summary>
+        /// Testweise Methode zum hinzufügen einer neuen Zeile/Row zur Tabelle
+        /// </summary>
+         void   addDataset();
+        
+
+
+
     }
 }

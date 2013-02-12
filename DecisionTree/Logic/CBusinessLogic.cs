@@ -100,5 +100,15 @@ namespace DecisionTree.Logic
         {
             mTableLogic.saveCSVFile(filePath);
         }
+        /*********************************************************************/
+        /// <summary>
+        /// Testweise Methode zum hinzufügen einer neuen Zeile/Row zur Tabelle
+        /// </summary>
+        public void addDataset()
+        {
+            mTableLogic.addRow();
+
+        }
+
     }// class
 } // namespace

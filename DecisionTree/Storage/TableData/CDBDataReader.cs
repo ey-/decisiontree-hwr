@@ -259,5 +259,16 @@ namespace DecisionTree.Storage.TableData
             // Datenbank neu aufsetzen
             mTableManager.setUpDatabase();
         }
+
+        /*********************************************************************/
+        /// <summary>
+        /// fügt eine Zeile zur Tabelle hinzu.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public void addRow()
+        {
+            insertEntry();
+        }
     }
 }
