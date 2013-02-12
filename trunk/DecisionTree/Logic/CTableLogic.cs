@@ -81,7 +81,7 @@ namespace DecisionTree.Logic
         /// </summary>
         public void addRow()
         {
-            mTableReader.addRow();
+            mDBAccess.addRow();
         }
     }
 }
