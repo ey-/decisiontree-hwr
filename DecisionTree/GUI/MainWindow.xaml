@@ -63,8 +63,10 @@
 
             <r:RibbonTab Header="Tabellenansicht" ContextualTabGroupHeader="Tabellenansicht">
                 <r:RibbonGroup Header="Debug">
-                    <r:RibbonButton Name="btnAddColumn" Label="addColumn" Click="RibbonButtonTableView_Click" />
-                    <r:RibbonButton Name="btnRemoveColumn" Label="removeColumn" Click="RibbonButtonTableView_Click" />
+                    <r:RibbonButton Name="btnAddColumn" LargeImageSource="../Images/LargeIcon.png" Label="addColumn" Click="RibbonButtonTableView_Click">
+              
+                    </r:RibbonButton>
+                    <r:RibbonButton Name="btnRemoveColumn" Label="removeColumn" LargeImageSource="../Images/looschenb.png" Click="RibbonButtonTableView_Click" />
                     <r:RibbonButton Name="btnAddRow" Label="addRow" Click="RibbonButtonTableView_Click" />
                 </r:RibbonGroup>
             </r:RibbonTab>
