@@ -86,9 +86,9 @@ namespace DecisionTree.Logic
         /// Öffnet eine CSV-Datei und fügt den Inhalt in die Datenbank ein
         /// </summary>
         /// <param name="filePath">Pfad der CSV-Datei</param>
-        public void openCSVFile(string filePath)
+        public List<CAttributeType> openCSVFile(string filePath)
         {
-            mTableLogic.openCSVFile(filePath);
+            return mTableLogic.openCSVFile(filePath);
         }
 
         /*********************************************************************/
@@ -100,14 +100,26 @@ namespace DecisionTree.Logic
         {
             mTableLogic.saveCSVFile(filePath);
         }
+
         /*********************************************************************/
         /// <summary>
         /// Testweise Methode zum hinzufügen einer neuen Zeile/Row zur Tabelle
         /// </summary>
-        public void addDataset()
+        /// <returns>neu Eingefügter Eintrag</returns>
+        public CTableEntry addDataset()
         {
-            mTableLogic.addRow();
+            return mTableLogic.addRow();
+        }
 
+        /*********************************************************************/
+        /// <summary>
+        /// Löscht einen Datensatz aus der Datenbank
+        /// </summary>
+        /// <param name="entry">Zu Löschender Datensatz</param>
+        /// <returns>Erfolg des Löschens</returns>
+        public bool removeDataset(CTableEntry entry)
+        {
+            return mTableLogic.removeDataset(entry);
         }
 
     }// class

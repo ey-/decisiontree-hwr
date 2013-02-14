@@ -49,7 +49,7 @@ namespace DecisionTree.Logic
         /// Öffnet eine CSV-Datei und fügt den Inhalt in die Datenbank ein
         /// </summary>
         /// <param name="filePath">Pfad der CSV-Datei</param>
-        void openCSVFile(string filePath);
+        List<CAttributeType> openCSVFile(string filePath);
 
         /*********************************************************************/
         /// <summary>
@@ -62,10 +62,16 @@ namespace DecisionTree.Logic
         /// <summary>
         /// Testweise Methode zum hinzufügen einer neuen Zeile/Row zur Tabelle
         /// </summary>
-         void   addDataset();
-        
+        /// <returns>neu Eingefügter Eintrag</returns>
+        CTableEntry addDataset();
 
+        /*********************************************************************/
+        /// <summary>
+        /// Löscht einen Datensatz aus der Datenbank
+        /// </summary>
+        /// <param name="entry">Zu Löschender Datensatz</param>
+        /// <returns>Erfolg des Löschens</returns>
+        bool removeDataset(CTableEntry entry);
 
-
-    }
-}
+    }// class
+} // namespace

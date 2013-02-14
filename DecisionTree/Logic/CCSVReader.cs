@@ -32,7 +32,7 @@ namespace DecisionTree.Logic
         /// Ließt die CSV-Datei aus und füllt die Datenbank mit den Daten
         /// </summary>
         /// <param name="csvFilePath">Pfad zur auszulesenden CSV-Datei</param>
-        public void insertFileDataToDatabase(string csvFilePath)
+        public List<CAttributeType> insertFileDataToDatabase(string csvFilePath)
         {
             if (isCSVFileExistent(csvFilePath) == true)
             {
@@ -44,9 +44,10 @@ namespace DecisionTree.Logic
                     mDBAccess.clearDatabase();
 
                     // Daten aus der Datei lesen und in die Datenbank einfügen
-                    readFile(csvFile);
+                    return readFile(csvFile);
                 }
             }
+            return null;
         }
 
         /*********************************************************************/
@@ -111,19 +112,21 @@ namespace DecisionTree.Logic
         /// Ließt die Daten aus der Datei und schreibt sie in die Datenbank
         /// </summary>
         /// <param name="csvFile">CSV-Datei mit den Daten</param>
-        protected void readFile(FileStream csvFile)
+        protected List<CAttributeType> readFile(FileStream csvFile)
         {
             // damit die Datei von Vorne gelesenwerden kann, 
             // den Datenpointer auf den Anfang setzen
             csvFile.Position = 0;
+            List<CAttributeType> addedColumns = null;
             using (StreamReader reader = new StreamReader(csvFile))
             {
                 // Spalten auslesen und einfügen
-                prepareColumns(reader);
+                addedColumns = prepareColumns(reader);
 
                 // Datensätze auslesen und einfügen
                 fillDatabase(reader);
             }
+            return addedColumns;
         }
 
         /*********************************************************************/
@@ -132,8 +135,9 @@ namespace DecisionTree.Logic
         /// eingefügt werden können
         /// </summary>
         /// <param name="reader">Reader der zum lesen verwendet werden soll</param>
-        protected void prepareColumns(StreamReader reader)
+        protected List<CAttributeType> prepareColumns(StreamReader reader)
         {
+            List<CAttributeType> mAttributeTypes = new List<CAttributeType>();
             string sLine = "";
             if (readNextLine(reader, ref sLine) == true)
             {
@@ -141,9 +145,11 @@ namespace DecisionTree.Logic
 
                 foreach (string sAttribute in attrbiuteNames)
                 {
-                    mDBAccess.addColumn(sAttribute);
+                    mAttributeTypes.Add(mDBAccess.addColumn(sAttribute));
                 }
             }
+
+            return mAttributeTypes;
         }
 
         /*********************************************************************/
