@@ -112,6 +112,7 @@
     <Compile Include="Storage\CValueList.cs" />
     <Compile Include="Storage\TableData\CDBDataReader.cs" />
     <Compile Include="Storage\CTableEntryList.cs" />
+    <Compile Include="Storage\TableData\CDataTypeChecker.cs" />
     <Compile Include="Storage\TableData\CSQLiteConnection.cs" />
     <Compile Include="Storage\TableData\CTableConstants.cs" />
     <Compile Include="Storage\TableData\CTableDataManager.cs" />

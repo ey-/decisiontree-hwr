@@ -15,6 +15,7 @@ namespace DecisionTree.Storage.TableData
         List<CAttributeType> mAttributeTypeList;
         CSQLiteConnection mConnection;
         CTableDataManager mTableManager;
+        CDataTypeChecker mDataTypeChecker;
 
         /*********************************************************************/
         /// <summary>
@@ -22,6 +23,7 @@ namespace DecisionTree.Storage.TableData
         /// </summary>
         public CDBDataReader()
         {
+            mDataTypeChecker = new CDataTypeChecker();
             mConnection = new CSQLiteConnection();
             mAttributeTypeList = new List<CAttributeType>();
             mTableManager = new CTableDataManager(mConnection, mAttributeTypeList);
@@ -251,6 +253,8 @@ namespace DecisionTree.Storage.TableData
         /// <returns>Erfolg der Aktualisierung</returns>
         public bool updateAttributeValue(CAttributeValue attribute, string newValue)
         {
+            mDataTypeChecker.handleDataTypeofValue(attribute, newValue);
+
             string sSQLCommand = "UPDATE " + CTableConstants.TABLE_ATTRIBUTES + 
                 " SET " + attribute.AttributeType.InternalName + "='" + newValue + "'" +
                 " WHERE id='" + attribute.EntryIndex + "'";

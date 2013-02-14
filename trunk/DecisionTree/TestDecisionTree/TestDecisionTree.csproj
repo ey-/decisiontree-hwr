@@ -78,6 +78,7 @@
     <Compile Include="CTestCSVWriter.cs" />
     <Compile Include="CTableEntryListTest.cs" />
     <Compile Include="CTestCSVReader.cs" />
+    <Compile Include="CTestDataTypeChecker.cs" />
     <Compile Include="CTestDBDataReader.cs" />
     <Compile Include="CTestTableEntry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
