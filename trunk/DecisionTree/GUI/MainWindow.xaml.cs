@@ -29,6 +29,9 @@ namespace DecisionTree
     public partial class MainWindow : RibbonWindow, IMainWindow
     {
         IBusinessLogic mBusinessLogic;
+        CTableEntryList mTableEntryList;
+
+        Setter TARGET_ATTRIBUTE_SETTER = new Setter();
 
         /*********************************************************************/
         /// <summary>
@@ -39,6 +42,10 @@ namespace DecisionTree
             InitializeComponent();
             mBusinessLogic = CBusinessLogic.getInstance();
             mBusinessLogic.registerWindow(this);
+
+            mTableEntryList = mBusinessLogic.getAllTableData();
+            this.datagrid1.ItemsSource = mTableEntryList;
+
             DataContext = this;
 
             viewTableBtn.IsChecked = true;
@@ -50,7 +57,7 @@ namespace DecisionTree
         /// </summary>
         public CTableEntryList TableEntryList
         {
-            get { return mBusinessLogic.getAllTableData(); }
+            get { return mTableEntryList; }
             set {  }
         }
 
@@ -62,21 +69,32 @@ namespace DecisionTree
         /// <param name="e">"irgendwelche Parameter" (Arne)</param>
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
+            // Programm Beenden Button
             if (sender == exitApplication)
             {
                 Application.Current.Shutdown();
             }
-
-            if (sender == openFile)
+            // Datei Öffnen Button
+            else if (sender == openFile)
             {
                 OpenFileDialog openDlg = new OpenFileDialog();
                 if (openDlg.ShowDialog() == true)
                 {
-                    mBusinessLogic.openCSVFile(openDlg.FileName);
+                    datagrid1.Columns.Clear();
+                    List<CAttributeType> addedColumns = mBusinessLogic.openCSVFile(openDlg.FileName);
+                    foreach (CAttributeType columnData in addedColumns)
+                    {
+                        addDatagridColumn(columnData);
+                    }
+
+                    mTableEntryList = mBusinessLogic.getAllTableData();
+                    this.datagrid1.ItemsSource = mTableEntryList;
+
+                    // http://social.msdn.microsoft.com/Forums/en/wpf/thread/1b694f75-7621-4c88-8055-6c31c601c87f
                 }
             }
-
-            if (sender == saveFile)
+            // Datei Speichern Button
+            else if (sender == saveFile) 
             {
                 SaveFileDialog saveDlg = new SaveFileDialog();
                 if (saveDlg.ShowDialog() == true)
@@ -95,11 +113,8 @@ namespace DecisionTree
             // Spalte hinzufügen Button
             if (sender.Equals(btnAddColumn) == true)
             {
-                CAttributeType type = mBusinessLogic.addAttribute();
-                DataGridTextColumn column = new DataGridTextColumn();
-                column.Header = type.Name;
-                column.Binding = new Binding("[ " + type.Index + "].TableValue");
-                datagrid1.Columns.Add(column);
+                CAttributeType columnData = mBusinessLogic.addAttribute();
+                addDatagridColumn(columnData);
             }
             // selektierte Spalte löschen Button
             else if (sender.Equals(btnRemoveColumn) == true)
@@ -113,10 +128,40 @@ namespace DecisionTree
                     }
                 }
             }
+            // Neue Zeile hinzufügen
             else if (sender.Equals(btnAddRow) == true)
             {
-                 mBusinessLogic.addDataset();
-                
+                 mTableEntryList.addEntry(mBusinessLogic.addDataset());
+            }
+            // Selektierte Zeile Löschen
+            else if (sender.Equals(btnRemoveRow) == true)
+            {
+                if (datagrid1.SelectedItem != null)
+                {
+                    CTableEntry selectedEntry = (CTableEntry)datagrid1.SelectedItem;
+                    if (mBusinessLogic.removeDataset(selectedEntry) == true)
+                    {
+                        mTableEntryList.Remove(selectedEntry);
+                    }
+                }
+            }
+            // Selektierte Zeile als Zielattribut setzen
+            else if (sender.Equals(btnSetTargetAttribute) == true)
+            {
+                if (datagrid1.CurrentColumn != null)
+                {
+                    /*
+                    GridViewColumnHeader.
+
+                    Style test = new Style("{x:Type DataGridColumnHeader}");
+                    Setter asd = new Setter();
+                    //asd.
+                    //column.
+
+                    GridViewColumnHeader qwe = new GridViewColumnHeader();
+                    qwe.
+                    */
+                }
             }
         }
 
@@ -167,6 +212,31 @@ namespace DecisionTree
             }
         }
 
-        
-    }
-}
+        /*********************************************************************/
+        /// <summary>
+        /// Fügt eine Spalte für das Datagrid ein, aus einem AttributTypen
+        /// </summary>
+        /// <param name="columnData">Attributtype für den eine Spalte eingefügt 
+        /// werden soll</param>
+        void addDatagridColumn(CAttributeType columnData)
+        {
+            if (columnData != null)
+            {
+                DataGridTextColumn column = new DataGridTextColumn();
+                column.Header = columnData.Name;
+                column.Binding = new Binding("[ " + columnData.Index + "].TableValue");
+                datagrid1.Columns.Add(column);
+            }
+        }
+        /*
+        void test(string bindPath)
+        {
+            Style style = new Style(typeof(GridViewColumnHeader));
+            Trigger trigger = new Trigger();
+            Setter setterColored = new Setter(GridViewColumnHeader.BackgroundProperty, "Moccasin");
+            trigger.Property = 
+            style.Triggers.Add(
+        }*/
+
+    } // class
+} // namespace

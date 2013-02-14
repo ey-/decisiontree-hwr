@@ -28,6 +28,14 @@ namespace DecisionTree.Storage.TableData
 
         /*********************************************************************/
         /// <summary>
+        /// Löscht einen Eintrag aus der Datenbank
+        /// </summary>
+        /// <param name="entry">Zu Löschender Eintrag</param>
+        /// <returns>Erfolg des Löschens</returns>
+        bool removeEntry(CTableEntry entry);
+
+        /*********************************************************************/
+        /// <summary>
         /// fügt eine Spalte zur Tabelle hinzu.
         /// </summary>
         /// <param name="name">Name/Überschrift der Spalte</param>
@@ -41,8 +49,6 @@ namespace DecisionTree.Storage.TableData
         /// <param name="name">Name/Überschrift der Spalte</param>
         /// <returns>Erfolg beim anlegen</returns>
         bool removeColumn(string name);
-
-
 
         /*********************************************************************/
         /// <summary>
@@ -59,15 +65,5 @@ namespace DecisionTree.Storage.TableData
         /// </summary>
         void clearDatabase();
 
-        /*********************************************************************/
-        /// <summary>
-        /// fügt eine zeile ein
-        /// </summary>
-        /// <param name="name">Name/Überschrift der Spalte</param>
-        /// <returns>Erfolg beim anlegen</returns>
-        void addRow();
-
-
-    }
-    
-}
+    } // class    
+} // namespace

@@ -7,27 +7,41 @@
         Title="MainWindow"
 		x:Name="RibbonWindow"
 		Width="720" Height="450">
-        <Grid x:Name="LayoutRoot">
+
+    <r:RibbonWindow.Resources>
+        <!--
+        <Style TargetType="{x:Type GridViewColumnHeader}" >
+            <Style.Triggers>
+                <Trigger Property="{Binding Path=[ " + columnData.Index + "].TableValue}" Value="True">
+                    <Setter Property="Background" Value="Moccasin" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>-->
+    </r:RibbonWindow.Resources>
+
+    <Grid x:Name="LayoutRoot">
+        <!-- Aufteilung Ribbon / Inhalt-->    
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
+        <!-- Ribbon Abschnitt -->
         <r:Ribbon x:Name="Ribbon" >
             <r:Ribbon.ApplicationMenu>
-                <r:RibbonApplicationMenu SmallImageSource="..\Images\SmallIcon.png">
+                <r:RibbonApplicationMenu SmallImageSource="../Images/SmallIcon.png">
                     <r:RibbonApplicationMenuItem Header="Datei öffnen"
                                                  Name="openFile"
-                                                 ImageSource="..\Images\save.png"
+                                                 ImageSource="../Images/save.png"
                                                  Click="MenuItem_Click"/>
                     <r:RibbonApplicationMenuItem Header="Datei speichern"
                                                  Name="saveFile"
-                                                 ImageSource="..\Images\save.png"
+                                                 ImageSource="../Images/save.png"
                                                  Click="MenuItem_Click"/>
                     <r:RibbonApplicationMenuItem Name="exitApplication"
                                                  Click="MenuItem_Click"
                                                  Header="Close"
-                                                 ImageSource="..\Images\quit.png"/>
+                                                 ImageSource="../Images/quit.png"/>
                 </r:RibbonApplicationMenu>
             </r:Ribbon.ApplicationMenu>
             <r:RibbonTab x:Name="tabAnsicht" 
@@ -56,7 +70,6 @@
                 </r:RibbonGroup>
                 
                 <r:RibbonGroup Header="Test">
-                    
                 </r:RibbonGroup>
 
             </r:RibbonTab>
@@ -67,6 +80,7 @@
                     <r:RibbonButton Name="btnRemoveColumn" Label="removeColumn" LargeImageSource="../Images/Remove_Collum_Spalte.png" Click="RibbonButtonTableView_Click" />
                     <r:RibbonButton Name="btnAddRow" Label="addRow" LargeImageSource="../Images/Add_Row_Zeile.png" Click="RibbonButtonTableView_Click" />
                     <r:RibbonButton Name="btnRemoveRow" Label="removeRow" LargeImageSource="../Images/Remove_Row_Zeile.png" Click="RibbonButtonTableView_Click" />
+                    <r:RibbonButton Name="btnSetTargetAttribute" Label="setze Zielattribut" Click="RibbonButtonTableView_Click" />
                 </r:RibbonGroup>
             </r:RibbonTab>
 
@@ -90,7 +104,7 @@
             </r:Ribbon.ContextualTabGroups>
         </r:Ribbon>
 
-        <!-- Die Verschiedenen Ansichten -->
+        <!-- Abschnitt für die Verschiedenen Ansichten -->
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions >
                 <extended:CColumnDefinitionWithVisibility x:Name="viewTable" Width="100*"/>
@@ -99,8 +113,10 @@
             </Grid.ColumnDefinitions>
 
             <!-- Ansichten -->
+            <!-- Tabellenansicht -->
             <ContentControl Grid.Column="0" >
-                <DataGrid  ItemsSource="{Binding TableEntryList}" AutoGenerateColumns="False" Name="datagrid1"  >
+                <!---->
+                <DataGrid ItemsSource="{Binding TableEntryList}" AutoGenerateColumns="False" Name="datagrid1"  >
                     <DataGrid.Columns>
                         <!--<DataGridTextColumn Binding="{Binding Path=Attribute1.TableValue}" Visibility="{Binding Path=Attribute1.AttributeType.ColumnVisibility}" Header="{Binding Path=Attribute1.AttributeType.Name}" />-->
                         <!--<DataGridTextColumn Binding="{Binding Path=Attribute2.TableValue}" Visibility="{Binding Path=Attribute2.AttributeType.ColumnVisibility}" Header="{Binding Path=Attribute2.AttributeType.Name}" />-->
@@ -109,10 +125,12 @@
                 </DataGrid>
             </ContentControl>
 
+            <!-- Baum Interaktiv Ansicht -->
             <ContentControl Grid.Column="1" >
                 <Label Content="Baum Interaktiv" />
             </ContentControl>
 
+            <!-- Baum Automatisch Ansicht -->
             <ContentControl Grid.Column="2" >
                 <Label Content="Baum Automatisch" />
             </ContentControl>

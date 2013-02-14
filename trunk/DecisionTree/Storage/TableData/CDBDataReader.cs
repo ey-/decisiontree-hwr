@@ -174,6 +174,18 @@ namespace DecisionTree.Storage.TableData
 
         /*********************************************************************/
         /// <summary>
+        /// Löscht einen Eintrag aus der Datenbank
+        /// </summary>
+        /// <param name="entry">Zu Löschender Eintrag</param>
+        /// <returns>Erfolg des Löschens</returns>
+        public bool removeEntry(CTableEntry entry)
+        {
+            string sSQLCommand = "DELETE FROM " + CTableConstants.TABLE_ATTRIBUTES + " WHERE id='" + entry.Index + "'";
+            return mConnection.sqlExecuteStatement(sSQLCommand);
+        }
+
+        /*********************************************************************/
+        /// <summary>
         /// Ließt aus dem Reader den nächsten TableEntry aus. 
         /// </summary>
         /// <param name="reader">Reader der den Zugriff auf den Datensatz bietet</param>
@@ -270,5 +282,8 @@ namespace DecisionTree.Storage.TableData
         {
             insertEntry();
         }
+
+        
+
     }
 }

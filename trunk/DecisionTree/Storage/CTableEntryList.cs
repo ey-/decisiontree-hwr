@@ -11,9 +11,8 @@ namespace DecisionTree.Storage
     /// Liste Datenbankeinträgen.
     /// Es werden nur Lesezugeriffe zugelassen. Schreiben in die Datenbank
     /// </summary>
-    public class CTableEntryList : ObservableCollection<CTableEntry>, IEnumerable
+    public class CTableEntryList : ObservableCollection<CTableEntry>
     {
-
         /*********************************************************************/
         /// <summary>
         /// Konstruktor
@@ -41,24 +40,6 @@ namespace DecisionTree.Storage
             get { return this.Count; }
         }
 
-        /*********************************************************************
-        /// <summary>
-        /// Zugriff auf einen Tabelleneintrag in der Liste per Index
-        /// </summary>
-        /// <param name="index">Index</param>
-        /// <returns>Tabelleneintrag</returns>
-        public CTableEntry this[int index]
-        {
-            get
-            {
-                if (index < mEntryList.Count)
-                {
-                    return mEntryList[index];
-                }
-                return null;
-            }
-        }
-
         /*********************************************************************/
         /// <summary>
         /// 
@@ -83,17 +64,5 @@ namespace DecisionTree.Storage
             }
         }
 
-        /*********************************************************************
-        /// <summary>
-        /// Methode zum Iterieren per foreach
-        /// </summary>
-        /// <returns>Tabelleneintrag</returns>
-        public IEnumerator GetEnumerator()
-        {
-            foreach (CTableEntry value in mEntryList)
-            {
-                yield return value;
-            }
-        }*/
-    }
-}
+    } // class
+} // namespace
