@@ -9,14 +9,12 @@
 		Width="720" Height="450">
 
     <r:RibbonWindow.Resources>
-        <!--
-        <Style TargetType="{x:Type GridViewColumnHeader}" >
-            <Style.Triggers>
-                <Trigger Property="{Binding Path=[ " + columnData.Index + "].TableValue}" Value="True">
-                    <Setter Property="Background" Value="Moccasin" />
-                </Trigger>
-            </Style.Triggers>
-        </Style>-->
+       
+        <ResourceDictionary Source="Styles/DataGridStyles.xaml">
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles/BureauBlue.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </r:RibbonWindow.Resources>
 
     <Grid x:Name="LayoutRoot">
@@ -116,7 +114,7 @@
             <!-- Tabellenansicht -->
             <ContentControl Grid.Column="0" >
                 <!---->
-                <DataGrid ItemsSource="{Binding TableEntryList}" AutoGenerateColumns="False" Name="datagrid1"  >
+                <DataGrid ItemsSource="{Binding TableEntryList}" AutoGenerateColumns="False" Name="datagrid1" LoadingRow="DataGrid_LoadingRow"  >
                     <DataGrid.Columns>
                         <!--<DataGridTextColumn Binding="{Binding Path=Attribute1.TableValue}" Visibility="{Binding Path=Attribute1.AttributeType.ColumnVisibility}" Header="{Binding Path=Attribute1.AttributeType.Name}" />-->
                         <!--<DataGridTextColumn Binding="{Binding Path=Attribute2.TableValue}" Visibility="{Binding Path=Attribute2.AttributeType.ColumnVisibility}" Header="{Binding Path=Attribute2.AttributeType.Name}" />-->
