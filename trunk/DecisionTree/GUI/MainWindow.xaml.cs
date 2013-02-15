@@ -20,6 +20,7 @@ using DecisionTree.Storage;
 using System.Data;
 using Microsoft.Win32;
 using System.IO;
+using System.Globalization;
 
 namespace DecisionTree
 {
@@ -150,6 +151,15 @@ namespace DecisionTree
             {
                 if (datagrid1.CurrentColumn != null)
                 {
+                    foreach (DataGridColumn column in datagrid1.Columns) 
+                    {
+                        column.HeaderStyle = FindResource("DefaultColumnHeaderStyle") as Style;
+                    }
+                    
+                    datagrid1.CurrentColumn.HeaderStyle = FindResource("TargetValueColumnHeaderStyle") as Style;
+                    CTableEntry entry = (CTableEntry)datagrid1.CurrentItem;
+
+                    
                     /*
                     GridViewColumnHeader.
 
@@ -238,5 +248,10 @@ namespace DecisionTree
             style.Triggers.Add(
         }*/
 
+        private void DataGrid_LoadingRow(object sender, System.Windows.Controls.DataGridRowEventArgs e)
+        {
+            //e.Row.Background = FindResource("RedBackgroundBrush") as Brush;
+            
+        }
     } // class
 } // namespace
