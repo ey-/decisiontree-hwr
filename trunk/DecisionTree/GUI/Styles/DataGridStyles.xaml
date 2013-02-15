@@ -6,15 +6,7 @@
     mc:Ignorable="d"     
 	>
 
-    <Style x:Key="TargetValueColumnHeaderStyle">
-        <Setter Property="Control.Background" Value="Yellow"/>
-    </Style>
 
-    <Style x:Key="DefaultColumnHeaderStyle">
-        <Setter Property="Control.Background" Value="Gray"/>
-    </Style>
-<!---
-    vvv bleibt als Beispiel für Erweiterung des Designs vvv
     <LinearGradientBrush x:Key="DataGridHeaderBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
         <GradientStop Color="#FFFFFFFF" Offset="0" />
         <GradientStop Color="#FF8AAEDA" Offset="0.521" />
@@ -23,7 +15,18 @@
         <GradientStop Color="#FFB7C8E0" Offset="0.507" />
         <GradientStop Color="#FFD1DEF0" Offset="1" />
     </LinearGradientBrush>
+    
+    <Style x:Key="TargetValueColumnHeaderStyle">
+        <Setter Property="Control.Background" Value="{StaticResource DataGridHeaderBackgroundBrush}"/>
+    </Style>
 
+    <Style x:Key="DefaultColumnHeaderStyle">
+        <Setter Property="Control.Background" Value="Gray"/>
+    </Style>
+
+
+<!---
+    vvv bleibt als Beispiel für Erweiterung des Designs vvv
     <LinearGradientBrush x:Key="DataGridHeaderMouseOverBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
         <GradientStop Color="#FFFFFFFF" Offset="0" />
         <GradientStop Color="#FFFEF3B5" Offset="0.318" />
