@@ -21,22 +21,25 @@ using System.Data;
 using Microsoft.Win32;
 using System.IO;
 using System.Globalization;
+using DecisionTree.Storage.TreeData;
 
 namespace DecisionTree
 {
+    /*************************************************************************/
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : RibbonWindow, IMainWindow
     {
-        IBusinessLogic mBusinessLogic;
-        CTableEntryList mTableEntryList;
+        protected IBusinessLogic mBusinessLogic;
 
-        Setter TARGET_ATTRIBUTE_SETTER = new Setter();
-
+        protected CTableEntryList mTableEntryList;
+        protected CTreeGraph mGraph;
+        protected string layoutAlgorithmType;
+        
         /*********************************************************************/
         /// <summary>
-        /// 
+        /// Konstruktor, Initialisierung der Komponenten
         /// </summary>
         public MainWindow()
         {
@@ -47,10 +50,16 @@ namespace DecisionTree
             mTableEntryList = mBusinessLogic.getAllTableData();
             this.datagrid1.ItemsSource = mTableEntryList;
 
+            mGraph = mBusinessLogic.getGraph();
+            setupTestData();
+            LayoutAlgorithmType = "LinLog";
+
             DataContext = this;
 
             viewTableBtn.IsChecked = true;
         }
+
+
 
         /*********************************************************************/
         /// <summary>
@@ -59,7 +68,71 @@ namespace DecisionTree
         public CTableEntryList TableEntryList
         {
             get { return mTableEntryList; }
-            set {  }
+        }
+
+        /*********************************************************************/
+        /// <summary>
+        /// Zugriff auf die Daten im Graphen
+        /// </summary>
+        public CTreeGraph VisualGraph
+        {
+            get { return mGraph; }
+        }
+
+        /*********************************************************************/
+        /// <summary>
+        /// 
+        /// </summary>
+        public string LayoutAlgorithmType
+        {
+            get { return layoutAlgorithmType; }
+            set { layoutAlgorithmType = value; }
+        }
+
+        /*********************************************************************/
+        /// <summary>
+        /// Testdaten für Funktionstest der Anzeige der Baumansicht
+        /// TODO Nach erfolgreicher Implementierung auskommentieren .. 
+        /// damit im Fehlerfall wieder genutzt werden kann.
+        /// </summary>
+        private void setupTestData()
+        {
+            CTreeVertex root = new CTreeVertex(null, mGraph);
+            root.setDemoData("Geschlecht", 11, 5, 6, 0.2134);
+
+            CTreeVertex v1_1 = new CTreeVertex(root, mGraph);
+            v1_1.setDemoData("Sendung Enthält", 6, 4, 2, 0.3234);
+            CTreeVertex v1_2 = new CTreeVertex(root, mGraph);
+            v1_2.setDemoData("", 6, 4, 2, 0.3234);
+
+            CAttributeType testType = new CAttributeType(0);
+            CTreeEdge edgeR_1_1 = new CTreeEdge(root, v1_1, new CAttributeValue(testType, "0", "f", null));
+            CTreeEdge edgeR_1_2 = new CTreeEdge(root, v1_2, new CAttributeValue(testType, "0", "m", null));
+
+            CTreeVertex v2_1 = new CTreeVertex(v1_1, mGraph);
+            v2_1.setDemoData("", 3, 2, 1, 0.3234);
+            CTreeVertex v2_2 = new CTreeVertex(v1_1, mGraph);
+            v2_2.setDemoData("", 2, 2, 0, 0.3234);
+            CTreeVertex v2_3 = new CTreeVertex(v1_1, mGraph);
+            v2_3.setDemoData("", 1, 0, 1, 0.3234);
+
+            CTreeEdge edge1_1_2_1 = new CTreeEdge(v1_1, v2_1, new CAttributeValue(testType, "0", "Filme", null));
+            CTreeEdge edge1_1_2_2 = new CTreeEdge(v1_1, v2_2, new CAttributeValue(testType, "0", "Bücher", null));
+            CTreeEdge edge1_1_2_3 = new CTreeEdge(v1_1, v2_3, new CAttributeValue(testType, "0", "Musik", null));
+
+            mGraph.AddVertex(root);
+            mGraph.AddVertex(v1_1);
+            mGraph.AddVertex(v1_2);
+            mGraph.AddVertex(v2_1);
+            mGraph.AddVertex(v2_2);
+            mGraph.AddVertex(v2_3);
+
+            mGraph.AddEdge(edgeR_1_1);
+            mGraph.AddEdge(edgeR_1_2);
+            mGraph.AddEdge(edge1_1_2_1);
+            mGraph.AddEdge(edge1_1_2_2);
+            mGraph.AddEdge(edge1_1_2_3);
+
         }
 
         /*********************************************************************/
@@ -149,17 +222,21 @@ namespace DecisionTree
             // Selektierte Zeile als Zielattribut setzen
             else if (sender.Equals(btnSetTargetAttribute) == true)
             {
-                if (datagrid1.CurrentColumn != null)
+                CTableColumn selectedColumn = datagrid1.CurrentColumn as CTableColumn;
+                if (selectedColumn != null)
                 {
-                    foreach (DataGridColumn column in datagrid1.Columns) 
+                    if (mBusinessLogic.setTargetAttribute(selectedColumn.ColumnDataType) == true)
                     {
-                        column.HeaderStyle = FindResource("DefaultColumnHeaderStyle") as Style;
-                    }
-                    
-                    datagrid1.CurrentColumn.HeaderStyle = FindResource("TargetValueColumnHeaderStyle") as Style;
-                    CTableEntry entry = (CTableEntry)datagrid1.CurrentItem;
+                        foreach (CTableColumn column in datagrid1.Columns)
+                        {
+                            //column.HeaderStyle = FindResource("DefaultColumnHeaderStyle") as Style;
+                            column.HeaderStyle = null;
+                        }
 
-                    
+                        selectedColumn.HeaderStyle = FindResource("TargetValueColumnHeaderStyle") as Style;
+                        CTableEntry entry = (CTableEntry)datagrid1.CurrentItem;
+                    }
+
                     /*
                     GridViewColumnHeader.
 
@@ -177,10 +254,12 @@ namespace DecisionTree
 
         /*********************************************************************/
         /// <summary>
-        /// Wird bei Klick auf den Ansichtswechsel durchgeführt
+        /// Wird bei Klick auf einen Button für den Ansichtswechsel aufgerufen
+        /// und führt Ansichtswechsel durch
         /// </summary>
         private void viewToggleButton_Checked(object sender, RoutedEventArgs e)
         {
+            // Ansicht auf Tabellenansicht wechseln
             if (sender == viewTableBtn)
             {
                 viewTable.Visible = true;
@@ -194,6 +273,7 @@ namespace DecisionTree
                 viewTreeInteractivBtn.IsChecked = false;
                 viewTreeAutomaticBtn.IsChecked = false;
             }
+            // Ansicht auf Baum Interaktiv Ansicht wechseln
             else if (sender == viewTreeInteractivBtn)
             {
                 viewTable.Visible = false;
@@ -207,6 +287,7 @@ namespace DecisionTree
                 viewTableBtn.IsChecked = false;
                 viewTreeAutomaticBtn.IsChecked = false;
             }
+            // Ansicht auf Baum Automatisch Ansicht wechseln
             else if (sender == viewTreeAutomaticBtn)
             {
                 viewTable.Visible = false;
@@ -232,26 +313,12 @@ namespace DecisionTree
         {
             if (columnData != null)
             {
-                DataGridTextColumn column = new DataGridTextColumn();
-                column.Header = columnData.Name;
-                column.Binding = new Binding("[ " + columnData.Index + "].TableValue");
+                DataGridTextColumn column = new CTableColumn(columnData);
+                //column.Header = columnData.Name;
+                //column.Binding = new Binding("[ " + columnData.Index + "].TableValue");
                 datagrid1.Columns.Add(column);
             }
         }
-        /*
-        void test(string bindPath)
-        {
-            Style style = new Style(typeof(GridViewColumnHeader));
-            Trigger trigger = new Trigger();
-            Setter setterColored = new Setter(GridViewColumnHeader.BackgroundProperty, "Moccasin");
-            trigger.Property = 
-            style.Triggers.Add(
-        }*/
-
-        private void DataGrid_LoadingRow(object sender, System.Windows.Controls.DataGridRowEventArgs e)
-        {
-            //e.Row.Background = FindResource("RedBackgroundBrush") as Brush;
-            
-        }
+       
     } // class
 } // namespace

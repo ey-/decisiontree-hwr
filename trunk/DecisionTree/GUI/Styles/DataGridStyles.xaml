@@ -6,7 +6,7 @@
     mc:Ignorable="d"     
 	>
 
-
+<!--
     <LinearGradientBrush x:Key="DataGridHeaderBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
         <GradientStop Color="#FFFFFFFF" Offset="0" />
         <GradientStop Color="#FF8AAEDA" Offset="0.521" />
@@ -23,7 +23,7 @@
     <Style x:Key="DefaultColumnHeaderStyle">
         <Setter Property="Control.Background" Value="Gray"/>
     </Style>
-
+-->
 
 <!---
     vvv bleibt als Beispiel für Erweiterung des Designs vvv

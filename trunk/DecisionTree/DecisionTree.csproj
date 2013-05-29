@@ -15,6 +15,7 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -27,7 +28,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -84,20 +84,15 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="RibbonControlsLibrary" />
     <Reference Include="Microsoft.Windows.Shell" />
+    <Reference Include="WPFExtensions">
+      <HintPath>lib\WPFExtensions.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="GUI\Styles\BureauBlue.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="GUI\Styles\DataGridStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="GUI\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -107,12 +102,18 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="GUI\CColumnDefinitionWithVisibility.cs" />
+    <Compile Include="GUI\CLabeledEdgeControl.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="GUI\CTableColumn.cs" />
+    <Compile Include="GUI\CTreeElementLayout.cs" />
     <Compile Include="Logic\CBusinessLogic.cs" />
     <Compile Include="Logic\CCSVReader.cs" />
     <Compile Include="Logic\CCSVWriter.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Logic\CTableLogic.cs" />
+    <Compile Include="Logic\CTreeLogic.cs" />
     <Compile Include="Logic\IBusinessLogic.cs" />
     <Compile Include="Storage\CAttributeType.cs" />
     <Compile Include="Storage\CAttributeValue.cs" />
@@ -124,6 +125,11 @@
     <Compile Include="Storage\TableData\CSQLiteConnection.cs" />
     <Compile Include="Storage\TableData\CTableConstants.cs" />
     <Compile Include="Storage\TableData\CTableDataManager.cs" />
+    <Compile Include="Storage\TreeData\CTree.cs" />
+    <Compile Include="Storage\TreeData\CTreeGraph.cs" />
+    <Compile Include="Storage\TreeData\CTreeEdge.cs" />
+    <Compile Include="Storage\TreeData\CTreeHandler.cs" />
+    <Compile Include="Storage\TreeData\CTreeVertex.cs" />
     <Compile Include="Storage\TreeData\ITreeHandler.cs" />
     <Compile Include="Storage\TableData\IDBDataReader.cs" />
     <Compile Include="GUI\IMainWindow.cs" />
@@ -214,6 +220,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Themes\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

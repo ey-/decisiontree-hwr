@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using DecisionTree.Storage.TableData;
+using System.Diagnostics;
 
 namespace DecisionTree.Storage
 {
     /// <summary>
     /// 
     /// </summary>
+    [DebuggerDisplay("Index: {EntryIndex} Attr: {AttributeType.msName} Value: {TableValue}")]
     public class CAttributeValue
     {
         CAttributeType mAttributeType;

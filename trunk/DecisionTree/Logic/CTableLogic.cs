@@ -8,7 +8,7 @@ using DecisionTree.Storage;
 namespace DecisionTree.Logic
 {
     /// <summary>
-    /// Implementierung der TableLogic
+    /// Enthält die gesamte Logik um die Daten der Tabelle zu steuern
     /// </summary>
     public class CTableLogic
     {
@@ -95,5 +95,19 @@ namespace DecisionTree.Logic
         {
             return mDBAccess.removeEntry(entry);
         }
+
+        /*********************************************************************/
+        /// <summary>
+        /// Setzt das Zielattribut auf den übergebenen Typen
+        /// </summary>
+        /// <param name="targetAttributeType">Attributtyp der zum Zielattribut 
+        /// werden soll</param>
+        /// <returns>Erfolg des Setztens</returns>
+        public bool setTargetAttribute(CAttributeType targetAttributeType)
+        {
+            return mDBAccess.setTargetAttribute(targetAttributeType);
+        }
+
+
     }
 }

@@ -6,6 +6,7 @@ using DecisionTree.GUI;
 using System.Collections.ObjectModel;
 using DecisionTree.Storage;
 using DecisionTree.Storage.TableData;
+using DecisionTree.Storage.TreeData;
 
 namespace DecisionTree.Logic
 {
@@ -15,6 +16,7 @@ namespace DecisionTree.Logic
     /// </summary>
     public interface IBusinessLogic
     {
+        
         /*********************************************************************/
         /// <summary>
         /// Registiert das MainWindow Interface damit der Zugriff auf die Fenster erfolgen kann.
@@ -22,6 +24,7 @@ namespace DecisionTree.Logic
         /// <param name="mainWindow">Interface zum MainWindow</param>
         void registerWindow(IMainWindow mainWindow);
 
+        #region Tabellenfunktionen
         /*********************************************************************/
         /// <summary>
         /// gibt die Liste mit allen Datensätzen zurück
@@ -73,5 +76,26 @@ namespace DecisionTree.Logic
         /// <returns>Erfolg des Löschens</returns>
         bool removeDataset(CTableEntry entry);
 
+        /*********************************************************************/
+        /// <summary>
+        /// Setzt das Zielattribut auf den übergebenen Typen
+        /// </summary>
+        /// <param name="targetAttributeType">Attributtyp der zum Zielattribut 
+        /// werden soll</param>
+        /// <returns>Erfolg des Setztens</returns>
+        bool setTargetAttribute(CAttributeType targetAttributeType);
+
+        #endregion
+
+        #region Graphenfunktionen
+
+        /*********************************************************************/
+        /// <summary>
+        /// Holt den aktuell aktiven Graphen aus der Datenschicht
+        /// </summary>
+        /// <returns></returns>
+        CTreeGraph getGraph();
+
+        #endregion
     }// class
 } // namespace
