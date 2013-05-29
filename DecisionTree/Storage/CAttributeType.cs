@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using DecisionTree.Storage.TableData;
+using System.Diagnostics;
 
 namespace DecisionTree.Storage
 {
@@ -20,6 +21,7 @@ namespace DecisionTree.Storage
     /// <summary>
     /// Diese Klasse beschreibt einen Attributtypen.
     /// </summary>
+    [DebuggerDisplay("{Name} Used: {Used} TargetAttribut: {TargetAttribute}")]
     public class CAttributeType
     {
         protected string msName;
@@ -81,6 +83,7 @@ namespace DecisionTree.Storage
         public string Name 
         {
             get { return msName; }
+            set { msName = value; }
         }
 
         /*********************************************************************/
@@ -100,6 +103,7 @@ namespace DecisionTree.Storage
         public bool TargetAttribute
         {
             get { return mbTargetAttribute; }
+            set { mbTargetAttribute = value; }
         }
 
         /*********************************************************************/
@@ -109,29 +113,6 @@ namespace DecisionTree.Storage
         public bool Used
         {
             get { return mbUsed; }
-        }
-
-        public Visibility ColumnVisibility
-        {
-            get
-            {
-                if (Used == true)
-                {
-                    return Visibility.Visible;
-                }
-                return Visibility.Collapsed;
-            }
-            set
-            {
-                if (value == Visibility.Visible)
-                {
-                    mbUsed = true;
-                }
-                else
-                {
-                    mbUsed = false;
-                }
-            }
         }
 
         public int Index

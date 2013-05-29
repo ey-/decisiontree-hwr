@@ -30,6 +30,8 @@ namespace DecisionTree.Storage.TableData
             
             mTableManager.setUpDatabase();
 
+            // Einkommentieren um Testdaten neu einzufügen
+            // ! Überschreibt alle bisherigen Daten !
             //createTestData();
         }
 
@@ -278,16 +280,21 @@ namespace DecisionTree.Storage.TableData
 
         /*********************************************************************/
         /// <summary>
-        /// fügt eine Zeile zur Tabelle hinzu.
+        /// Setzt das Zielattribut auf den übergebenen Typen
         /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
-        public void addRow()
+        /// <param name="targetAttributeType">Attributtyp der zum Zielattribut 
+        /// werden soll</param>
+        /// <returns>Erfolg des Setztens</returns>
+        public bool setTargetAttribute(CAttributeType targetAttributeType)
         {
-            insertEntry();
-        }
+            foreach (CAttributeType attributeType in mAttributeTypeList)
+            {
+                attributeType.TargetAttribute = false;
+            }
 
-        
+            targetAttributeType.TargetAttribute = true;
+            return true;
+        }
 
     }
 }

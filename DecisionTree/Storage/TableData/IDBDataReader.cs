@@ -65,5 +65,14 @@ namespace DecisionTree.Storage.TableData
         /// </summary>
         void clearDatabase();
 
+        /*********************************************************************/
+        /// <summary>
+        /// Setzt das Zielattribut auf den übergebenen Typen
+        /// </summary>
+        /// <param name="targetAttributeType">Attributtyp der zum Zielattribut 
+        /// werden soll</param>
+        /// <returns>Erfolg des Setztens</returns>
+        bool setTargetAttribute(CAttributeType targetAttributeType);
+
     } // class    
 } // namespace

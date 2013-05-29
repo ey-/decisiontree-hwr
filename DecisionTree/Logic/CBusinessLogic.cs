@@ -5,6 +5,7 @@ using System.Text;
 using DecisionTree.GUI;
 using DecisionTree.Storage.TableData;
 using DecisionTree.Storage;
+using DecisionTree.Storage.TreeData;
 
 namespace DecisionTree.Logic
 {
@@ -19,8 +20,9 @@ namespace DecisionTree.Logic
         // Interfaces zur GUI
         protected IMainWindow mMainWindow = null;
         
-        //TableLogic
+        // Logiken für die verschiedenen Ansichten
         protected CTableLogic mTableLogic = new CTableLogic();
+        protected CTreeLogic mTreeLogic = new CTreeLogic();
 
         /*********************************************************************/
         /// <summary>
@@ -48,6 +50,11 @@ namespace DecisionTree.Logic
         {
             mMainWindow = mainWindow;
         }
+
+        /*********************************************************************/
+        #region Tabellenfunktionen
+        /*********************************************************************/
+
         /*********************************************************************/
         /// <summary>
         /// Gibt alle Tabellendaten zurück
@@ -122,5 +129,34 @@ namespace DecisionTree.Logic
             return mTableLogic.removeDataset(entry);
         }
 
+        /*********************************************************************/
+        /// <summary>
+        /// Setzt das Zielattribut auf den übergebenen Typen
+        /// </summary>
+        /// <param name="cAttributeType">Attributtyp der zum Zielattribut werden soll</param>
+        /// <returns>Erfolg des Setztens</returns>
+        public bool setTargetAttribute(CAttributeType targetAttributeType)
+        {
+            return mTableLogic.setTargetAttribute(targetAttributeType);
+        }
+
+
+        #endregion
+
+        /*********************************************************************/
+        #region Graphenfunktionen
+        /*********************************************************************/
+
+        /*********************************************************************/
+        /// <summary>
+        /// Holt den aktuell aktiven Graphen aus der Datenschicht
+        /// </summary>
+        /// <returns></returns>
+        public CTreeGraph getGraph()
+        {
+            return mTreeLogic.getGraph();
+        }
+
+        #endregion
     }// class
 } // namespace
