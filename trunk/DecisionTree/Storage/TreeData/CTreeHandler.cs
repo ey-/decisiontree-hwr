@@ -53,5 +53,16 @@ namespace DecisionTree.Storage.TreeData
                     break;
             }
         }
+
+        /*********************************************************************/
+        /// <summary>
+        /// Setzt den Baum auf den Initalzustand mit einem leeren Root-Knoten 
+        /// zurück
+        /// </summary>
+        public void resetActiveTree()
+        {
+            mActiveTree.resetTree();
+        }
+
     }
 }
