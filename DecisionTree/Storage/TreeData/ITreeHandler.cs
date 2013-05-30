@@ -32,5 +32,12 @@ namespace DecisionTree.Storage
         /// </summary>
         /// <param name="tree">Baum der verwendet werden soll</param>
         void setActiveTree(E_TREE_TYPE tree);
+
+        /*********************************************************************/
+        /// <summary>
+        /// Setzt den Baum auf den Initalzustand mit einem leeren Root-Knoten 
+        /// zurück
+        /// </summary>
+        void resetActiveTree();
     }
 }
