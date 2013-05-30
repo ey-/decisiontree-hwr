@@ -29,7 +29,7 @@ namespace DecisionTree.Storage.TableData
         /// </summary>
         public CSQLiteConnection()
         {
-#if TEST || RELEASE
+#if TEST || !DEBUG
             // Im Releasebetrieb verwenden wir eine Inmemory Datenbank.
             // Daher muss der Pfad zur exe nicht angegeben werden.
             string exePath = "";
