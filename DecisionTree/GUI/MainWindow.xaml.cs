@@ -59,7 +59,6 @@ namespace DecisionTree
 
             graph.DataContext = this;
             mGraph = mBusinessLogic.getGraph();
-            setupTestData();
             LayoutAlgorithmType = "LinLog";
 
             DataContext = this;
@@ -85,7 +84,6 @@ namespace DecisionTree
         public CTreeGraph VisualGraph
         {
             get { return mGraph = mBusinessLogic.getGraph(); }
-            //set { mGraph = value; }
         }
 
         /*********************************************************************/
