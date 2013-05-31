@@ -76,6 +76,7 @@ namespace DecisionTree.Logic
         /// </summary>
         public CAttributeType addAttribute()
         {
+            mTreeLogic.setTableSetupChanged();
             return mTableLogic.addAttribute();
         }
 
@@ -85,6 +86,7 @@ namespace DecisionTree.Logic
         /// </summary>
         public bool removeAttribute(string attributeName)
         {
+            mTreeLogic.setTableSetupChanged();
             return mTableLogic.removeAttribute(attributeName);
         }
 
@@ -95,6 +97,7 @@ namespace DecisionTree.Logic
         /// <param name="filePath">Pfad der CSV-Datei</param>
         public List<CAttributeType> openCSVFile(string filePath)
         {
+            mTreeLogic.setTableSetupChanged();
             return mTableLogic.openCSVFile(filePath);
         }
 
@@ -137,6 +140,7 @@ namespace DecisionTree.Logic
         /// <returns>Erfolg des Setztens</returns>
         public bool setTargetAttribute(CAttributeType targetAttributeType)
         {
+            mTreeLogic.setTableSetupChanged();
             return mTableLogic.setTargetAttribute(targetAttributeType);
         }
 
@@ -158,5 +162,29 @@ namespace DecisionTree.Logic
         }
 
         #endregion
+
+        /*********************************************************************/
+        /// <summary>
+        /// Der Nutzer hat auf die angegebene Ansicht gewechselt
+        /// </summary>
+        /// <param name="selectedView">View auf die gewechselt wurde</param>
+        public void changeView(E_VIEW selectedView)
+        {
+            switch (selectedView)
+            { 
+                case E_VIEW.E_TABLE_VIEW:
+                    // wir machen nichts
+                    break;
+                case E_VIEW.E_TREE_INTERACTIVE_VIEW:
+                case E_VIEW.E_TREE_AUTOMATIC_VIEW:
+                    mTreeLogic.setTreeForView(selectedView);
+                    break;
+            }
+        }
+
+        public void test()
+        { 
+            
+        }
     }// class
 } // namespace

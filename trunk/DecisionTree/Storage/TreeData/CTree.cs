@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 namespace DecisionTree.Storage.TreeData
 {
@@ -48,11 +49,15 @@ namespace DecisionTree.Storage.TreeData
         public void resetTree()
         {
             // alle bestehenden Knoten und Verbindungen des Baumes löschen
+            foreach (CTreeVertex vertex in mVertexList)
+            {
+                mGraph.RemoveVertex(vertex);
+            }
             mVertexList.Clear();
             mEdgeList.Clear();
             mRoot = null;
 
-            mRoot = addVertex(null, null);
+            mRoot = addVertex(null);
         }
 
         /*********************************************************************/
@@ -71,5 +76,11 @@ namespace DecisionTree.Storage.TreeData
             return vertex;
         }
 
+
+        internal bool removeVertex(CTreeVertex vertex)
+        {
+            mVertexList.Remove(vertex);
+            return mGraph.RemoveVertex(vertex);
+        }
     }
 }
