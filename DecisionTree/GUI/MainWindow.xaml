@@ -135,7 +135,7 @@
                                 </Path.Data>
                             </Path>-->
                             
-                            <local:CLabeledEdgeControl Content="{Binding Edge.EdgeValue, RelativeSource={RelativeSource TemplatedParent}}" />
+                            <local:CLabeledEdgeControl Content="{Binding Edge.EdgeValue, RelativeSource={RelativeSource TemplatedParent}}" Foreground="Black" />
                         </Canvas>
                     </ControlTemplate>
                 </Setter.Value>
@@ -178,23 +178,23 @@
                         Name="viewTableBtn" 
                         Label="Tabellenansicht"
                         LargeImageSource="../Images/Table.png"
-                        Checked="viewToggleButton_Checked"
-                         />
+                        Click="viewToggleButton_Checked" />
                     <r:RibbonToggleButton 
                         Name="viewTreeInteractivBtn" 
                         Label="Baum Interaktiv"
                         LargeImageSource="../Images/Baum_interaktiv.png"
-                        Checked="viewToggleButton_Checked"
+                        Click="viewToggleButton_Checked"
                          />
                     <r:RibbonToggleButton 
                         Name="viewTreeAutomaticBtn" 
                         Label="Baum Automatisch"
                         LargeImageSource="../Images/Baum_automatisch.png"
-                        Checked="viewToggleButton_Checked"
+                        Click="viewToggleButton_Checked"
                          />
                 </r:RibbonGroup>
                 
                 <r:RibbonGroup Header="Test">
+                    <r:RibbonButton Name="TestBtn1" Label="test" Click="TestButton_Click" />
                 </r:RibbonGroup>
 
             </r:RibbonTab>
@@ -262,7 +262,7 @@
                 <zoom:ZoomControl Zoom="0.0" ZoomBoxOpacity="0.5" Background="#FFEBEBEB" >
                     <local:CTreeElementLayout x:Name="graph" Margin="10" Graph="{Binding Path=VisualGraph}" 
                                              LayoutAlgorithmType="Tree"  OverlapRemovalAlgorithmType="FSA" 
-                                             IsEnabled="False"  />
+                                             IsEnabled="False" />
                 </zoom:ZoomControl>
             </ContentControl>
 

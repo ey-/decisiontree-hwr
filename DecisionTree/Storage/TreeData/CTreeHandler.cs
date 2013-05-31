@@ -11,7 +11,7 @@ namespace DecisionTree.Storage.TreeData
     /// </summary>
     public class CTreeHandler : ITreeHandler
     {
-        CTree[] mTrees = new CTree[2];
+        CTree[] mTrees = new CTree[(int)E_TREE_TYPE.E_TREE_COUNT];
         CTree mActiveTree;
 
         /*********************************************************************/
@@ -20,8 +20,8 @@ namespace DecisionTree.Storage.TreeData
         /// </summary>
         public CTreeHandler()
         {
-            mTrees[0] = new CTree();
-            mTrees[1] = new CTree();
+            mTrees[(int)E_TREE_TYPE.E_TREE_INTERACTIVE] = new CTree();
+            mTrees[(int)E_TREE_TYPE.E_TREE_AUTOMATIC] = new CTree();
 
             setActiveTree(E_TREE_TYPE.E_TREE_INTERACTIVE);
         }
@@ -64,5 +64,15 @@ namespace DecisionTree.Storage.TreeData
             mActiveTree.resetTree();
         }
 
+
+        public CTreeVertex addVertex(CTreeVertex parent, CAttributeType type)
+        {
+            return mActiveTree.addVertex(parent, type);
+        }
+
+        public bool removeVertex(CTreeVertex vertex)
+        {
+            return mActiveTree.removeVertex(vertex);
+        }
     }
 }

@@ -25,6 +25,13 @@ using DecisionTree.Storage.TreeData;
 
 namespace DecisionTree
 {
+    public enum E_VIEW
+    { 
+        E_TABLE_VIEW,
+        E_TREE_INTERACTIVE_VIEW,
+        E_TREE_AUTOMATIC_VIEW
+    }
+
     /*************************************************************************/
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -50,13 +57,14 @@ namespace DecisionTree
             mTableEntryList = mBusinessLogic.getAllTableData();
             this.datagrid1.ItemsSource = mTableEntryList;
 
+            graph.DataContext = this;
             mGraph = mBusinessLogic.getGraph();
             setupTestData();
             LayoutAlgorithmType = "LinLog";
 
             DataContext = this;
 
-            viewTableBtn.IsChecked = true;
+            setViewVisibility(E_VIEW.E_TABLE_VIEW);
         }
 
 
@@ -76,7 +84,8 @@ namespace DecisionTree
         /// </summary>
         public CTreeGraph VisualGraph
         {
-            get { return mGraph; }
+            get { return mGraph = mBusinessLogic.getGraph(); }
+            //set { mGraph = value; }
         }
 
         /*********************************************************************/
@@ -89,51 +98,7 @@ namespace DecisionTree
             set { layoutAlgorithmType = value; }
         }
 
-        /*********************************************************************/
-        /// <summary>
-        /// Testdaten für Funktionstest der Anzeige der Baumansicht
-        /// TODO Nach erfolgreicher Implementierung auskommentieren .. 
-        /// damit im Fehlerfall wieder genutzt werden kann.
-        /// </summary>
-        private void setupTestData()
-        {
-            CTreeVertex root = new CTreeVertex(null, mGraph);
-            root.setDemoData("Geschlecht", 11, 5, 6, 0.2134);
-
-            CTreeVertex v1_1 = new CTreeVertex(root, mGraph);
-            v1_1.setDemoData("Sendung Enthält", 6, 4, 2, 0.3234);
-            CTreeVertex v1_2 = new CTreeVertex(root, mGraph);
-            v1_2.setDemoData("", 6, 4, 2, 0.3234);
-
-            CAttributeType testType = new CAttributeType(0);
-            CTreeEdge edgeR_1_1 = new CTreeEdge(root, v1_1, new CAttributeValue(testType, "0", "f", null));
-            CTreeEdge edgeR_1_2 = new CTreeEdge(root, v1_2, new CAttributeValue(testType, "0", "m", null));
-
-            CTreeVertex v2_1 = new CTreeVertex(v1_1, mGraph);
-            v2_1.setDemoData("", 3, 2, 1, 0.3234);
-            CTreeVertex v2_2 = new CTreeVertex(v1_1, mGraph);
-            v2_2.setDemoData("", 2, 2, 0, 0.3234);
-            CTreeVertex v2_3 = new CTreeVertex(v1_1, mGraph);
-            v2_3.setDemoData("", 1, 0, 1, 0.3234);
-
-            CTreeEdge edge1_1_2_1 = new CTreeEdge(v1_1, v2_1, new CAttributeValue(testType, "0", "Filme", null));
-            CTreeEdge edge1_1_2_2 = new CTreeEdge(v1_1, v2_2, new CAttributeValue(testType, "0", "Bücher", null));
-            CTreeEdge edge1_1_2_3 = new CTreeEdge(v1_1, v2_3, new CAttributeValue(testType, "0", "Musik", null));
-
-            mGraph.AddVertex(root);
-            mGraph.AddVertex(v1_1);
-            mGraph.AddVertex(v1_2);
-            mGraph.AddVertex(v2_1);
-            mGraph.AddVertex(v2_2);
-            mGraph.AddVertex(v2_3);
-
-            mGraph.AddEdge(edgeR_1_1);
-            mGraph.AddEdge(edgeR_1_2);
-            mGraph.AddEdge(edge1_1_2_1);
-            mGraph.AddEdge(edge1_1_2_2);
-            mGraph.AddEdge(edge1_1_2_3);
-
-        }
+        
 
         /*********************************************************************/
         /// <summary>
@@ -259,48 +224,75 @@ namespace DecisionTree
         /// </summary>
         private void viewToggleButton_Checked(object sender, RoutedEventArgs e)
         {
+            E_VIEW selectedView = E_VIEW.E_TABLE_VIEW;
+
             // Ansicht auf Tabellenansicht wechseln
             if (sender == viewTableBtn)
             {
-                viewTable.Visible = true;
-                viewTreeInteractiv.Visible = false;
-                viewTreeAutomatic.Visible = false;
-
-                grpTable.Visibility = System.Windows.Visibility.Visible;
-                grpTreeInteractive.Visibility = System.Windows.Visibility.Hidden;
-                grpTreeAutomatic.Visibility = System.Windows.Visibility.Hidden;
-
-                viewTreeInteractivBtn.IsChecked = false;
-                viewTreeAutomaticBtn.IsChecked = false;
+                selectedView = E_VIEW.E_TABLE_VIEW;
             }
             // Ansicht auf Baum Interaktiv Ansicht wechseln
             else if (sender == viewTreeInteractivBtn)
             {
-                viewTable.Visible = false;
-                viewTreeInteractiv.Visible = true;
-                viewTreeAutomatic.Visible = false;
-
-                grpTable.Visibility = System.Windows.Visibility.Hidden;
-                grpTreeInteractive.Visibility = System.Windows.Visibility.Visible;
-                grpTreeAutomatic.Visibility = System.Windows.Visibility.Hidden;
-                
-                viewTableBtn.IsChecked = false;
-                viewTreeAutomaticBtn.IsChecked = false;
+                selectedView = E_VIEW.E_TREE_INTERACTIVE_VIEW;
             }
             // Ansicht auf Baum Automatisch Ansicht wechseln
             else if (sender == viewTreeAutomaticBtn)
             {
-                viewTable.Visible = false;
-                viewTreeInteractiv.Visible = false;
-                viewTreeAutomatic.Visible = true;
-
-                grpTable.Visibility = System.Windows.Visibility.Hidden;
-                grpTreeInteractive.Visibility = System.Windows.Visibility.Hidden;
-                grpTreeAutomatic.Visibility = System.Windows.Visibility.Visible;
-                
-                viewTableBtn.IsChecked = false;
-                viewTreeInteractivBtn.IsChecked = false;
+                selectedView = E_VIEW.E_TREE_AUTOMATIC_VIEW;
             }
+
+            setViewVisibility(selectedView);
+            mBusinessLogic.changeView(selectedView);
+
+            mGraph = mBusinessLogic.getGraph();
+            graph.DataContext = this;
+        }
+
+        /*********************************************************************/
+        /// <summary>
+        /// Setzt die Sichtbarkeit einer Ansicht
+        /// </summary>
+        /// <param name="view">Ansicht die Angezeigt werden soll</param>
+        private void setViewVisibility(E_VIEW view)
+        {
+            bool tableVisibility = false;
+            bool treeInteractiveVisibility = false;
+            bool treeAutomaticVisibility = false;
+
+            switch (view)
+            {
+                case E_VIEW.E_TABLE_VIEW: tableVisibility = true; break;
+                case E_VIEW.E_TREE_INTERACTIVE_VIEW: treeInteractiveVisibility = true; break;
+                case E_VIEW.E_TREE_AUTOMATIC_VIEW: treeAutomaticVisibility = true; break;
+            }
+
+            viewTable.Visible = tableVisibility;
+            viewTreeInteractiv.Visible = treeInteractiveVisibility;
+            viewTreeAutomatic.Visible = treeAutomaticVisibility;
+
+            grpTable.Visibility = bool2Visibility(tableVisibility);
+            grpTreeInteractive.Visibility = bool2Visibility(treeInteractiveVisibility);
+            grpTreeAutomatic.Visibility = bool2Visibility(treeAutomaticVisibility);
+
+            viewTableBtn.IsChecked = tableVisibility;
+            viewTreeInteractivBtn.IsChecked = treeInteractiveVisibility;
+            viewTreeAutomaticBtn.IsChecked = treeAutomaticVisibility;
+        }
+
+        /*********************************************************************/
+        /// <summary>
+        /// Konvertiert ein boolean in ein Visibility Typen
+        /// </summary>
+        /// <param name="visible">Sichtbar oder nicht</param>
+        /// <returns>Sichtbarkeitstyp</returns>
+        private Visibility bool2Visibility(bool visible)
+        {
+            if (visible == true)
+            {
+                return Visibility.Visible;
+            }
+            return Visibility.Hidden;
         }
 
         /*********************************************************************/
@@ -318,6 +310,10 @@ namespace DecisionTree
                 //column.Binding = new Binding("[ " + columnData.Index + "].TableValue");
                 datagrid1.Columns.Add(column);
             }
+        }
+
+        private void TestButton_Click(object sender, RoutedEventArgs e)
+        {
         }
        
     } // class

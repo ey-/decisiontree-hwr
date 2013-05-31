@@ -9,7 +9,8 @@ namespace DecisionTree.Storage
     public enum E_TREE_TYPE
     { 
         E_TREE_INTERACTIVE = 0,
-        E_TREE_AUTOMATIC = 1
+        E_TREE_AUTOMATIC,
+        E_TREE_COUNT
     }
 
     /// <summary>
@@ -39,5 +40,9 @@ namespace DecisionTree.Storage
         /// zurück
         /// </summary>
         void resetActiveTree();
+
+        CTreeVertex addVertex(CTreeVertex parent, CAttributeType type);
+
+        bool removeVertex(CTreeVertex vertex);
     }
 }

@@ -10,9 +10,11 @@ using DecisionTree.Storage.TreeData;
 
 namespace DecisionTree.Logic
 {
+    /*************************************************************************/
     /// <summary>
-    /// Schnittstelle für Zugriff auf die Logikebene. Alle Methoden die benötigt werden,
-    /// werden zuerst hier eingefügt und dann in der implementierenden Klasse umgesetzt.
+    /// Schnittstelle für Zugriff auf die Logikebene. Alle Methoden die 
+    /// benötigt werden, werden zuerst hier eingefügt und dann in der 
+    /// implementierenden Klasse umgesetzt.
     /// </summary>
     public interface IBusinessLogic
     {
@@ -22,7 +24,7 @@ namespace DecisionTree.Logic
         /// Registiert das MainWindow Interface damit der Zugriff auf die Fenster erfolgen kann.
         /// </summary>
         /// <param name="mainWindow">Interface zum MainWindow</param>
-        void registerWindow(IMainWindow mainWindow);
+         void registerWindow(IMainWindow mainWindow);
 
         #region Tabellenfunktionen
         /*********************************************************************/
@@ -97,5 +99,16 @@ namespace DecisionTree.Logic
         CTreeGraph getGraph();
 
         #endregion
+        
+        /*********************************************************************/
+        /// <summary>
+        /// Der Nutzer hat auf die angegebene Ansicht gewechselt
+        /// </summary>
+        /// <param name="selectedView">View auf die gewechselt wurde</param>
+        void changeView(E_VIEW selectedView);
+
+        void test();
+
+        
     }// class
 } // namespace
