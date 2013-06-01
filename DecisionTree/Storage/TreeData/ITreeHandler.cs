@@ -41,8 +41,19 @@ namespace DecisionTree.Storage
         /// </summary>
         void resetActiveTree();
 
+        /*********************************************************************/
+        /// <summary>
+        /// Fügt einen Knoten zum Graphen hinzu
+        /// </summary>
+        /// <param name="parent">Parent-Knoten des Knotens</param>
+        /// <param name="type">Typ des Attributes welches der Knoten 
+        /// repräsentiert</param>
+        /// <returns>erstellter Vertex</returns>
         CTreeVertex addVertex(CTreeVertex parent, CAttributeType type);
 
         bool removeVertex(CTreeVertex vertex);
+
+        CTreeEdge addEdge(CTreeVertex parent, CTreeVertex child, CAttributeValue attributeValue);
+
     }
 }

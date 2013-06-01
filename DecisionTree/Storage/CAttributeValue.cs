@@ -44,8 +44,8 @@ namespace DecisionTree.Storage
             switch (mAttributeType.DataType)
             { 
                 case E_DATATYPE.E_STRING:   mStringValue = sValue;                      break;
-                case E_DATATYPE.E_INT:      mIntegerValue = Convert.ToInt32(sValue);    break;
-                case E_DATATYPE.E_FLOAT:    mFloatValue = Convert.ToSingle(sValue);     break;
+                case E_DATATYPE.E_INT:      mIntegerValue = (sValue != "") ? Convert.ToInt32(sValue) : 0; break;
+                case E_DATATYPE.E_FLOAT:    mFloatValue = (sValue != "") ? Convert.ToSingle(sValue) : 0.0f; break;
             }
         }
 

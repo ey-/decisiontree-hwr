@@ -8,6 +8,7 @@
         xmlns:graphsharp="clr-namespace:GraphSharp.Controls;assembly=GraphSharp.Controls"
         xmlns:Converters="clr-namespace:GraphSharp.Converters;assembly=GraphSharp.Controls"
         xmlns:zoom="clr-namespace:WPFExtensions.Controls;assembly=WPFExtensions"
+        xmlns:extbehaviour="clr-namespace:WPFExtensions.AttachedBehaviours;assembly=WPFExtensions"
         Title="MainWindow"
 		x:Name="RibbonWindow"
 		Width="800" Height="600">
@@ -66,12 +67,12 @@
         <Style TargetType="{x:Type graphsharp:VertexControl}">
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type graphsharp:VertexControl}">
+                    <ControlTemplate TargetType="{x:Type graphsharp:VertexControl}" >
+                        <!-- CornerRadius="10,10,10,10" -->
                         <Border BorderBrush="Black" 
                                     Background="White"
 							        BorderThickness="2"
-							        CornerRadius="10,10,10,10"
-							        Padding="{TemplateBinding Padding}">
+							        Padding="{TemplateBinding Padding}" >
                             <!--<Border.Effect>
                                 <DropShadowEffect BlurRadius="2" Color="LightGray" 
                                     Opacity="0.3" Direction="315"/>
@@ -85,8 +86,12 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+            <Setter Property="extbehaviour:DragBehaviour.IsDragEnabled"
+                Value="False" />
+            <EventSetter Event="MouseDoubleClick" Handler="nodeDoubleClicked" />
         </Style>
-<!-- 
+            
+            <!-- 
         <DataTemplate x:Key="edgeVisualizer" DataType="{x:Type tree:CTreeVertex}">
             <TextBlock Text="{Binding Path=EdgeValue}" />
         </DataTemplate>
@@ -259,10 +264,11 @@
 						      HighlightAlgorithmType="Simple" 
                 
                 -->
-                <zoom:ZoomControl Zoom="0.0" ZoomBoxOpacity="0.5" Background="#FFEBEBEB" >
+                <zoom:ZoomControl Zoom="1" MinZoom="0.1" MaxZoom="2" ZoomBoxOpacity="0.5" Background="#FFEBEBEB" > 
                     <local:CTreeElementLayout x:Name="graph" Margin="10" Graph="{Binding Path=VisualGraph}" 
                                              LayoutAlgorithmType="Tree"  OverlapRemovalAlgorithmType="FSA" 
-                                             IsEnabled="False" />
+                                             IsEnabled="True"  AllowDrop="False" >
+                    </local:CTreeElementLayout>
                 </zoom:ZoomControl>
             </ContentControl>
 

@@ -22,6 +22,7 @@ using Microsoft.Win32;
 using System.IO;
 using System.Globalization;
 using DecisionTree.Storage.TreeData;
+using GraphSharp.Controls;
 
 namespace DecisionTree
 {
@@ -55,8 +56,7 @@ namespace DecisionTree
             mBusinessLogic.registerWindow(this);
 
             mTableEntryList = mBusinessLogic.getAllTableData();
-            this.datagrid1.ItemsSource = mTableEntryList;
-
+            
             graph.DataContext = this;
             mGraph = mBusinessLogic.getGraph();
             LayoutAlgorithmType = "LinLog";
@@ -65,8 +65,6 @@ namespace DecisionTree
 
             setViewVisibility(E_VIEW.E_TABLE_VIEW);
         }
-
-
 
         /*********************************************************************/
         /// <summary>
@@ -117,6 +115,8 @@ namespace DecisionTree
                 OpenFileDialog openDlg = new OpenFileDialog();
                 if (openDlg.ShowDialog() == true)
                 {
+                    this.Cursor = Cursors.Wait;
+
                     datagrid1.Columns.Clear();
                     List<CAttributeType> addedColumns = mBusinessLogic.openCSVFile(openDlg.FileName);
                     foreach (CAttributeType columnData in addedColumns)
@@ -127,6 +127,7 @@ namespace DecisionTree
                     mTableEntryList = mBusinessLogic.getAllTableData();
                     this.datagrid1.ItemsSource = mTableEntryList;
 
+                    this.Cursor = Cursors.Arrow;
                     // http://social.msdn.microsoft.com/Forums/en/wpf/thread/1b694f75-7621-4c88-8055-6c31c601c87f
                 }
             }
@@ -312,6 +313,18 @@ namespace DecisionTree
 
         private void TestButton_Click(object sender, RoutedEventArgs e)
         {
+        }
+
+        private void nodeDoubleClicked(object sender, RoutedEventArgs e)
+        {
+            if (sender is VertexControl)
+            {
+                VertexControl control = sender as VertexControl;
+                CTreeVertex vertex = control.Vertex as CTreeVertex;
+
+                IdentificationWindow identWindow = new IdentificationWindow(vertex);
+                identWindow.Show();
+            }
         }
        
     } // class

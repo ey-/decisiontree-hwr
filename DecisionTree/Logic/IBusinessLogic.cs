@@ -36,6 +36,16 @@ namespace DecisionTree.Logic
 
         /*********************************************************************/
         /// <summary>
+        /// gibt ein Liste mit Datensätzen zurück die von dem übergebenen 
+        /// Knoten repräsentiert werden.
+        /// </summary>
+        /// <param name="vertexToIdentify">Knoten der Identifiziert werden 
+        /// soll</param>
+        /// <returns>Liste mit Datensätzen des Knotens</returns>
+        CTableEntryList getFilterdTableData(CTreeVertex vertexToIdentify);
+
+        /*********************************************************************/
+        /// <summary>
         /// Testweise Methode zum hinzufügen eines weiteren Attributes zur Tabelle
         /// </summary>
         CAttributeType addAttribute();
@@ -107,8 +117,9 @@ namespace DecisionTree.Logic
         /// <param name="selectedView">View auf die gewechselt wurde</param>
         void changeView(E_VIEW selectedView);
 
+        List<CAttributeType> getAttributeTypes();
+        
         void test();
 
-        
     }// class
 } // namespace

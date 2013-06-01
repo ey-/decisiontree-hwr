@@ -74,5 +74,11 @@ namespace DecisionTree.Storage.TreeData
         {
             return mActiveTree.removeVertex(vertex);
         }
+
+        public CTreeEdge addEdge(CTreeVertex parent, CTreeVertex child, CAttributeValue attributeValue)
+        {
+            return mActiveTree.addEdge(parent, child, attributeValue);
+        }
+
     }
 }
