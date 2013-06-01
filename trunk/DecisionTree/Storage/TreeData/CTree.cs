@@ -49,12 +49,17 @@ namespace DecisionTree.Storage.TreeData
         public void resetTree()
         {
             // alle bestehenden Knoten und Verbindungen des Baumes löschen
+            foreach (CTreeEdge edge in mEdgeList)
+            {
+                mGraph.RemoveEdge(edge);
+            }
+            mEdgeList.Clear();
             foreach (CTreeVertex vertex in mVertexList)
             {
                 mGraph.RemoveVertex(vertex);
             }
             mVertexList.Clear();
-            mEdgeList.Clear();
+            
             mRoot = null;
 
             mRoot = addVertex(null);
@@ -81,6 +86,15 @@ namespace DecisionTree.Storage.TreeData
         {
             mVertexList.Remove(vertex);
             return mGraph.RemoveVertex(vertex);
+        }
+
+        internal CTreeEdge addEdge(CTreeVertex parent, CTreeVertex child, CAttributeValue attributeValue)
+        {
+            CTreeEdge edge = new CTreeEdge(parent, child, attributeValue);
+            mGraph.AddEdge(edge);
+            mEdgeList.Add(edge);
+
+            return edge;
         }
     }
 }

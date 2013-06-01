@@ -21,6 +21,16 @@ namespace DecisionTree.Storage.TableData
 
         /*********************************************************************/
         /// <summary>
+        /// gibt ein Liste mit Datensätzen zurück die von dem übergebenen 
+        /// Knoten repräsentiert werden.
+        /// </summary>
+        /// <param name="vertexToIdentify">Knoten der Identifiziert werden 
+        /// soll</param>
+        /// <returns>Liste mit Datensätzen des Knotens</returns>
+        CTableEntryList getFilteredTableData(TreeData.CTreeVertex vertexToIdentify);
+
+        /*********************************************************************/
+        /// <summary>
         /// fügt neuen leeren Datensatz in die Datenbak ein und gibt diesen zurück
         /// </summary>
         /// <returns>leerer Datenbankeintrag</returns>
@@ -74,5 +84,7 @@ namespace DecisionTree.Storage.TableData
         /// <returns>Erfolg des Setztens</returns>
         bool setTargetAttribute(CAttributeType targetAttributeType);
 
+        List<CAttributeType> getAttributeTypes();
+        
     } // class    
 } // namespace

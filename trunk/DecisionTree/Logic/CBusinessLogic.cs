@@ -65,9 +65,17 @@ namespace DecisionTree.Logic
             return mTableLogic.getAllTableData();
         }
 
-        public void loadCSV()
+        /*********************************************************************/
+        /// <summary>
+        /// gibt ein Liste mit Datensätzen zurück die von dem übergebenen 
+        /// Knoten repräsentiert werden.
+        /// </summary>
+        /// <param name="vertexToIdentify">Knoten der Identifiziert werden 
+        /// soll</param>
+        /// <returns>Liste mit Datensätzen des Knotens</returns>
+        public CTableEntryList getFilterdTableData(CTreeVertex vertexToIdentify)
         {
-
+            return mTableLogic.getFilteredTableData(vertexToIdentify);
         }
 
         /*********************************************************************/
@@ -180,6 +188,11 @@ namespace DecisionTree.Logic
                     mTreeLogic.setTreeForView(selectedView);
                     break;
             }
+        }
+
+        public List<CAttributeType> getAttributeTypes()
+        {
+            return mTableLogic.getAttributeTypes();
         }
 
         public void test()

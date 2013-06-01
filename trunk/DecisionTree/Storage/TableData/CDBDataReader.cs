@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Data.SQLite;
 using System.Diagnostics;
+using DecisionTree.Storage.TreeData;
 
 namespace DecisionTree.Storage.TableData
 {
@@ -134,6 +135,60 @@ namespace DecisionTree.Storage.TableData
 
             SQLiteDataReader reader;
             if (mConnection.sqlRequestStatement(sSQLCommand, out reader) == true)
+            {
+                CTableEntry tableEntry;
+                while (getNextTableEntry(reader, out tableEntry) == true)
+                {
+                    entryList.Add(tableEntry);
+                }
+                closeReader(reader);
+            }
+
+            return entryList;
+        }
+
+        /*********************************************************************/
+        /// <summary>
+        /// gibt ein Liste mit Datensätzen zurück die von dem übergebenen 
+        /// Knoten repräsentiert werden.
+        /// </summary>
+        /// <param name="vertexToIdentify">Knoten der Identifiziert werden 
+        /// soll</param>
+        /// <returns>Liste mit Datensätzen des Knotens</returns>
+        public CTableEntryList getFilteredTableData(CTreeVertex vertexToIdentify)
+        {
+            if (vertexToIdentify == null)
+            {
+                return null;
+            }
+
+            // sollte der Knoten kein Parent-Knoten haben (Root-Knoten) geben 
+            // wir alle Einträge zurück
+            if (vertexToIdentify.ParentVertex == null)
+            {
+                return getAllEntries();
+            }
+
+            string sSqlCommand = "SELECT * FROM " + CTableConstants.TABLE_ATTRIBUTES + "WHERE ";
+
+            // Den SQL-Befehl um die Filter erweitert. Dabei wird vom zu übergebenen Knoten 
+            while (vertexToIdentify.ParentVertex != null)
+            {
+                CTreeVertex parent = vertexToIdentify.ParentVertex;
+                CTreeEdge parentEdge = vertexToIdentify.ParentEdge;
+
+                sSqlCommand += parent.VertexName;
+                sSqlCommand += "=";
+                sSqlCommand += parentEdge.EdgeValue;
+                sSqlCommand += " ";
+
+                // den Nächsten Knotne auswählen
+                vertexToIdentify = parent;
+            }
+
+            SQLiteDataReader reader;
+            CTableEntryList entryList = new CTableEntryList();
+            if (mConnection.sqlRequestStatement(sSqlCommand, out reader) == true)
             {
                 CTableEntry tableEntry;
                 while (getNextTableEntry(reader, out tableEntry) == true)
@@ -296,5 +351,11 @@ namespace DecisionTree.Storage.TableData
             return true;
         }
 
+
+
+        public List<CAttributeType> getAttributeTypes()
+        {
+            return mAttributeTypeList;
+        }
     }
 }

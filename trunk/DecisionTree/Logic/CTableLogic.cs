@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using DecisionTree.Storage.TableData;
 using DecisionTree.Storage;
+using DecisionTree.Storage.TreeData;
 
 namespace DecisionTree.Logic
 {
@@ -25,6 +26,19 @@ namespace DecisionTree.Logic
         public CTableEntryList getAllTableData()
         {
             return mDBAccess.getAllEntries();
+        }
+
+        /*********************************************************************/
+        /// <summary>
+        /// gibt ein Liste mit Datensätzen zurück die von dem übergebenen 
+        /// Knoten repräsentiert werden.
+        /// </summary>
+        /// <param name="vertexToIdentify">Knoten der Identifiziert werden 
+        /// soll</param>
+        /// <returns>Liste mit Datensätzen des Knotens</returns>
+        internal CTableEntryList getFilteredTableData(CTreeVertex vertexToIdentify)
+        {
+            return mDBAccess.getFilteredTableData(vertexToIdentify);
         }
 
         /*********************************************************************/
@@ -109,5 +123,11 @@ namespace DecisionTree.Logic
         }
 
 
+
+
+        internal List<CAttributeType> getAttributeTypes()
+        {
+            return mDBAccess.getAttributeTypes();
+        }
     }
 }

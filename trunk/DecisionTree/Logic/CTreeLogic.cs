@@ -83,6 +83,11 @@ namespace DecisionTree.Logic
             return mTreeHandler.removeVertex(vertex);
         }
 
+        protected CTreeEdge addEdge(CTreeVertex parent, CTreeVertex child, CAttributeValue attributeValue)
+        {
+            return mTreeHandler.addEdge(parent, child, attributeValue);
+        }
+
         /*********************************************************************/
         /// <summary>
         /// Testdaten für Funktionstest der Anzeige der Baumansicht
@@ -100,20 +105,23 @@ namespace DecisionTree.Logic
             v1_2.setDemoData("", 6, 4, 2, 0.3234);
 
             CAttributeType testType = new CAttributeType(0);
-            CTreeEdge edgeR_1_1 = new CTreeEdge(root, v1_1, new CAttributeValue(testType, "0", "f", null));
+            CTreeEdge edgeR_1_1 = addEdge(root, v1_1, new CAttributeValue(testType, "0", "f", null));
+            CTreeEdge edgeR_1_2 = addEdge(root, v1_2, new CAttributeValue(testType, "0", "m", null));
+                /*
+                new CTreeEdge();
             CTreeEdge edgeR_1_2 = new CTreeEdge(root, v1_2, new CAttributeValue(testType, "0", "m", null));
-
+            */
             CTreeVertex v2_1 = addVertex(v1_1);
             v2_1.setDemoData("", 3, 2, 1, 0.3234);
             CTreeVertex v2_2 = addVertex(v1_1);
             v2_2.setDemoData("", 2, 2, 0, 0.3234);
             CTreeVertex v2_3 = addVertex(v1_1);
             v2_3.setDemoData("", 1, 0, 1, 0.3234);
+
+            CTreeEdge edge1_1_2_1 = addEdge(v1_1, v2_1, new CAttributeValue(testType, "0", "Filme", null));
+            CTreeEdge edge1_1_2_2 = addEdge(v1_1, v2_2, new CAttributeValue(testType, "0", "Bücher", null));
+            CTreeEdge edge1_1_2_3 = addEdge(v1_1, v2_3, new CAttributeValue(testType, "0", "Musik", null));
             /*
-            CTreeEdge edge1_1_2_1 = new CTreeEdge(v1_1, v2_1, new CAttributeValue(testType, "0", "Filme", null));
-            CTreeEdge edge1_1_2_2 = new CTreeEdge(v1_1, v2_2, new CAttributeValue(testType, "0", "Bücher", null));
-            CTreeEdge edge1_1_2_3 = new CTreeEdge(v1_1, v2_3, new CAttributeValue(testType, "0", "Musik", null));
-            
             mGraph.AddVertex(root);
             mGraph.AddVertex(v1_1);
             mGraph.AddVertex(v1_2);
@@ -128,5 +136,6 @@ namespace DecisionTree.Logic
             mGraph.AddEdge(edge1_1_2_3);
             */
         }
+
     }
 }
