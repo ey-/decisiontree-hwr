@@ -45,13 +45,10 @@ namespace DecisionTree.Logic
         /// <summary>
         /// Testweise Methode zum hinzufügen eines weiteren Attributes zur Tabelle
         /// </summary>
-        public CAttributeType addAttribute()
+        public CAttributeType addAttribute(string attributeName)
         {
-            // Testweise .. Der name der Spalte muss später von der GUI kommen
             NUM_COLUMNS++;
-            string name = "Column" + NUM_COLUMNS.ToString();
-            return mDBAccess.addColumn(name);
-            //return name;
+            return mDBAccess.addColumn(attributeName);
         }
 
         /*********************************************************************/

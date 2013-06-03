@@ -154,8 +154,12 @@ namespace DecisionTree
             // Spalte hinzufügen Button
             if (sender.Equals(btnAddColumn) == true)
             {
-                CAttributeType columnData = mBusinessLogic.addAttribute();
-                addDatagridColumn(columnData);
+                string name = Microsoft.VisualBasic.Interaction.InputBox("Geben Sie den Namen des Attributs ein", "Attributname", "");
+                if (!name.Equals(""))
+                {
+                    CAttributeType columnData = mBusinessLogic.addAttribute(name);
+                    addDatagridColumn(columnData);
+                }
             }
             // selektierte Spalte löschen Button
             else if (sender.Equals(btnRemoveColumn) == true)

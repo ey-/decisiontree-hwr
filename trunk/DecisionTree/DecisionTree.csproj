@@ -63,6 +63,7 @@
     <Reference Include="Microsoft.Contracts">
       <HintPath>lib\Microsoft.Contracts.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="QuickGraph">
       <HintPath>lib\QuickGraph.dll</HintPath>
     </Reference>

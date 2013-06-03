@@ -82,10 +82,10 @@ namespace DecisionTree.Logic
         /// <summary>
         /// Testweise Methode zum hinzufügen eines weiteren Attributes zur Tabelle
         /// </summary>
-        public CAttributeType addAttribute()
+        public CAttributeType addAttribute(string attributeName)
         {
             mTreeLogic.setTableSetupChanged();
-            return mTableLogic.addAttribute();
+            return mTableLogic.addAttribute(attributeName);
         }
 
         /*********************************************************************/
