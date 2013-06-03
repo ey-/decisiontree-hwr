@@ -50,16 +50,16 @@
                     </Grid.ColumnDefinitions>
                     
                     <TextBlock Grid.Row="0" Grid.Column="0" Text="Objekte: " />
-                    <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Path=CountObjects}" />
+                    <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Path=CountObjects, Mode=OneWay}" />
 
                     <TextBlock Grid.Row="1" Grid.Column="0" Text="Objekte j: " />
-                    <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Path=CountObjectsPerClass[0]}" />
+                    <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Path=CountObjectsPerClass[0], Mode=OneWay}" />
 
                     <TextBlock Grid.Row="2" Grid.Column="0" Text="Objekte n: " />
-                    <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Path=CountObjectsPerClass[1]}" />
+                    <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Path=CountObjectsPerClass[1], Mode=OneWay}" />
 
                     <TextBlock Grid.Row="3" Grid.Column="0" Text="Entropie: " />
-                    <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Path=Entropy}" />
+                    <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Path=Entropy, Mode=OneWay}" />
                 </Grid>
             </StackPanel>
         </DataTemplate>

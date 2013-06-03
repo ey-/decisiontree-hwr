@@ -2,14 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.ComponentModel;
 
 namespace DecisionTree.Storage.TreeData
 {
     /// <summary>
     /// Klasse zum Speichern eines Knoten im Baum
     /// </summary>
-    public class CTreeVertex
+    public class CTreeVertex : INotifyPropertyChanged
     {
+        protected const string NO_RULE_SET_TEXT = "keine Regel festgelegt";
+
         protected CTreeVertex mParentVertex = null;
         protected List<CTreeVertex> mChildNodes = new List<CTreeVertex>();
         protected CTreeEdge mParentEdge = null;
@@ -70,8 +73,12 @@ namespace DecisionTree.Storage.TreeData
                 }
                 else
                 {
-                    mName = "keine Regel festgelegt";
+                    mName = NO_RULE_SET_TEXT;
                 }
+                NotifyPropertyChanged("VertexName");
+                NotifyPropertyChanged("CountObjects");
+                NotifyPropertyChanged("CountObjectsPerClass");
+                NotifyPropertyChanged("Entropy");
             }
         }
 
@@ -102,7 +109,7 @@ namespace DecisionTree.Storage.TreeData
 
         public string VertexName
         {
-            get { return mName; }
+            get { return (mAttributeType != null) ? mAttributeType.Name : NO_RULE_SET_TEXT; }
         }
 
         public int CountObjects
@@ -133,7 +140,20 @@ namespace DecisionTree.Storage.TreeData
             get { return 0; }
         }
 
-        
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        /*********************************************************************/
+        /// <summary>
+        /// Gibt dem Graphen bescheid das ein Attribut geändert wurde
+        /// </summary>
+        /// <param name="info">Name des Feldes welches sich geändert hat</param>
+        protected void NotifyPropertyChanged(string info)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(info));
+            }
+        }
 
     }// class
 } // namespace
