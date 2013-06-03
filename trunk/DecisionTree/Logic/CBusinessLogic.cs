@@ -156,6 +156,23 @@ namespace DecisionTree.Logic
         #endregion
 
         /*********************************************************************/
+        #region Funktionen Identifikationsfenster
+        /*********************************************************************/
+
+        /*********************************************************************/
+        /// <summary>
+        /// Holt die Liste aller AttributTypen und gibt diese zurück. 
+        /// Auch die nicht verwendeten!
+        /// </summary>
+        /// <returns>Liste mit allen Attributtypen</returns>
+        public List<CAttributeType> getAttributeTypes()
+        {
+            return mTableLogic.getAttributeTypes();
+        }
+
+        #endregion
+
+        /*********************************************************************/
         #region Graphenfunktionen
         /*********************************************************************/
 
@@ -167,6 +184,17 @@ namespace DecisionTree.Logic
         public CTreeGraph getGraph()
         {
             return mTreeLogic.getGraph();
+        }
+
+        /*********************************************************************/
+        /// <summary>
+        /// Setzt für einen Vertex das Attribut welches dieser Repräsentiert
+        /// </summary>
+        /// <param name="vertex">Vertex dessen Attribut geändert werden soll</param>
+        /// <param name="attributeType">neues Attribut des Vertex</param>
+        public void setVertexAttribute(CTreeVertex vertex, CAttributeType attributeType)
+        {
+            mTreeLogic.setVertexAttribute(vertex, attributeType);
         }
 
         #endregion
@@ -190,14 +218,8 @@ namespace DecisionTree.Logic
             }
         }
 
-        public List<CAttributeType> getAttributeTypes()
-        {
-            return mTableLogic.getAttributeTypes();
-        }
-
         public void test()
         { 
-            
         }
     }// class
 } // namespace

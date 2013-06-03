@@ -1,14 +1,28 @@
-﻿<Window x:Class="DecisionTree.GUI.IdentificationWindow"
+﻿<r:RibbonWindow x:Class="DecisionTree.GUI.IdentificationWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="IdentificationWindow" Height="300" Width="300">
-    <Grid >
+        xmlns:r="clr-namespace:Microsoft.Windows.Controls.Ribbon;assembly=RibbonControlsLibrary"
+        Title="IdentificationWindow" Height="500" Width="600">
+
+    
+
+    <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="25" />
-            <RowDefinition />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Button Grid.Row="0" Height="25" Content="Attribut auswählen" HorizontalAlignment="Left">
-        </Button>
+        <!--<Button Name="chooseAttributeBtn" Grid.Row="0" Height="25" Content="Attribut auswählen" HorizontalAlignment="Left" Click="chooseAttributeBtn_Click" />-->
+        <!-- Ribbon Abschnitt -->
+        <r:Ribbon x:Name="Ribbon" Grid.Row="0" >
+            <r:RibbonTab x:Name="tabAnsicht" 
+                              Header="Programm">
+                <r:RibbonGroup x:Name="groupAnsichtwechsel" 
+                                    Header="Ansichtwechsel">
+                    <r:RibbonButton Label="Attribut auswählen" Click="chooseAttributeBtn_Click" />
+                </r:RibbonGroup>
+            </r:RibbonTab>
+        </r:Ribbon>
+        
         <DataGrid Grid.Row="1" ItemsSource="{Binding TableEntryList}" AutoGenerateColumns="False" Name="filteredDataGrid" />
     </Grid>
-</Window>
+</r:RibbonWindow>

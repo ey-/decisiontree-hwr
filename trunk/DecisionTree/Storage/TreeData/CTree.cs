@@ -96,5 +96,11 @@ namespace DecisionTree.Storage.TreeData
 
             return edge;
         }
+
+        internal bool removeEdge(CTreeEdge edge)
+        {
+            mEdgeList.Remove(edge);
+            return mGraph.RemoveEdge(edge);
+        }
     }
 }

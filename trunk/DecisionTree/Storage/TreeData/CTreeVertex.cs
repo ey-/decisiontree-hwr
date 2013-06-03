@@ -10,18 +10,21 @@ namespace DecisionTree.Storage.TreeData
     /// </summary>
     public class CTreeVertex
     {
-        protected CTreeVertex mParentVertex;
-        protected CTreeEdge mParentEdge;
+        protected CTreeVertex mParentVertex = null;
+        protected List<CTreeVertex> mChildNodes = new List<CTreeVertex>();
+        protected CTreeEdge mParentEdge = null;
         protected CTreeGraph mGraph;
 
         protected CAttributeType mAttributeType;
 
+        protected string mName = "keine Regel festgelegt";
+
         #region Testdaten für Präsi -> Danach wieder löschen
-        protected int mNumObjects;
+        /*protected int mNumObjects;
         protected int mNumObjectsYes;
         protected int mNumObjectsNo;
         protected double mEntropy;
-
+        
         public void setDemoData(string vertexName, int countObjects, int countObjectsYes, int countObjectsNo, double entropy)
         {
             if (vertexName != "")
@@ -34,7 +37,7 @@ namespace DecisionTree.Storage.TreeData
             mNumObjectsYes = countObjectsYes;
             mNumObjectsNo = countObjectsNo;
             mEntropy = entropy;
-        }
+        }*/
         #endregion
 
         /*********************************************************************/
@@ -47,7 +50,29 @@ namespace DecisionTree.Storage.TreeData
         { 
             mParentVertex = parent;
             mGraph = graph;
-            mAttributeType = attributeType;
+            AttributeType = attributeType;
+        }
+
+        /*********************************************************************/
+        /// <summary>
+        /// Attributtyp welcher durch diesen Knoten repräsentiert wird.
+        /// </summary>
+        public CAttributeType AttributeType
+        {
+            get { return mAttributeType; }
+            set 
+            { 
+                mAttributeType = value;
+
+                if (mAttributeType != null)
+                {
+                    mName = mAttributeType.Name;
+                }
+                else
+                {
+                    mName = "keine Regel festgelegt";
+                }
+            }
         }
 
         /*********************************************************************/
@@ -59,6 +84,12 @@ namespace DecisionTree.Storage.TreeData
             get { return mParentVertex; }
         }
 
+        public List<CTreeVertex> ChildList
+        {
+            get { return mChildNodes; }
+        }
+
+
         /*********************************************************************/
         /// <summary>
         /// Verbindung zum übergeordnetten Knoten
@@ -69,42 +100,37 @@ namespace DecisionTree.Storage.TreeData
             set { mParentEdge = value; }
         }
 
-
-
         public string VertexName
         {
-            get
-            {
-                if (mAttributeType != null)
-                {
-                    return mAttributeType.Name;
-                }
-                return "keine Regel festgelegt";
-            }
+            get { return mName = mAttributeType.Name; }
         }
 
         public int CountObjects
         {
-            get { return mNumObjects; }
+            // TODO CTreeVertex::CountObjects
+            get { return 0; }
         }
 
         /// <summary>
         /// Nochmal überdenken wie man das schöner machen kann
         /// </summary>
         public int[] CountObjectsPerClass
-        { 
+        {
+            // // TODO CTreeVertex::CountObjectsPerClass
             get 
             {
-                int [] ret = new int[2];
+                /*int [] ret = new int[2];
                 ret[0] = mNumObjectsYes;
                 ret[1] = mNumObjectsNo;
-                return ret;
+                return ret;*/
+                return new int[1];
             }
         }
 
         public double Entropy
         {
-            get { return mEntropy; }
+            // // TODO CTreeVertex::Entropy
+            get { return 0; }
         }
 
         
