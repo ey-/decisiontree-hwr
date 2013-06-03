@@ -34,7 +34,7 @@
 
         <!-- Beschreibung wie ein Vertex aussieht -->
         <DataTemplate x:Key="vertexVisualizer" DataType="{x:Type tree:CTreeVertex}">
-            <StackPanel Orientation="Vertical" Margin="5">
+            <StackPanel Orientation="Vertical" Margin="10" >
                 <TextBlock Text="{Binding Path=VertexName, Mode=OneWay}" FontWeight="Bold" />
                 
                 <Grid >
@@ -71,8 +71,10 @@
                         <!-- CornerRadius="10,10,10,10" -->
                         <Border BorderBrush="Black" 
                                     Background="White"
-							        BorderThickness="2"
-							        Padding="{TemplateBinding Padding}" >
+							        BorderThickness="1"
+							        CornerRadius="10,10,10,10"
+							        Padding="{TemplateBinding Padding}"
+                                    Margin="5">
                             <!--<Border.Effect>
                                 <DropShadowEffect BlurRadius="2" Color="LightGray" 
                                     Opacity="0.3" Direction="315"/>
@@ -112,36 +114,37 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type graphsharp:EdgeControl}">
                         <Canvas>
-                            <!-- TODO Versuchen lauffähig zu machen .. dies zeichnet die Linie zwischen den Knoten -->
-                            <!--
+
+
                             <Path Stroke="{TemplateBinding Foreground}"
-                                    StrokeThickness="2"
-                                    MinWidth="1"
-                                    MinHeight="1"
-                                    x:Name="edgePath">
+                                  StrokeThickness="1"
+                                  MinWidth="1"
+                                  MinHeight="1"
+                                  x:Name="edgePath">
                                 <Path.Data>
                                     <PathGeometry>
-                                        <PathGeometry.Figures>
+                                        <PathGeometry.Figures>       
                                             <MultiBinding Converter="{StaticResource routeToPathConverter}">
-                                                alle haben: RelativeSource="{RelativeSource TemplatedParent}"
-                                                
-                                                <Binding Path="Source.(Controls:GraphCanvas.X)" />
-                                                <Binding Path="Source.(Controls:GraphCanvas.Y)" />
-                                                <Binding Path="Source.ActualWidth" />
-                                                <Binding Path="Source.ActualHeight" />
-                                                <Binding Path="Target.(Controls:GraphCanvas.X)" />
-                                                <Binding Path="Target.(Controls:GraphCanvas.Y)" />
-                                                <Binding Path="Target.ActualWidth" />
-                                                <Binding Path="Target.ActualHeight" />
-                                                <Binding Path="RoutePoints" />
+                                                <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="Source.(graphsharp:GraphCanvas.X)" />
+                                                <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="Source.(graphsharp:GraphCanvas.Y)" />
+                                                <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="Source.ActualWidth" />
+                                                <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="Source.ActualHeight" />
+                                                <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="Target.(graphsharp:GraphCanvas.X)" />
+                                                <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="Target.(graphsharp:GraphCanvas.Y)" />
+                                                <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="Target.ActualWidth" />
+                                                <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="Target.ActualHeight" />
+                                                <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="RoutePoints" />
                                             </MultiBinding>
                                         </PathGeometry.Figures>
                                     </PathGeometry>
+                                    
                                 </Path.Data>
-                            </Path>-->
+                            </Path>
+                                                    
+
                             
-                            <local:CLabeledEdgeControl Content="{Binding Edge.EdgeValue, RelativeSource={RelativeSource TemplatedParent}}" Foreground="Black" />
-                        </Canvas>
+                           <local:CLabeledEdgeControl Content="{Binding Edge.Tag, RelativeSource={RelativeSource TemplatedParent}}" Foreground="Black" />
+</Canvas>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
