@@ -192,9 +192,9 @@ namespace DecisionTree.Logic
         /// </summary>
         /// <param name="vertex">Vertex dessen Attribut geändert werden soll</param>
         /// <param name="attributeType">neues Attribut des Vertex</param>
-        public void setVertexAttribute(CTreeVertex vertex, CAttributeType attributeType)
+        public bool setVertexAttribute(CTreeVertex vertex, CAttributeType attributeType)
         {
-            mTreeLogic.setVertexAttribute(vertex, attributeType);
+            return mTreeLogic.setVertexAttribute(vertex, attributeType);
         }
 
         #endregion

@@ -17,11 +17,11 @@ namespace DecisionTree.Storage.TableData
         protected SQLiteCommand mCommand;
 
         const string DATABASE_SOURCE = "Data Source=";
-#if DEBUG
+/*#if DEBUG
         const string DATABASE_PATH = "\\..\\..\\Database\\test.sl3";
-#else
+#else*/
         const string DATABASE_PATH = ":memory:";
-#endif
+//#endif
 
         /*********************************************************************/
         /// <summary>
@@ -29,11 +29,11 @@ namespace DecisionTree.Storage.TableData
         /// </summary>
         public CSQLiteConnection()
         {
-#if TEST || !DEBUG
+//#if TEST || !DEBUG
             // Im Releasebetrieb verwenden wir eine Inmemory Datenbank.
             // Daher muss der Pfad zur exe nicht angegeben werden.
             string exePath = "";
-#else
+/*#else
             // Im Debugbetrieb verwenden wir eine Datenbank auf der Festplatte.
             // Dazu müssen wir relativ zur exe den Datenbankpfad ermitteln
             string exePath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
@@ -50,7 +50,7 @@ namespace DecisionTree.Storage.TableData
                     SQLiteConnection.CreateFile(exePath + DATABASE_PATH);
                 }
             }       
-#endif
+#endif*/
 
             string databaseSource = DATABASE_SOURCE;
             databaseSource += exePath;
