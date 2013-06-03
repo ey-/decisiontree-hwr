@@ -10,7 +10,7 @@ namespace DecisionTree.Storage.TreeData
     /// Klasse zum Speichern einer Verbindung zwischen zwei 
     /// Vertex im Baum
     /// </summary>
-    public class CTreeEdge : Edge<CTreeVertex>
+    public class CTreeEdge : TaggedEdge<CTreeVertex, CAttributeValue>
     {
         protected CAttributeValue mEdgeValue;
 
@@ -22,11 +22,11 @@ namespace DecisionTree.Storage.TreeData
         /// <param name="target">Endpunkt der Verbindung</param>
         /// <param name="mEdgeValue">Wert der Kante</param>
         public CTreeEdge(CTreeVertex source, CTreeVertex target, CAttributeValue edgeValue) 
-            : base(source, target)
+            : base(source, target, edgeValue)
         {
             mEdgeValue = edgeValue;
         }
-
+        
         public string EdgeValue
         {
             get 
@@ -43,5 +43,6 @@ namespace DecisionTree.Storage.TreeData
         {
             return EdgeValue;
         }
+        
     }
 }
