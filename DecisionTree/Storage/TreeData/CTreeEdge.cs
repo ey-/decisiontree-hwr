@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using QuickGraph;
+using System.ComponentModel;
 
 namespace DecisionTree.Storage.TreeData
 {
@@ -10,7 +11,7 @@ namespace DecisionTree.Storage.TreeData
     /// Klasse zum Speichern einer Verbindung zwischen zwei 
     /// Vertex im Baum
     /// </summary>
-    public class CTreeEdge : TaggedEdge<CTreeVertex, CAttributeValue>
+    public class CTreeEdge : TaggedEdge<CTreeVertex, CAttributeValue>, INotifyPropertyChanged
     {
         protected CAttributeValue mEdgeValue;
 
@@ -43,6 +44,21 @@ namespace DecisionTree.Storage.TreeData
         {
             return EdgeValue;
         }
-        
+
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        /*********************************************************************/
+        /// <summary>
+        /// Gibt dem Graphen bescheid das ein Attribut geändert wurde
+        /// </summary>
+        /// <param name="info">Name des Feldes welches sich geändert hat</param>
+        protected void NotifyPropertyChanged(string info)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(info));
+            }
+        }
     }
 }
