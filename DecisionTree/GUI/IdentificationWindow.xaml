@@ -4,7 +4,20 @@
         xmlns:r="clr-namespace:Microsoft.Windows.Controls.Ribbon;assembly=RibbonControlsLibrary"
         Title="IdentificationWindow" Height="500" Width="600">
 
-    
+    <r:RibbonWindow.Resources>
+        <LinearGradientBrush x:Key="DataGridHeaderBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#FFFFFFFF" Offset="0" />
+            <GradientStop Color="#FF8AAEDA" Offset="0.521" />
+            <GradientStop Color="#FFC6D6EC" Offset="0.194" />
+            <GradientStop Color="#FFB4C9E5" Offset="0.811" />
+            <GradientStop Color="#FFB7C8E0" Offset="0.507" />
+            <GradientStop Color="#FFD1DEF0" Offset="1" />
+        </LinearGradientBrush>
+        
+        <Style x:Key="TargetValueColumnHeaderStyle">
+            <Setter Property="Control.Background" Value="{StaticResource DataGridHeaderBackgroundBrush}"/>
+        </Style>
+    </r:RibbonWindow.Resources>
 
     <Grid>
         <Grid.RowDefinitions>

@@ -56,6 +56,8 @@ namespace DecisionTree.GUI
                     filteredDataGrid.Columns.Add(column);
                 }
             }
+
+            highlightSelectedAttributeColumn();
         }
 
         /*********************************************************************/
@@ -94,7 +96,32 @@ namespace DecisionTree.GUI
                 {
                     MessageBox.Show("Sie können dieses Attribut nicht auswählen, da es bereits als Attribut in einem anderen Knoten verwendet wird.", "Attribut wird bereits verwendet", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 }
+                else
+                {
+                    highlightSelectedAttributeColumn();
+                }
             }
+        }
+
+        /*********************************************************************/
+        /// <summary>
+        /// Hebt die Spalte hervor dessen Attributtyp, mit dem Typen des Knotens 
+        /// übereinstimmt der gerade identifiziert wird.
+        /// </summary>
+        private void highlightSelectedAttributeColumn()
+        {
+            foreach (CTableColumn col in filteredDataGrid.Columns)
+            {
+                if (col.ColumnDataType == mVertexToIdentify.AttributeType)
+                {
+                    col.HeaderStyle = FindResource("TargetValueColumnHeaderStyle") as Style;
+                }
+                else
+                {
+                    col.HeaderStyle = null;
+                }
+            }
+            
         }
     }
 }

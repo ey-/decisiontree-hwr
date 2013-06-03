@@ -121,6 +121,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Logic\CTableLogic.cs" />
+    <Compile Include="Logic\CTDIDTAlgorithm.cs" />
     <Compile Include="Logic\CTreeLogic.cs" />
     <Compile Include="Logic\IBusinessLogic.cs" />
     <Compile Include="Storage\CAttributeType.cs" />
