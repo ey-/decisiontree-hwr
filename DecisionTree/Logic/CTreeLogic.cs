@@ -25,7 +25,7 @@ namespace DecisionTree.Logic
         {
             mTreeHandler = new CTreeHandler();
 
-            setupTestData();
+            //setupTestData();
         }
 
         /*********************************************************************/
@@ -97,12 +97,12 @@ namespace DecisionTree.Logic
         private void setupTestData()
         {
             CTreeVertex root = addVertex(null);
-            root.setDemoData("Geschlecht", 11, 5, 6, 0.2134);
+            //root.setDemoData("Geschlecht", 11, 5, 6, 0.2134);
 
             CTreeVertex v1_1 = addVertex(root);
-            v1_1.setDemoData("Sendung Enthält", 6, 4, 2, 0.3234);
+            //v1_1.setDemoData("Sendung Enthält", 6, 4, 2, 0.3234);
             CTreeVertex v1_2 = addVertex(root);
-            v1_2.setDemoData("", 6, 4, 2, 0.3234);
+            //v1_2.setDemoData("", 6, 4, 2, 0.3234);
 
             CAttributeType testType = new CAttributeType(0);
             CTreeEdge edgeR_1_1 = addEdge(root, v1_1, new CAttributeValue(testType, "0", "f", null));
@@ -112,11 +112,11 @@ namespace DecisionTree.Logic
             CTreeEdge edgeR_1_2 = new CTreeEdge(root, v1_2, new CAttributeValue(testType, "0", "m", null));
             */
             CTreeVertex v2_1 = addVertex(v1_1);
-            v2_1.setDemoData("", 3, 2, 1, 0.3234);
+            //v2_1.setDemoData("", 3, 2, 1, 0.3234);
             CTreeVertex v2_2 = addVertex(v1_1);
-            v2_2.setDemoData("", 2, 2, 0, 0.3234);
+            //v2_2.setDemoData("", 2, 2, 0, 0.3234);
             CTreeVertex v2_3 = addVertex(v1_1);
-            v2_3.setDemoData("", 1, 0, 1, 0.3234);
+            //v2_3.setDemoData("", 1, 0, 1, 0.3234);
 
             CTreeEdge edge1_1_2_1 = addEdge(v1_1, v2_1, new CAttributeValue(testType, "0", "Filme", null));
             CTreeEdge edge1_1_2_2 = addEdge(v1_1, v2_2, new CAttributeValue(testType, "0", "Bücher", null));
@@ -137,5 +137,25 @@ namespace DecisionTree.Logic
             */
         }
 
+        /*********************************************************************/
+        /// <summary>
+        /// Setzt für einen Vertex das Attribut welches dieser Repräsentiert
+        /// </summary>
+        /// <param name="vertex">Vertex dessen Attribut geändert werden soll</param>
+        /// <param name="attributeType">neues Attribut des Vertex</param>
+        internal void setVertexAttribute(CTreeVertex vertex, CAttributeType attributeType)
+        {
+            // wenn das Attribut bereits das ist welches der Vertex repräsentiert,
+            // müssen wir nichts machen.
+            if (vertex.AttributeType != attributeType)
+            {
+                mTreeHandler.removeChildVertices(vertex);
+
+                // Attribut des Vertex setzen
+                vertex.AttributeType = attributeType;
+
+                // TODO Kindknoten erzeugen und Verbindungen anlegen
+            }
+        }
     }
 }

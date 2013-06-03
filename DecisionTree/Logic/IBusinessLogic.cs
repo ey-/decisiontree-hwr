@@ -99,6 +99,18 @@ namespace DecisionTree.Logic
 
         #endregion
 
+        #region Funktionen Identifikationsfenster
+
+        /*********************************************************************/
+        /// <summary>
+        /// Holt die Liste aller AttributTypen und gibt diese zurück. 
+        /// Auch die nicht verwendeten!
+        /// </summary>
+        /// <returns>Liste mit allen Attributtypen</returns>
+        List<CAttributeType> getAttributeTypes();
+
+        #endregion
+
         #region Graphenfunktionen
 
         /*********************************************************************/
@@ -107,6 +119,14 @@ namespace DecisionTree.Logic
         /// </summary>
         /// <returns></returns>
         CTreeGraph getGraph();
+
+        /*********************************************************************/
+        /// <summary>
+        /// Setzt für einen Vertex das Attribut welches dieser Repräsentiert
+        /// </summary>
+        /// <param name="vertex">Vertex dessen Attribut geändert werden soll</param>
+        /// <param name="attributeType">neues Attribut des Vertex</param>
+        void setVertexAttribute(CTreeVertex vertex, CAttributeType attributeType);
 
         #endregion
         
@@ -117,8 +137,6 @@ namespace DecisionTree.Logic
         /// <param name="selectedView">View auf die gewechselt wurde</param>
         void changeView(E_VIEW selectedView);
 
-        List<CAttributeType> getAttributeTypes();
-        
         void test();
 
     }// class

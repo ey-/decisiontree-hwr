@@ -13,6 +13,7 @@ using System.Windows.Shapes;
 using DecisionTree.Storage.TreeData;
 using DecisionTree.Logic;
 using DecisionTree.Storage;
+using Microsoft.Windows.Controls.Ribbon;
 
 namespace DecisionTree.GUI
 {
@@ -20,7 +21,7 @@ namespace DecisionTree.GUI
     /// <summary>
     /// Interaktionslogik für IdentificationWindow.xaml
     /// </summary>
-    public partial class IdentificationWindow : Window
+    public partial class IdentificationWindow : RibbonWindow
     {
         IBusinessLogic mBusinessLogic = CBusinessLogic.getInstance();
         CTreeVertex mVertexToIdentify;
@@ -36,19 +37,12 @@ namespace DecisionTree.GUI
         /// soll</param>
         public IdentificationWindow(CTreeVertex vertexToIdentify)
         {
-            // sollte bereits ein Identifikationsfenster offen sein, diese jetzt schließen
-            if (mInstance != null)
-            {
-                mInstance.Close();
-                mInstance = null;
-            }
-            // Fenster Instanz speichern, um sicher zu gehen dass nur ein 
-            // Identifikationsfenster geöffnet ist
-            mInstance = this;
+            // Sichergehen das nur ein Identifikationsfenster geöffnet ist
+            checkSingleIndentificationWindow();
+
+            InitializeComponent();
 
             mVertexToIdentify = vertexToIdentify;
-            
-            InitializeComponent();
             mTableEntryList = mBusinessLogic.getFilterdTableData(mVertexToIdentify);
             filteredDataGrid.DataContext = this;
 
@@ -66,12 +60,38 @@ namespace DecisionTree.GUI
 
         /*********************************************************************/
         /// <summary>
+        /// Sichergehen das nur ein Identifikationsfenster geöffnet ist
+        /// </summary>
+        private void checkSingleIndentificationWindow()
+        {
+            // sollte bereits ein Identifikationsfenster offen sein, diese jetzt schließen
+            if (mInstance != null)
+            {
+                mInstance.Close();
+                mInstance = null;
+            }
+            // Fenster Instanz speichern, um sicher zu gehen dass nur ein 
+            // Identifikationsfenster geöffnet ist
+            mInstance = this;
+        }
+
+        /*********************************************************************/
+        /// <summary>
         /// Holen der Liste mit Einträgen die von dem Knoten repräsentiert werden
         /// </summary>
         public CTableEntryList TableEntryList
         {
             get { return mTableEntryList; }
             
+        }
+        
+        private void chooseAttributeBtn_Click(object sender, RoutedEventArgs e)
+        {
+            CTableColumn selectedColumn = filteredDataGrid.CurrentColumn as CTableColumn;
+            if (selectedColumn != null)
+            { 
+                mBusinessLogic.setVertexAttribute(mVertexToIdentify, selectedColumn.ColumnDataType);
+            }
         }
     }
 }

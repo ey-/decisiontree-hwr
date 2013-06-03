@@ -51,9 +51,25 @@ namespace DecisionTree.Storage
         /// <returns>erstellter Vertex</returns>
         CTreeVertex addVertex(CTreeVertex parent, CAttributeType type);
 
+        /*********************************************************************/
+        /// <summary>
+        /// Löscht einen Vertex aus dem Graphen. 
+        /// !!Dabei werden KEINE Edges gelöscht!!
+        /// </summary>
+        /// <param name="vertex">zu Entfernender Vertex</param>
+        /// <returns>Erfolg der Operation</returns>
         bool removeVertex(CTreeVertex vertex);
 
-        CTreeEdge addEdge(CTreeVertex parent, CTreeVertex child, CAttributeValue attributeValue);
+        /*********************************************************************/
+        /// <summary>
+        /// Löscht die Kindelement des übergebenen Vertex und die dazugehörigen 
+        /// Verbindungen.
+        /// </summary>
+        /// <param name="vertex">Vertex dessen Kindknoten entfernt werden sollen</param>
+        /// <returns>Erfolg der Operation</returns>
+        bool removeChildVertices(CTreeVertex vertex);
 
+        CTreeEdge addEdge(CTreeVertex parent, CTreeVertex child, CAttributeValue attributeValue);
+        bool removeEdge(CTreeEdge edge);
     }
 }
