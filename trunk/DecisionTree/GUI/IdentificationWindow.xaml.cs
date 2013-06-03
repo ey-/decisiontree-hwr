@@ -89,8 +89,11 @@ namespace DecisionTree.GUI
         {
             CTableColumn selectedColumn = filteredDataGrid.CurrentColumn as CTableColumn;
             if (selectedColumn != null)
-            { 
-                mBusinessLogic.setVertexAttribute(mVertexToIdentify, selectedColumn.ColumnDataType);
+            {
+                if (mBusinessLogic.setVertexAttribute(mVertexToIdentify, selectedColumn.ColumnDataType) == false)
+                {
+                    MessageBox.Show("Sie können dieses Attribut nicht auswählen, da es bereits als Attribut in einem anderen Knoten verwendet wird.", "Attribut wird bereits verwendet", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                }
             }
         }
     }

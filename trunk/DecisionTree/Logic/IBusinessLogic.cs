@@ -126,7 +126,7 @@ namespace DecisionTree.Logic
         /// </summary>
         /// <param name="vertex">Vertex dessen Attribut geändert werden soll</param>
         /// <param name="attributeType">neues Attribut des Vertex</param>
-        void setVertexAttribute(CTreeVertex vertex, CAttributeType attributeType);
+        bool setVertexAttribute(CTreeVertex vertex, CAttributeType attributeType);
 
         #endregion
         

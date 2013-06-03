@@ -143,8 +143,20 @@ namespace DecisionTree.Logic
         /// </summary>
         /// <param name="vertex">Vertex dessen Attribut geändert werden soll</param>
         /// <param name="attributeType">neues Attribut des Vertex</param>
-        internal void setVertexAttribute(CTreeVertex vertex, CAttributeType attributeType)
+        internal bool setVertexAttribute(CTreeVertex vertex, CAttributeType attributeType)
         {
+            // Durch alle Parentelemente des Knotenes gehen und prüfen ob dieses Attribut 
+            // nicht schon verwendet wurde
+            CTreeVertex parent = vertex.ParentVertex;
+            while (parent != null)
+            {
+                if (parent.AttributeType != attributeType)
+                {
+                    return false;
+                }
+                parent = parent.ParentVertex;
+            }
+
             // wenn das Attribut bereits das ist welches der Vertex repräsentiert,
             // müssen wir nichts machen.
             if (vertex.AttributeType != attributeType)
@@ -155,7 +167,10 @@ namespace DecisionTree.Logic
                 vertex.AttributeType = attributeType;
 
                 // TODO Kindknoten erzeugen und Verbindungen anlegen
+
+                return true;
             }
+            return false;
         }
     }
 }
