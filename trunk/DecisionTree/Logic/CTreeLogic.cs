@@ -14,6 +14,7 @@ namespace DecisionTree.Logic
     public class CTreeLogic
     {
         ITreeHandler mTreeHandler;
+        CTDIDTAlgorithm mTDIDTAlgorithm;
 
         bool mbInteractiveTreeNeedReset = false;
 
@@ -24,7 +25,7 @@ namespace DecisionTree.Logic
         public CTreeLogic()
         {
             mTreeHandler = new CTreeHandler();
-
+            mTDIDTAlgorithm = new CTDIDTAlgorithm(this);
             //setupTestData();
         }
 
