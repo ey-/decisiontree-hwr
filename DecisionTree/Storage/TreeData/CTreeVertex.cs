@@ -102,7 +102,7 @@ namespace DecisionTree.Storage.TreeData
 
         public string VertexName
         {
-            get { return mName = mAttributeType.Name; }
+            get { return mName; }
         }
 
         public int CountObjects

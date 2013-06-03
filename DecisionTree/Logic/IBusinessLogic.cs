@@ -48,7 +48,7 @@ namespace DecisionTree.Logic
         /// <summary>
         /// Testweise Methode zum hinzufügen eines weiteren Attributes zur Tabelle
         /// </summary>
-        CAttributeType addAttribute();
+        CAttributeType addAttribute(string attributeName);
 
         /*********************************************************************/
         /// <summary>
