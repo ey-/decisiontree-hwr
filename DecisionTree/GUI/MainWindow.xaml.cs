@@ -23,7 +23,6 @@ using System.IO;
 using System.Globalization;
 using DecisionTree.Storage.TreeData;
 using GraphSharp.Controls;
-using QuickGraph;
 
 namespace DecisionTree
 {
