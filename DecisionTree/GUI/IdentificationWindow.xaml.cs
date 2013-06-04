@@ -67,11 +67,12 @@ namespace DecisionTree.GUI
         {
             if (bShowButtons == true)
             {
-                chooseAttrBtn.Visibility = Visibility.Visible;
+
+                groupAnsichtwechsel.Visibility = Visibility.Visible;
             }
             else 
             {
-                chooseAttrBtn.Visibility = Visibility.Hidden;
+                groupAnsichtwechsel.Visibility = Visibility.Hidden;
             }
         }
 
