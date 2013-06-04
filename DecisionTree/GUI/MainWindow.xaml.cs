@@ -56,6 +56,7 @@ namespace DecisionTree
         {
             InitializeComponent();
             mBusinessLogic = CBusinessLogic.getInstance();
+            mBusinessLogic.init();
             mBusinessLogic.registerWindow(this);
 
             mTableEntryList = mBusinessLogic.getAllTableData();

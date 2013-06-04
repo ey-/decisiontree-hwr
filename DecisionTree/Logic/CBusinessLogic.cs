@@ -43,6 +43,12 @@ namespace DecisionTree.Logic
             return mInstance ;
         }
 
+        public void init()
+        {
+            mTreeLogic.setTableSetupChanged();
+            mTreeLogic.setTreeForView(E_VIEW.E_TREE_INTERACTIVE_VIEW);
+        }
+
         /*********************************************************************/
         /// <summary>
         /// Registiert das MainWindow Interface damit der Zugriff auf die Fenster erfolgen kann.
