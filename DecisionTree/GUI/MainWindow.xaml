@@ -22,7 +22,7 @@
             <GradientStop Color="#FFB7C8E0" Offset="0.507" />
             <GradientStop Color="#FFD1DEF0" Offset="1" />
         </LinearGradientBrush>
-
+        
         <Style x:Key="TargetValueColumnHeaderStyle">
             <Setter Property="Control.Background" Value="{StaticResource DataGridHeaderBackgroundBrush}"/>
         </Style>
@@ -65,16 +65,23 @@
         </DataTemplate>
 
         <Style TargetType="{x:Type graphsharp:VertexControl}">
+            <Style.Resources>
+                <ToolTip x:Key="ToolTipContent">
+                    <StackPanel>
+                        <TextBlock Text="Doppelklicken um das Attribut auszuwählen oder zu ändern"/>
+                    </StackPanel>
+                </ToolTip>
+            </Style.Resources>
+            <Setter Property="ToolTip" Value="{StaticResource ToolTipContent}"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type graphsharp:VertexControl}" >
-                        <!-- CornerRadius="10,10,10,10" -->
+                        <!--CornerRadius="10,10,10,10"-->
                         <Border BorderBrush="Black" 
                                     Background="White"
 							        BorderThickness="1"
-							        CornerRadius="10,10,10,10"
 							        Padding="{TemplateBinding Padding}"
-                                    Margin="5">
+                                    Margin="2">
                             <!--<Border.Effect>
                                 <DropShadowEffect BlurRadius="2" Color="LightGray" 
                                     Opacity="0.3" Direction="315"/>
@@ -114,8 +121,6 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type graphsharp:EdgeControl}">
                         <Canvas>
-
-
                             <Path Stroke="{TemplateBinding Foreground}"
                                   StrokeThickness="1"
                                   MinWidth="1"
@@ -267,7 +272,7 @@
                 <zoom:ZoomControl Zoom="1" MinZoom="0.1" MaxZoom="2" ZoomBoxOpacity="0.5" Background="#FFEBEBEB" >
                     <local:CTreeElementLayout x:Name="graph" Margin="10" Graph="{Binding Path=VisualGraph}" 
                                              LayoutAlgorithmType="Tree"  OverlapRemovalAlgorithmType="FSA" 
-                                             IsEnabled="True"  AllowDrop="False" >
+                                             IsEnabled="True"  HighlightAlgorithmType="Simple" AllowDrop="True">
                     </local:CTreeElementLayout>
                 </zoom:ZoomControl>
             </ContentControl>

@@ -54,9 +54,6 @@
     <Reference Include="GraphSharp">
       <HintPath>lib\GraphSharp.dll</HintPath>
     </Reference>
-    <Reference Include="GraphSharp.Contracts">
-      <HintPath>lib\GraphSharp.Contracts.dll</HintPath>
-    </Reference>
     <Reference Include="GraphSharp.Controls">
       <HintPath>lib\GraphSharp.Controls.dll</HintPath>
     </Reference>
