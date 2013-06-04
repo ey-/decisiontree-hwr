@@ -67,8 +67,8 @@
         <Style TargetType="{x:Type graphsharp:VertexControl}">
             <Style.Resources>
                 <ToolTip x:Key="ToolTipContent">
-                    <StackPanel>
-                        <TextBlock Text="Doppelklicken um das Attribut auszuwählen oder zu ändern"/>
+                    <StackPanel Name="toolTiptext">
+                        <TextBlock Text="{Binding Path=vertexTooltip}" />
                     </StackPanel>
                 </ToolTip>
             </Style.Resources>
@@ -132,7 +132,7 @@
 
 
 
-                            <local:CLabeledEdgeControl Content="{Binding Edge.Tag, RelativeSource={RelativeSource TemplatedParent}}" Foreground="Black" />
+                            <local:CLabeledEdgeControl Content="{Binding Edge.Tag, RelativeSource={RelativeSource TemplatedParent}}" Foreground="Black" FontSize="24 pt"/>
                         </Canvas>
                     </ControlTemplate>
                 </Setter.Value>
