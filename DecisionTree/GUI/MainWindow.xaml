@@ -9,7 +9,7 @@
         xmlns:Converters="clr-namespace:GraphSharp.Converters;assembly=GraphSharp.Controls"
         xmlns:zoom="clr-namespace:WPFExtensions.Controls;assembly=WPFExtensions"
         xmlns:extbehaviour="clr-namespace:WPFExtensions.AttachedBehaviours;assembly=WPFExtensions"
-        Title="MainWindow"
+        Title="Entscheidungsbaum"
 		x:Name="RibbonWindow"
 		Width="800" Height="600">
 
@@ -209,10 +209,10 @@
 
             <r:RibbonTab Header="Tabellenansicht" ContextualTabGroupHeader="Tabellenansicht">
                 <r:RibbonGroup Header="Debug">
-                    <r:RibbonButton Name="btnAddColumn" LargeImageSource="../Images/Add_Collum_Spalte.png" Label="addColumn" Click="RibbonButtonTableView_Click"/>
-                    <r:RibbonButton Name="btnRemoveColumn" Label="removeColumn" LargeImageSource="../Images/Remove_Collum_Spalte.png" Click="RibbonButtonTableView_Click" />
-                    <r:RibbonButton Name="btnAddRow" Label="addRow" LargeImageSource="../Images/Add_Row_Zeile.png" Click="RibbonButtonTableView_Click" />
-                    <r:RibbonButton Name="btnRemoveRow" Label="removeRow" LargeImageSource="../Images/Remove_Row_Zeile.png" Click="RibbonButtonTableView_Click" />
+                    <r:RibbonButton Name="btnAddColumn" LargeImageSource="../Images/Add_Collum_Spalte.png" Label="Attribut hinzufügen" Click="RibbonButtonTableView_Click"/>
+                    <r:RibbonButton Name="btnRemoveColumn" Label="Attribut entfernen" LargeImageSource="../Images/Remove_Collum_Spalte.png" Click="RibbonButtonTableView_Click" />
+                    <r:RibbonButton Name="btnAddRow" Label="Zeile hinzufügen" LargeImageSource="../Images/Add_Row_Zeile.png" Click="RibbonButtonTableView_Click" />
+                    <r:RibbonButton Name="btnRemoveRow" Label="Zeile entfernen" LargeImageSource="../Images/Remove_Row_Zeile.png" Click="RibbonButtonTableView_Click" />
                     <r:RibbonButton Name="btnSetTargetAttribute" Label="setze Zielattribut" Click="RibbonButtonTableView_Click" />
                 </r:RibbonGroup>
             </r:RibbonTab>
