@@ -151,7 +151,7 @@
         <!-- Ribbon Abschnitt -->
         <r:Ribbon x:Name="Ribbon" >
             <r:Ribbon.ApplicationMenu>
-                <r:RibbonApplicationMenu SmallImageSource="../Images/SmallIcon.png">
+                <r:RibbonApplicationMenu SmallImageSource="../Images/Datei2.png">
                     <r:RibbonApplicationMenuItem Header="Datei öffnen"
                                                  Name="openFile"
                                                  ImageSource="../Images/save.png"
