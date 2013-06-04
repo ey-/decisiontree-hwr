@@ -31,7 +31,7 @@
                               Header="Programm">
                 <r:RibbonGroup x:Name="groupAnsichtwechsel" 
                                     Header="Ansichtwechsel">
-                    <r:RibbonButton Label="Attribut auswählen" Click="chooseAttributeBtn_Click" />
+                    <r:RibbonButton Name="chooseAttrBtn" Label="Attribut auswählen" Click="chooseAttributeBtn_Click" />
                 </r:RibbonGroup>
             </r:RibbonTab>
         </r:Ribbon>
