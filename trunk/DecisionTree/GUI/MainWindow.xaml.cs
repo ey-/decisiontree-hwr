@@ -23,6 +23,7 @@ using System.IO;
 using System.Globalization;
 using DecisionTree.Storage.TreeData;
 using GraphSharp.Controls;
+using GraphSharp.Algorithms.Layout;
 
 namespace DecisionTree
 {
@@ -63,8 +64,16 @@ namespace DecisionTree
 
             graph.DataContext = this;
             mGraph = mBusinessLogic.getGraph();
+            
+                
+            GraphSharp.Algorithms.Layout.Simple.Tree.SimpleTreeLayoutParameters layoutParameter = new GraphSharp.Algorithms.Layout.Simple.Tree.SimpleTreeLayoutParameters();
+            layoutParameter.LayerGap = 50;
+            layoutParameter.VertexGap = 50;
+            layoutParameter.Direction = LayoutDirection.TopToBottom;
+                   
             LayoutAlgorithmType = "LinLog";
-
+            graph.LayoutParameters = layoutParameter;
+               
             DataContext = this;
 
             setViewVisibility(E_VIEW.E_TABLE_VIEW);
