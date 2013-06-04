@@ -149,6 +149,8 @@ namespace DecisionTree
             else if (sender == openFile)
             {
                 OpenFileDialog openDlg = new OpenFileDialog();
+                openDlg.Filter = "CSV-Dateiein (*.csv)|*.csv";
+                openDlg.Title = "Bitte wählen Sie eine CSV-Datei aus.";
                 if (openDlg.ShowDialog() == true)
                 {
                     this.Cursor = Cursors.Wait;
@@ -171,6 +173,8 @@ namespace DecisionTree
             else if (sender == saveFile)
             {
                 SaveFileDialog saveDlg = new SaveFileDialog();
+                saveDlg.Filter = "CSV-Dateiein (*.csv)|*.csv";
+                saveDlg.Title = "Bitte wählen Sie eine CSV-Datei unter der sie die Tabelle speichern möchten.";
                 if (saveDlg.ShowDialog() == true)
                 {
                     mBusinessLogic.saveCSVFile(saveDlg.FileName);
