@@ -9,7 +9,7 @@ namespace DecisionTree.Storage.TreeData
     /// <summary>
     /// Klasse zum Speichern eines Knoten im Baum
     /// </summary>
-    public class CTreeVertex : INotifyPropertyChanged
+    public class CTreeVertex //: INotifyPropertyChanged
     {
         protected const string NO_RULE_SET_TEXT = "keine Regel festgelegt";
 
@@ -140,7 +140,7 @@ namespace DecisionTree.Storage.TreeData
             get { return 0; }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        //public event PropertyChangedEventHandler PropertyChanged;
 
         /*********************************************************************/
         /// <summary>
@@ -149,9 +149,9 @@ namespace DecisionTree.Storage.TreeData
         /// <param name="info">Name des Feldes welches sich geändert hat</param>
         protected void NotifyPropertyChanged(string info)
         {
-            if (PropertyChanged != null)
+           // if (PropertyChanged != null)
             {
-                PropertyChanged(this, new PropertyChangedEventArgs(info));
+                //PropertyChanged(this, new PropertyChangedEventArgs(info));
             }
         }
 

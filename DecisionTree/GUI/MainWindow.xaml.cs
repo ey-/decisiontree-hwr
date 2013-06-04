@@ -61,7 +61,8 @@ namespace DecisionTree
 
             mTableEntryList = mBusinessLogic.getAllTableData();
             
-            graph.DataContext = this;
+            //graph.DataContext = this;
+            
             mGraph = mBusinessLogic.getGraph();
             LayoutAlgorithmType = "LinLog";
 
@@ -85,7 +86,7 @@ namespace DecisionTree
         /// </summary>
         public CTreeGraph VisualGraph
         {
-            get { return mGraph = mBusinessLogic.getGraph(); }
+            get { return mGraph; }
         }
 
         /*********************************************************************/
@@ -122,7 +123,7 @@ namespace DecisionTree
                 {
                     this.Cursor = Cursors.Wait;
 
-                    datagrid1.Columns.Clear();
+                    //datagrid1.Columns.Clear();
                     List<CAttributeType> addedColumns = mBusinessLogic.openCSVFile(openDlg.FileName);
                     foreach (CAttributeType columnData in addedColumns)
                     {
@@ -130,7 +131,7 @@ namespace DecisionTree
                     }
 
                     mTableEntryList = mBusinessLogic.getAllTableData();
-                    this.datagrid1.ItemsSource = mTableEntryList;
+                    //this.datagrid1.ItemsSource = mTableEntryList;
 
                     this.Cursor = Cursors.Arrow;
                     // http://social.msdn.microsoft.com/Forums/en/wpf/thread/1b694f75-7621-4c88-8055-6c31c601c87f
@@ -153,6 +154,7 @@ namespace DecisionTree
         /// </summary>
         private void RibbonButtonTableView_Click(object sender, RoutedEventArgs e)
         {
+            /*
             // Spalte hinzufügen Button
             if (sender.Equals(btnAddColumn) == true)
             {
@@ -166,14 +168,7 @@ namespace DecisionTree
             // selektierte Spalte löschen Button
             else if (sender.Equals(btnRemoveColumn) == true)
             {
-                if (datagrid1.CurrentColumn != null)
-                {
-                    DataGridColumn column = datagrid1.CurrentColumn;
-                    if (mBusinessLogic.removeAttribute((string)column.Header) == true)
-                    {
-                        datagrid1.Columns.Remove(column);
-                    }
-                }
+                
             }
             // Neue Zeile hinzufügen
             else if (sender.Equals(btnAddRow) == true)
@@ -183,9 +178,9 @@ namespace DecisionTree
             // Selektierte Zeile Löschen
             else if (sender.Equals(btnRemoveRow) == true)
             {
-                if (datagrid1.SelectedItem != null)
+                //if (datagrid1.SelectedItem != null)
                 {
-                    CTableEntry selectedEntry = (CTableEntry)datagrid1.SelectedItem;
+                   CTableEntry selectedEntry = (CTableEntry)datagrid1.SelectedItem;
                     if (mBusinessLogic.removeDataset(selectedEntry) == true)
                     {
                         mTableEntryList.Remove(selectedEntry);
@@ -195,34 +190,23 @@ namespace DecisionTree
             // Selektierte Zeile als Zielattribut setzen
             else if (sender.Equals(btnSetTargetAttribute) == true)
             {
-                CTableColumn selectedColumn = datagrid1.CurrentColumn as CTableColumn;
-                if (selectedColumn != null)
+                //CTableColumn selectedColumn = datagrid1.CurrentColumn as CTableColumn;
+                //if (selectedColumn != null)
                 {
                     if (mBusinessLogic.setTargetAttribute(selectedColumn.ColumnDataType) == true)
                     {
-                        foreach (CTableColumn column in datagrid1.Columns)
+                        //foreach (CTableColumn column in datagrid1.Columns)
                         {
                             //column.HeaderStyle = FindResource("DefaultColumnHeaderStyle") as Style;
                             column.HeaderStyle = null;
                         }
 
-                        selectedColumn.HeaderStyle = FindResource("TargetValueColumnHeaderStyle") as Style;
-                        CTableEntry entry = (CTableEntry)datagrid1.CurrentItem;
+                        //selectedColumn.HeaderStyle = FindResource("TargetValueColumnHeaderStyle") as Style;
+                        //CTableEntry entry = (CTableEntry)datagrid1.CurrentItem;
                     }
-
-                    /*
-                    GridViewColumnHeader.
-
-                    Style test = new Style("{x:Type DataGridColumnHeader}");
-                    Setter asd = new Setter();
-                    //asd.
-                    //column.
-
-                    GridViewColumnHeader qwe = new GridViewColumnHeader();
-                    qwe.
-                    */
+                    
                 }
-            }
+            }*/
         }
 
         /*********************************************************************/
@@ -254,7 +238,7 @@ namespace DecisionTree
             mBusinessLogic.changeView(selectedView);
 
             mGraph = mBusinessLogic.getGraph();
-            graph.DataContext = this;
+            //graph.DataContext = this;
         }
 
         /*********************************************************************/
@@ -318,7 +302,7 @@ namespace DecisionTree
                 DataGridTextColumn column = new CTableColumn(columnData);
                 //column.Header = columnData.Name;
                 //column.Binding = new Binding("[ " + columnData.Index + "].TableValue");
-                datagrid1.Columns.Add(column);
+                //datagrid1.Columns.Add(column);
             }
         }
 
@@ -339,8 +323,8 @@ namespace DecisionTree
                 {
                     bInteractiveView = false;
                 }
-                IdentificationWindow identWindow = new IdentificationWindow(vertex, bInteractiveView);
-                identWindow.Show();
+                //IdentificationWindow identWindow = new IdentificationWindow(vertex, bInteractiveView);
+               // identWindow.Show();
             }
         }
        
