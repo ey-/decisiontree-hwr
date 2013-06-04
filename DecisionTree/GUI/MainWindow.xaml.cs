@@ -240,6 +240,10 @@ namespace DecisionTree
                         selectedColumn.HeaderStyle = FindResource("TargetValueColumnHeaderStyle") as Style;
                         CTableEntry entry = (CTableEntry)datagrid1.CurrentItem;
                     }
+                    else
+                    {
+                        MessageBox.Show("Das Attribut \"" + selectedColumn.ColumnDataType.Name + "\" kann nicht als Zielattribut gesetzt werden, da nur Datensätze mit den Einträgen \"j\" und \"n\" zugelassen sind.", "Ungültiges Zielattribut", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    }
                 }
             }
         }
