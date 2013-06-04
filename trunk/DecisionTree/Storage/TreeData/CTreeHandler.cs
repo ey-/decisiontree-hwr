@@ -110,6 +110,7 @@ namespace DecisionTree.Storage.TreeData
                     // und den Kindknoten selbst
                     removeVertex(child);
                 }
+                vertex.ChildList.Clear();
                 return true;
             }
             // es wurden kein Elemente gelöscht

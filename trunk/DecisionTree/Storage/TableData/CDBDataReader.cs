@@ -170,7 +170,7 @@ namespace DecisionTree.Storage.TableData
             }
 
 
-            string sSqlCommand = "SELECT * FROM " + CTableConstants.TABLE_ATTRIBUTES + "WHERE ";
+            string sSqlCommand = "SELECT * FROM " + CTableConstants.TABLE_ATTRIBUTES + " WHERE ";
 
             // Den SQL-Befehl um die Filter erweitert. Dabei wird vom zu übergebenen Knoten 
             while (vertexToIdentify.ParentVertex != null)
@@ -178,13 +178,17 @@ namespace DecisionTree.Storage.TableData
                 CTreeVertex parent = vertexToIdentify.ParentVertex;
                 CTreeEdge parentEdge = vertexToIdentify.ParentEdge;
 
-                sSqlCommand += parent.VertexName;
+                sSqlCommand += parent.AttributeType.InternalName;
                 sSqlCommand += "=";
-                sSqlCommand += parentEdge.EdgeValue;
-                sSqlCommand += " ";
+                sSqlCommand += "'" + parentEdge.EdgeValue + "'";
+                
 
                 // den Nächsten Knotne auswählen
                 vertexToIdentify = parent;
+                if (vertexToIdentify.ParentVertex != null)
+                {
+                    sSqlCommand += " AND ";
+                }
             }
 
             SQLiteDataReader reader;
@@ -218,7 +222,7 @@ namespace DecisionTree.Storage.TableData
                 return null;
             }
 
-            string sSqlCommand = "SELECT DISTINCT " + vertexToIdentify.AttributeType.InternalName + " FROM " + CTableConstants.TABLE_ATTRIBUTES + ";";
+            string sSqlCommand = "SELECT DISTINCT " + vertexToIdentify.AttributeType.InternalName + " FROM " + CTableConstants.TABLE_ATTRIBUTES;
 
 
             SQLiteDataReader reader;

@@ -153,7 +153,7 @@ namespace DecisionTree.Logic
             CTreeVertex parent = vertex.ParentVertex;
             while (parent != null)
             {
-                if (parent.AttributeType != attributeType)
+                if (parent.AttributeType == attributeType)
                 {
                     return false;
                 }
