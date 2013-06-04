@@ -51,6 +51,32 @@ namespace DecisionTree.Storage
 
         /*********************************************************************/
         /// <summary>
+        /// Konstruktor um einen Attributwert zu speichern
+        /// </summary>
+        /// <param name="type">Beschreibung von welchem Typ die Varialbe ist</param>
+        /// <param name="sEntryIndex">ID des Eintrags aus der DB um den Eintrag eindeutig identifizieren zu können</param>
+        /// <param name="sValue">Wert im Stringformat</param>
+        /// <param name="dbAccess">Interface für den Zugriff auf die Datenbank, damit Werte geändert werden können</param>
+        public CAttributeValue(CAttributeType type, string sEntryIndex, string sValue)
+        {
+
+            mAttributeType = type;
+            msEntryIndex = sEntryIndex;
+
+            mStringValue = "";
+            mIntegerValue = 0;
+            mFloatValue = 0f;
+
+            switch (mAttributeType.DataType)
+            {
+                case E_DATATYPE.E_STRING: mStringValue = sValue; break;
+                case E_DATATYPE.E_INT: mIntegerValue = (sValue != "") ? Convert.ToInt32(sValue) : 0; break;
+                case E_DATATYPE.E_FLOAT: mFloatValue = (sValue != "") ? Convert.ToSingle(sValue) : 0.0f; break;
+            }
+        }
+
+        /*********************************************************************/
+        /// <summary>
         /// Informationen über den Typen des Attributwertes
         /// </summary>
         public CAttributeType AttributeType

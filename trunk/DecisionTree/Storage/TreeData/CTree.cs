@@ -78,6 +78,11 @@ namespace DecisionTree.Storage.TreeData
             mVertexList.Add(vertex);
             mGraph.AddVertex(vertex);
 
+            if (parent != null)
+            {
+                parent.ChildList.Add(vertex);
+            }
+
             return vertex;
         }
 
