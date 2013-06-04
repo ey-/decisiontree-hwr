@@ -77,6 +77,7 @@ namespace DecisionTree
                
             DataContext = this;
 
+            setTreeViewsEnabled(false);
             setViewVisibility(E_VIEW.E_TABLE_VIEW);
         }
 
@@ -166,6 +167,10 @@ namespace DecisionTree
                     this.datagrid1.ItemsSource = mTableEntryList;
                     // http://social.msdn.microsoft.com/Forums/en/wpf/thread/1b694f75-7621-4c88-8055-6c31c601c87f
 
+                    // wir haben eine neue Tabelle, also ist noch kein Zielattribut gesetzt 
+                    // und man soll nicht auf die Baumansichten wechseln
+                    setTreeViewsEnabled(false);
+
                     this.Cursor = Cursors.Arrow;
                 }
             }
@@ -243,6 +248,8 @@ namespace DecisionTree
 
                         selectedColumn.HeaderStyle = FindResource("TargetValueColumnHeaderStyle") as Style;
                         CTableEntry entry = (CTableEntry)datagrid1.CurrentItem;
+
+                        setTreeViewsEnabled(true);
                     }
                     else
                     {
@@ -457,6 +464,12 @@ namespace DecisionTree
                     e.Handled = true;
                 }
             }
+        }
+
+        private void setTreeViewsEnabled(bool enabled)
+        {
+            viewTreeInteractivBtn.IsEnabled = enabled;
+            viewTreeAutomaticBtn.IsEnabled = enabled;
         }
 
     } // class

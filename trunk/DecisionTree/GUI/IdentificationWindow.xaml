@@ -27,6 +27,15 @@
         <!--<Button Name="chooseAttributeBtn" Grid.Row="0" Height="25" Content="Attribut auswählen" HorizontalAlignment="Left" Click="chooseAttributeBtn_Click" />-->
         <!-- Ribbon Abschnitt -->
         <r:Ribbon x:Name="Ribbon" Grid.Row="0" >
+            <r:Ribbon.ApplicationMenu>
+                <r:RibbonApplicationMenu SmallImageSource="../Images/Datei2.png">
+                    <r:RibbonApplicationMenuItem Name="closeWindow"
+                                                 Click="closeWindow_Click"
+                                                 Header="Schließen"
+                                                 ImageSource="../Images/quit.png"/>
+                </r:RibbonApplicationMenu>
+            </r:Ribbon.ApplicationMenu>
+            
             <r:RibbonTab x:Name="tabAnsicht" 
                               Header="Programm">
                 <r:RibbonGroup x:Name="groupAnsichtwechsel" 
