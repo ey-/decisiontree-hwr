@@ -71,5 +71,7 @@ namespace DecisionTree.Storage
 
         CTreeEdge addEdge(CTreeVertex parent, CTreeVertex child, CAttributeValue attributeValue);
         bool removeEdge(CTreeEdge edge);
+
+        void updateVertexValues(Logic.CTableLogic mTableLogic);
     }
 }

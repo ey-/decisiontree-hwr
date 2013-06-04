@@ -202,7 +202,9 @@ namespace DecisionTree.Logic
         /// <param name="attributeType">neues Attribut des Vertex</param>
         public bool setVertexAttribute(CTreeVertex vertex, CAttributeType attributeType)
         {
-            return mTreeLogic.setVertexAttribute(vertex, attributeType);
+            bool bRet = mTreeLogic.setVertexAttribute(vertex, attributeType);
+            mTreeLogic.updateVertexValues();
+            return bRet;
         }
 
         #endregion
@@ -222,6 +224,7 @@ namespace DecisionTree.Logic
                 case E_VIEW.E_TREE_INTERACTIVE_VIEW:
                 case E_VIEW.E_TREE_AUTOMATIC_VIEW:
                     mTreeLogic.setTreeForView(selectedView);
+                    mTreeLogic.updateVertexValues();
                     break;
             }
         }
