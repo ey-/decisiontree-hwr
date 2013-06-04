@@ -24,7 +24,9 @@ namespace DecisionTree.Logic
         /// Registiert das MainWindow Interface damit der Zugriff auf die Fenster erfolgen kann.
         /// </summary>
         /// <param name="mainWindow">Interface zum MainWindow</param>
-         void registerWindow(IMainWindow mainWindow);
+        void registerWindow(IMainWindow mainWindow);
+
+        void init();
 
         #region Tabellenfunktionen
         /*********************************************************************/
