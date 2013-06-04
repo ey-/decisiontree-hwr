@@ -201,9 +201,6 @@
                          />
                 </r:RibbonGroup>
                 
-                <r:RibbonGroup Header="Test">
-                    <r:RibbonButton Name="TestBtn1" Label="test" Click="TestButton_Click" />
-                </r:RibbonGroup>
 
             </r:RibbonTab>
 
