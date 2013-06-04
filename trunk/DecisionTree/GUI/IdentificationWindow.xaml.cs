@@ -121,6 +121,7 @@ namespace DecisionTree.GUI
                 else
                 {
                     highlightSelectedAttributeColumn();
+                    this.Close();
                 }
             }
         }

@@ -160,19 +160,22 @@
         <!-- Ribbon Abschnitt -->
         <r:Ribbon x:Name="Ribbon" >
             <r:Ribbon.ApplicationMenu>
-                <r:RibbonApplicationMenu SmallImageSource="../Images/SmallIcon.png">
+                <r:RibbonApplicationMenu>
+                    <r:RibbonApplicationMenu.FooterPaneContent>
+                        <r:RibbonApplicationMenuItem Name="exitApplication"
+                                                     Click="MenuItem_Click"
+                                                     Header="Schließen"
+                                                     ImageSource="../Images/quit.png"
+                                                     HorizontalAlignment="Right"/>
+                    </r:RibbonApplicationMenu.FooterPaneContent>
                     <r:RibbonApplicationMenuItem Header="Datei öffnen"
                                                  Name="openFile"
                                                  ImageSource="../Images/save.png"
-                                                 Click="MenuItem_Click"/>
+                                                 Click="MenuItem_Click" />
                     <r:RibbonApplicationMenuItem Header="Datei speichern"
                                                  Name="saveFile"
                                                  ImageSource="../Images/save.png"
                                                  Click="MenuItem_Click"/>
-                    <r:RibbonApplicationMenuItem Name="exitApplication"
-                                                 Click="MenuItem_Click"
-                                                 Header="Close"
-                                                 ImageSource="../Images/quit.png"/>
                 </r:RibbonApplicationMenu>
             </r:Ribbon.ApplicationMenu>
             <r:RibbonTab x:Name="tabAnsicht" 
