@@ -14,6 +14,7 @@ namespace DecisionTree.Logic
     public class CTreeLogic
     {
         ITreeHandler mTreeHandler;
+        CTableLogic mTableLogic;
         CTDIDTAlgorithm mTDIDTAlgorithm;
 
         bool mbInteractiveTreeNeedReset = false;
@@ -22,9 +23,10 @@ namespace DecisionTree.Logic
         /// <summary>
         /// Konstruktor
         /// </summary>
-        public CTreeLogic()
+        public CTreeLogic(CTableLogic tableLogic)
         {
             mTreeHandler = new CTreeHandler();
+            mTableLogic = tableLogic;
             mTDIDTAlgorithm = new CTDIDTAlgorithm(this);
             //setupTestData();
         }
@@ -167,7 +169,32 @@ namespace DecisionTree.Logic
                 // Attribut des Vertex setzen
                 vertex.AttributeType = attributeType;
 
-                // TODO Kindknoten erzeugen und Verbindungen anlegen
+
+                // TODO Kindknoten erzeugen und Verbindungen anlegen:
+
+                //diskreter Wert (Splitwerte zurzeit nicht verfügbar -> ||true)
+                if (attributeType.DataType.Equals(E_DATATYPE.E_STRING) || true)
+                {
+                    //alte Children löschen
+                    mTreeHandler.removeChildVertices(vertex);
+
+                    //Werte für die Kindknoten erhalten
+                    CValueList childVertices = mTableLogic.getChildVertices(vertex);
+
+                    //Knoten und Verbindungen hinzufügen
+                    foreach (CAttributeValue value in childVertices)
+                    {
+                        CTreeVertex childVertex = addVertex(vertex, null);
+                        childVertex.ParentEdge = addEdge(vertex, childVertex, value);
+                    }
+                }
+                else //stetiger Wert
+                {
+                    //Splitwert abfragen
+                    //Datenbankabfrage, GROUP BY?
+                    //
+                }
+                
 
                 return true;
             }

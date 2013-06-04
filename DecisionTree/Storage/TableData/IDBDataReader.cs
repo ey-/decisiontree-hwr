@@ -26,6 +26,7 @@ namespace DecisionTree.Storage.TableData
         /// </summary>
         /// <param name="vertexToIdentify">Knoten der Identifiziert werden 
         /// soll</param>
+        ///<param name="distinct">sollen doppelte Werte angezeigt werden</param>
         /// <returns>Liste mit Datensätzen des Knotens</returns>
         CTableEntryList getFilteredTableData(TreeData.CTreeVertex vertexToIdentify);
 
@@ -83,8 +84,9 @@ namespace DecisionTree.Storage.TableData
         /// werden soll</param>
         /// <returns>Erfolg des Setztens</returns>
         bool setTargetAttribute(CAttributeType targetAttributeType);
-
         List<CAttributeType> getAttributeTypes();
+
+        CValueList getDataforChildVertices(TreeData.CTreeVertex vertexToIdentify);
         
     } // class    
 } // namespace

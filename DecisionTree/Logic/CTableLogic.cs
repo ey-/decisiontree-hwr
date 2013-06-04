@@ -119,6 +119,10 @@ namespace DecisionTree.Logic
             return mDBAccess.setTargetAttribute(targetAttributeType);
         }
 
+        public CValueList getChildVertices(CTreeVertex vertex)
+        {
+            return mDBAccess.getDataforChildVertices(vertex);
+        }
 
 
 

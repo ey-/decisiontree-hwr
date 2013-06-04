@@ -22,14 +22,16 @@ namespace DecisionTree.Logic
         
         // Logiken für die verschiedenen Ansichten
         protected CTableLogic mTableLogic = new CTableLogic();
-        protected CTreeLogic mTreeLogic = new CTreeLogic();
+        protected CTreeLogic mTreeLogic = null;
 
         /*********************************************************************/
         /// <summary>
         /// Konstruktor
         /// </summary>
         public CBusinessLogic()
-        { }
+        {
+            mTreeLogic = new CTreeLogic(mTableLogic);
+        }
         
         /*********************************************************************/
         /// <summary>

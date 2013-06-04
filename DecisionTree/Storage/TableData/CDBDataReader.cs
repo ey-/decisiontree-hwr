@@ -169,6 +169,7 @@ namespace DecisionTree.Storage.TableData
                 return getAllEntries();
             }
 
+
             string sSqlCommand = "SELECT * FROM " + CTableConstants.TABLE_ATTRIBUTES + "WHERE ";
 
             // Den SQL-Befehl um die Filter erweitert. Dabei wird vom zu übergebenen Knoten 
@@ -201,6 +202,39 @@ namespace DecisionTree.Storage.TableData
             return entryList;
         }
 
+
+        /*********************************************************************/
+        /// <summary>
+        /// gibt ein Liste mit Childknoten zurück, die vom übergebenen
+        /// Vertex ausgehen
+        /// </summary>
+        /// <param name="vertexToIdentify">Knoten der Identifiziert werden 
+        /// soll</param>
+        /// <returns>Liste mit Childknoten</returns>
+        public CValueList getDataforChildVertices(CTreeVertex vertexToIdentify)
+        {
+            if (vertexToIdentify == null)
+            {
+                return null;
+            }
+
+            string sSqlCommand = "SELECT DISTINCT " + vertexToIdentify.AttributeType.InternalName + " FROM " + CTableConstants.TABLE_ATTRIBUTES + ";";
+
+
+            SQLiteDataReader reader;
+            CValueList entryList = new CValueList();
+            if (mConnection.sqlRequestStatement(sSqlCommand, out reader) == true)
+            {
+                CTableEntry tableEntry;
+                while (getNextTableEntry(reader, out tableEntry) == true)
+                {
+                    entryList.addValue(new CAttributeValue(vertexToIdentify.AttributeType, "2", tableEntry.Index));
+                }
+                closeReader(reader);
+            }
+
+            return entryList;
+        }
         /*********************************************************************/
         /// <summary>
         /// fügt neuen leeren Datensatz in die Datenbak ein und gibt diesen zurück
