@@ -132,5 +132,10 @@ namespace DecisionTree.Storage.TreeData
             mActiveTree.updateVertexValues(tableLogic);
         }
 
+        public CTreeVertex getRoot()
+        {
+            return mActiveTree.getRoot();
+        }
+
     }
 }

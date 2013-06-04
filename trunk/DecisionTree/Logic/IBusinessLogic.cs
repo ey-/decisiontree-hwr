@@ -141,5 +141,7 @@ namespace DecisionTree.Logic
 
         void test();
 
+
+        void setMinObjectCountAutoTree(int number);
     }// class
 } // namespace

@@ -73,5 +73,7 @@ namespace DecisionTree.Storage
         bool removeEdge(CTreeEdge edge);
 
         void updateVertexValues(Logic.CTableLogic mTableLogic);
+
+        CTreeVertex getRoot();
     }
 }

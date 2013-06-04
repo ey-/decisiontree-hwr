@@ -24,6 +24,7 @@ using System.Globalization;
 using DecisionTree.Storage.TreeData;
 using GraphSharp.Controls;
 using GraphSharp.Algorithms.Layout;
+using System.ComponentModel;
 
 namespace DecisionTree
 {
@@ -40,7 +41,7 @@ namespace DecisionTree
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : RibbonWindow, IMainWindow
+    public partial class MainWindow : RibbonWindow, IMainWindow, INotifyPropertyChanged
     {
         protected IBusinessLogic mBusinessLogic;
 
@@ -106,10 +107,7 @@ namespace DecisionTree
             get { return layoutAlgorithmType; }
             set { layoutAlgorithmType = value; }
         }
-
-
-
-
+        
         /*********************************************************************/
         /// <summary>
         /// Wird aufgerufen wenn eine MenuItem geklickt wird.
@@ -140,9 +138,9 @@ namespace DecisionTree
 
                     mTableEntryList = mBusinessLogic.getAllTableData();
                     this.datagrid1.ItemsSource = mTableEntryList;
+                    // http://social.msdn.microsoft.com/Forums/en/wpf/thread/1b694f75-7621-4c88-8055-6c31c601c87f
 
                     this.Cursor = Cursors.Arrow;
-                    // http://social.msdn.microsoft.com/Forums/en/wpf/thread/1b694f75-7621-4c88-8055-6c31c601c87f
                 }
             }
             // Datei Speichern Button
@@ -218,19 +216,15 @@ namespace DecisionTree
                         selectedColumn.HeaderStyle = FindResource("TargetValueColumnHeaderStyle") as Style;
                         CTableEntry entry = (CTableEntry)datagrid1.CurrentItem;
                     }
-
-                    /*
-                    GridViewColumnHeader.
-
-                    Style test = new Style("{x:Type DataGridColumnHeader}");
-                    Setter asd = new Setter();
-                    //asd.
-                    //column.
-
-                    GridViewColumnHeader qwe = new GridViewColumnHeader();
-                    qwe.
-                    */
                 }
+            }
+        }
+
+        private void RibbonButtonAutomaticView_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender == rerenderGraphBtn)
+            {
+                viewToggleButton_Checked(viewTreeAutomaticBtn, null);
             }
         }
 
@@ -262,7 +256,12 @@ namespace DecisionTree
             setViewVisibility(selectedView);
             mBusinessLogic.changeView(selectedView);
 
-            mGraph = mBusinessLogic.getGraph();
+            if ((selectedView == E_VIEW.E_TREE_INTERACTIVE_VIEW) || (selectedView == E_VIEW.E_TREE_AUTOMATIC_VIEW))
+            {
+                mGraph = mBusinessLogic.getGraph();
+                NotifyPropertyChanged("VisualGraph");
+            }
+
             graph.DataContext = this;
         }
 
@@ -284,18 +283,25 @@ namespace DecisionTree
                 case E_VIEW.E_TREE_AUTOMATIC_VIEW: treeAutomaticVisibility = true; break;
             }
 
+            // Ansichtskomponente (Tabelle/Graph) ein und ausblenden
             viewTable.Visible = tableVisibility;
-            viewTreeInteractiv.Visible = treeInteractiveVisibility;
-            viewTreeAutomatic.Visible = treeAutomaticVisibility;
-
+            viewTreeInteractiv.Visible = false;
+            if (view == E_VIEW.E_TREE_INTERACTIVE_VIEW || view == E_VIEW.E_TREE_AUTOMATIC_VIEW)
+            {
+                viewTreeInteractiv.Visible = true;
+            }
+            
+            // Im Ribbon die Ansichtsspezifischen Gruppen ein und Ausblenden
             grpTable.Visibility = bool2Visibility(tableVisibility);
             grpTreeInteractive.Visibility = bool2Visibility(treeInteractiveVisibility);
             grpTreeAutomatic.Visibility = bool2Visibility(treeAutomaticVisibility);
 
+            // Ansichtsbuttons auswählen
             viewTableBtn.IsChecked = tableVisibility;
             viewTreeInteractivBtn.IsChecked = treeInteractiveVisibility;
             viewTreeAutomaticBtn.IsChecked = treeAutomaticVisibility;
 
+            // aktive View merken
             mCurrentView = view;
         }
 
@@ -350,6 +356,73 @@ namespace DecisionTree
                 }
                 IdentificationWindow identWindow = new IdentificationWindow(vertex, bInteractiveView);
                 identWindow.Show();
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        /*********************************************************************/
+        /// <summary>
+        /// Gibt dem Graphen bescheid das ein Attribut geändert wurde
+        /// </summary>
+        /// <param name="info">Name des Feldes welches sich geändert hat</param>
+        protected void NotifyPropertyChanged(string info)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(info));
+            }
+        }
+
+        private void RibbonTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (sender == minObjectCountTextBox)
+            {
+                TextBox textbox = sender as TextBox;
+                textbox.Text = textbox.Text.Replace(" ", "");
+                
+                int number = 0;
+                if (int.TryParse(textbox.Text, out number) == true)
+                {
+                    if (mBusinessLogic != null)
+                    {
+                        mBusinessLogic.setMinObjectCountAutoTree(number);
+                    }
+                }
+            }
+        }
+
+        private void minObjectCountTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (sender == minObjectCountTextBox)
+            {
+                if ((e.Key == System.Windows.Input.Key.D1) ||
+                    (e.Key == System.Windows.Input.Key.D2) ||
+                    (e.Key == System.Windows.Input.Key.D3) ||
+                    (e.Key == System.Windows.Input.Key.D4) ||
+                    (e.Key == System.Windows.Input.Key.D5) ||
+                    (e.Key == System.Windows.Input.Key.D6) ||
+                    (e.Key == System.Windows.Input.Key.D7) ||
+                    (e.Key == System.Windows.Input.Key.D8) ||
+                    (e.Key == System.Windows.Input.Key.D9) ||
+                    (e.Key == System.Windows.Input.Key.D0) ||
+                    (e.Key == System.Windows.Input.Key.NumPad1) ||
+                    (e.Key == System.Windows.Input.Key.NumPad2) ||
+                    (e.Key == System.Windows.Input.Key.NumPad3) ||
+                    (e.Key == System.Windows.Input.Key.NumPad4) ||
+                    (e.Key == System.Windows.Input.Key.NumPad5) ||
+                    (e.Key == System.Windows.Input.Key.NumPad6) ||
+                    (e.Key == System.Windows.Input.Key.NumPad7) ||
+                    (e.Key == System.Windows.Input.Key.NumPad8) ||
+                    (e.Key == System.Windows.Input.Key.NumPad9) ||
+                    (e.Key == System.Windows.Input.Key.NumPad0))
+                {
+                    // ok
+                }
+                else
+                {
+                    e.Handled = true;
+                }
             }
         }
 

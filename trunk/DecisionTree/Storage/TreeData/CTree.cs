@@ -12,8 +12,7 @@ namespace DecisionTree.Storage.TreeData
     /// </summary>
     public class CTree
     {
-        const int YES_INDEX = 0;
-        const int NO_INDEX = 1;
+        
 
         CTreeGraph mGraph;
         List<CTreeEdge> mEdgeList;
@@ -31,7 +30,7 @@ namespace DecisionTree.Storage.TreeData
             mEdgeList = new List<CTreeEdge>();
             mVertexList = new List<CTreeVertex>();
 
-            mRoot = new CTreeVertex(null, mGraph);
+            mRoot = addVertex(null);
             mVertexList.Add(mRoot);
         }
 
@@ -52,15 +51,16 @@ namespace DecisionTree.Storage.TreeData
         public void resetTree()
         {
             // alle bestehenden Knoten und Verbindungen des Baumes löschen
-            foreach (CTreeEdge edge in mEdgeList)
+            /*foreach (CTreeEdge edge in mEdgeList)
             {
                 mGraph.RemoveEdge(edge);
-            }
+            }*/
             mEdgeList.Clear();
-            foreach (CTreeVertex vertex in mVertexList)
+            /*foreach (CTreeVertex vertex in mVertexList)
             {
                 mGraph.RemoveVertex(vertex);
-            }
+            }*/
+            mGraph = new CTreeGraph();
             mVertexList.Clear();
             
             mRoot = null;
@@ -130,14 +130,14 @@ namespace DecisionTree.Storage.TreeData
 
         private void updateVertexEntropy(CTreeVertex vertex, Logic.CTableLogic tableLogic)
         {
-            if (vertex.CountObjectsPerClass[YES_INDEX] == 0 || vertex.CountObjectsPerClass[NO_INDEX] == 0)
+            if (vertex.CountObjectsPerClass[CTreeVertex.YES_INDEX] == 0 || vertex.CountObjectsPerClass[CTreeVertex.NO_INDEX] == 0)
             {
                 vertex.Entropy = 0;
             }
             else
             {
-                double yesFactor = (double)vertex.CountObjectsPerClass[YES_INDEX] / (double)vertex.CountObjects;
-                double noFactor = (double)vertex.CountObjectsPerClass[NO_INDEX] / (double)vertex.CountObjects;
+                double yesFactor = (double)vertex.CountObjectsPerClass[CTreeVertex.YES_INDEX] / (double)vertex.CountObjects;
+                double noFactor = (double)vertex.CountObjectsPerClass[CTreeVertex.NO_INDEX] / (double)vertex.CountObjects;
 
                 vertex.Entropy = -(yesFactor * Math.Log(yesFactor, 2) + noFactor * Math.Log(noFactor, 2));
             }
@@ -149,8 +149,8 @@ namespace DecisionTree.Storage.TreeData
             CAttributeType targetAttribute = getTargetAttribute(tableLogic);
 
             int[] counts = new int[2];
-            counts[YES_INDEX] = 0;
-            counts[NO_INDEX] = 0;
+            counts[CTreeVertex.YES_INDEX] = 0;
+            counts[CTreeVertex.NO_INDEX] = 0;
 
             if (targetAttribute != null)
             {
@@ -173,11 +173,11 @@ namespace DecisionTree.Storage.TreeData
                     // TODO Bei Zielattr nicht nur Binär Verzweigen
                     if (entry[targetAttributeIndex].TableValue == "j")
                     {
-                        counts[YES_INDEX]++;
+                        counts[CTreeVertex.YES_INDEX]++;
                     }
                     else if (entry[targetAttributeIndex].TableValue == "n")
                     {
-                        counts[NO_INDEX]++;
+                        counts[CTreeVertex.NO_INDEX]++;
                     }
                 }
             }
@@ -200,6 +200,9 @@ namespace DecisionTree.Storage.TreeData
             return targetAttribute;
         }
 
-
+        internal CTreeVertex getRoot()
+        {
+            return mRoot;
+        }
     }
 }

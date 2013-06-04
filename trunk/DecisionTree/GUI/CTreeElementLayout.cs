@@ -11,5 +11,10 @@ namespace DecisionTree.GUI
     /// Layout des Graphen
     /// </summary>
     public class CTreeElementLayout : GraphLayout<CTreeVertex, CTreeEdge, CTreeGraph> 
-    { }
+    {
+        public CTreeElementLayout()
+        {
+            int i = 0;
+        }
+    }
 }
