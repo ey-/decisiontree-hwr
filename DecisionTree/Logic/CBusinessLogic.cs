@@ -202,9 +202,12 @@ namespace DecisionTree.Logic
         /// <param name="attributeType">neues Attribut des Vertex</param>
         public bool setVertexAttribute(CTreeVertex vertex, CAttributeType attributeType)
         {
-            bool bRet = mTreeLogic.setVertexAttribute(vertex, attributeType);
-            mTreeLogic.updateVertexValues();
-            return bRet;
+            if (mTreeLogic.setVertexAttribute(vertex, attributeType) == true)
+            {
+                mTreeLogic.updateVertexValues();
+                return true;
+            }
+            return false;
         }
 
         #endregion
@@ -227,6 +230,11 @@ namespace DecisionTree.Logic
                     mTreeLogic.updateVertexValues();
                     break;
             }
+        }
+
+        public void setMinObjectCountAutoTree(int number)
+        {
+            mTreeLogic.setMinObjectCountAutoTree(number);
         }
 
         public void test()

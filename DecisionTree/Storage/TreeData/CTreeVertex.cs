@@ -12,6 +12,8 @@ namespace DecisionTree.Storage.TreeData
     public class CTreeVertex : INotifyPropertyChanged
     {
         protected const string NO_RULE_SET_TEXT = "keine Regel festgelegt";
+        public const int YES_INDEX = 0;
+        public const int NO_INDEX = 1;
 
         protected CTreeVertex mParentVertex = null;
         protected List<CTreeVertex> mChildNodes = new List<CTreeVertex>();

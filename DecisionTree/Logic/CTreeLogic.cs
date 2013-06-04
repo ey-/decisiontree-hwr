@@ -27,8 +27,7 @@ namespace DecisionTree.Logic
         {
             mTreeHandler = new CTreeHandler();
             mTableLogic = tableLogic;
-            mTDIDTAlgorithm = new CTDIDTAlgorithm(this);
-            //setupTestData();
+            mTDIDTAlgorithm = new CTDIDTAlgorithm(this, tableLogic);
         }
 
         /*********************************************************************/
@@ -67,13 +66,20 @@ namespace DecisionTree.Logic
                 // wurden, muss der Baum interaktiven Ansicht reseted werden
                 if (mbInteractiveTreeNeedReset == true)
                 {
-                    mTreeHandler.resetActiveTree();
+                    resetActiveTree();
                     mbInteractiveTreeNeedReset = false;
                 }
             } else
             {
                 mTreeHandler.setActiveTree(E_TREE_TYPE.E_TREE_AUTOMATIC);
+
+                mTDIDTAlgorithm.createGraph();
             }
+        }
+
+        public void resetActiveTree()
+        {
+            mTreeHandler.resetActiveTree();
         }
 
         public void updateVertexValues()
@@ -96,55 +102,11 @@ namespace DecisionTree.Logic
             return mTreeHandler.addEdge(parent, child, attributeValue);
         }
 
-        /*********************************************************************/
-        /// <summary>
-        /// Testdaten für Funktionstest der Anzeige der Baumansicht
-        /// TODO Nach erfolgreicher Implementierung auskommentieren .. 
-        /// damit im Fehlerfall wieder genutzt werden kann.
-        /// </summary>
-        private void setupTestData()
+        public CTreeVertex getRootNode()
         {
-            CTreeVertex root = addVertex(null);
-            //root.setDemoData("Geschlecht", 11, 5, 6, 0.2134);
-
-            CTreeVertex v1_1 = addVertex(root);
-            //v1_1.setDemoData("Sendung Enthält", 6, 4, 2, 0.3234);
-            CTreeVertex v1_2 = addVertex(root);
-            //v1_2.setDemoData("", 6, 4, 2, 0.3234);
-
-            CAttributeType testType = new CAttributeType(0);
-            CTreeEdge edgeR_1_1 = addEdge(root, v1_1, new CAttributeValue(testType, "0", "f", null));
-            CTreeEdge edgeR_1_2 = addEdge(root, v1_2, new CAttributeValue(testType, "0", "m", null));
-                /*
-                new CTreeEdge();
-            CTreeEdge edgeR_1_2 = new CTreeEdge(root, v1_2, new CAttributeValue(testType, "0", "m", null));
-            */
-            CTreeVertex v2_1 = addVertex(v1_1);
-            //v2_1.setDemoData("", 3, 2, 1, 0.3234);
-            CTreeVertex v2_2 = addVertex(v1_1);
-            //v2_2.setDemoData("", 2, 2, 0, 0.3234);
-            CTreeVertex v2_3 = addVertex(v1_1);
-            //v2_3.setDemoData("", 1, 0, 1, 0.3234);
-
-            CTreeEdge edge1_1_2_1 = addEdge(v1_1, v2_1, new CAttributeValue(testType, "0", "Filme", null));
-            CTreeEdge edge1_1_2_2 = addEdge(v1_1, v2_2, new CAttributeValue(testType, "0", "Bücher", null));
-            CTreeEdge edge1_1_2_3 = addEdge(v1_1, v2_3, new CAttributeValue(testType, "0", "Musik", null));
-            /*
-            mGraph.AddVertex(root);
-            mGraph.AddVertex(v1_1);
-            mGraph.AddVertex(v1_2);
-            mGraph.AddVertex(v2_1);
-            mGraph.AddVertex(v2_2);
-            mGraph.AddVertex(v2_3);
-
-            mGraph.AddEdge(edgeR_1_1);
-            mGraph.AddEdge(edgeR_1_2);
-            mGraph.AddEdge(edge1_1_2_1);
-            mGraph.AddEdge(edge1_1_2_2);
-            mGraph.AddEdge(edge1_1_2_3);
-            */
+            return mTreeHandler.getRoot();
         }
-
+        
         /*********************************************************************/
         /// <summary>
         /// Setzt für einen Vertex das Attribut welches dieser Repräsentiert
@@ -153,16 +115,11 @@ namespace DecisionTree.Logic
         /// <param name="attributeType">neues Attribut des Vertex</param>
         internal bool setVertexAttribute(CTreeVertex vertex, CAttributeType attributeType)
         {
-            // Durch alle Parentelemente des Knotenes gehen und prüfen ob dieses Attribut 
-            // nicht schon verwendet wurde
-            CTreeVertex parent = vertex.ParentVertex;
-            while (parent != null)
+            // sollte das Attribut bereits von einem Parent-Knoten verwendet werden
+            // darf der Benutzer dieser Attribut nicht verwenden
+            if (isAttributeUsedByParent(vertex, attributeType) == true)
             {
-                if (parent.AttributeType == attributeType)
-                {
-                    return false;
-                }
-                parent = parent.ParentVertex;
+                return false;
             }
 
             // wenn das Attribut bereits das ist welches der Vertex repräsentiert,
@@ -174,36 +131,65 @@ namespace DecisionTree.Logic
                 // Attribut des Vertex setzen
                 vertex.AttributeType = attributeType;
 
-
-                // TODO Kindknoten erzeugen und Verbindungen anlegen:
-
-                //diskreter Wert (Splitwerte zurzeit nicht verfügbar -> ||true)
-                if (attributeType.DataType.Equals(E_DATATYPE.E_STRING) || true)
+                if (vertex.AttributeType != null)
                 {
-                    //alte Children löschen
-                    mTreeHandler.removeChildVertices(vertex);
+                    // TODO Kindknoten erzeugen und Verbindungen anlegen:
 
-                    //Werte für die Kindknoten erhalten
-                    CValueList childVertices = mTableLogic.getChildVertices(vertex);
-
-                    //Knoten und Verbindungen hinzufügen
-                    foreach (CAttributeValue value in childVertices)
+                    //diskreter Wert (Splitwerte zurzeit nicht verfügbar -> ||true)
+                    if (attributeType.DataType.Equals(E_DATATYPE.E_STRING) || true)
                     {
-                        CTreeVertex childVertex = addVertex(vertex, null);
-                        childVertex.ParentEdge = addEdge(vertex, childVertex, value);
+                        //alte Children löschen
+                        mTreeHandler.removeChildVertices(vertex);
+
+                        //Werte für die Kindknoten erhalten
+                        CValueList childVertices = mTableLogic.getChildVertices(vertex);
+
+                        //Knoten und Verbindungen hinzufügen
+                        foreach (CAttributeValue value in childVertices)
+                        {
+                            CTreeVertex childVertex = addVertex(vertex, null);
+                            childVertex.ParentEdge = addEdge(vertex, childVertex, value);
+                        }
+                    }
+                    else //stetiger Wert
+                    {
+                        //Splitwert abfragen
+                        //Datenbankabfrage, GROUP BY?
+                        //
                     }
                 }
-                else //stetiger Wert
-                {
-                    //Splitwert abfragen
-                    //Datenbankabfrage, GROUP BY?
-                    //
-                }
-                
-
                 return true;
             }
             return false;
+        }
+
+        /*********************************************************************/
+        /// <summary>
+        /// Prüft ob ein AttributType bereits von ein ParentKnoten des 
+        /// übergebenen Kontens verwendet wird
+        /// </summary>
+        /// <param name="vertex">Vertex dessen Parentes geprüft werden</param>
+        /// <param name="type">zu Prüfender Type</param>
+        /// <returns>True - wird von Parent benutzt, False - sonst</returns>
+        public bool isAttributeUsedByParent(CTreeVertex vertex, CAttributeType type)
+        {
+            // Durch alle Parentelemente des Knotenes gehen und prüfen ob dieses Attribut 
+            // nicht schon verwendet wurde
+            CTreeVertex parent = vertex.ParentVertex;
+            while (parent != null)
+            {
+                if (parent.AttributeType == type)
+                {
+                    return true;
+                }
+                parent = parent.ParentVertex;
+            }
+            return false;
+        }
+
+        internal void setMinObjectCountAutoTree(int number)
+        {
+            mTDIDTAlgorithm.setMinObjectCountAutoTree(number);
         }
     }
 }
