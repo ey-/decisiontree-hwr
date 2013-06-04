@@ -58,10 +58,6 @@ namespace DecisionTree.Logic
         public bool removeAttribute(string attributeName)
         {
             return mDBAccess.removeColumn(attributeName);
-
-            // Testweise .. Der name der Spalte muss später von der GUI kommen
-            //mTableReader.addColumn("Column" + NUM_COLUMNS.ToString());
-            //NUM_COLUMNS--;
         }
 
         /*********************************************************************/

@@ -380,6 +380,8 @@ namespace DecisionTree.Storage.TableData
         /// <returns>Erfolg des Setztens</returns>
         public bool setTargetAttribute(CAttributeType targetAttributeType)
         {
+            if (isValidTargetAttribut(targetAttributeType) == false)  return false;
+
             foreach (CAttributeType attributeType in mAttributeTypeList)
             {
                 attributeType.TargetAttribute = false;
@@ -389,7 +391,29 @@ namespace DecisionTree.Storage.TableData
             return true;
         }
 
+        private bool isValidTargetAttribut(CAttributeType type)
+        {
+            bool bRet = true;
+            string sSqlCommand = "SELECT DISTINCT " + type.InternalName + " FROM " + CTableConstants.TABLE_ATTRIBUTES;
 
+            SQLiteDataReader reader;
+            CValueList entryList = new CValueList();
+            if (mConnection.sqlRequestStatement(sSqlCommand, out reader) == true)
+            {
+                while (reader.Read() == true)
+                {
+                    string sValue = reader[0] as string;
+                    if ((sValue != "j") && (sValue != "n"))
+                    {
+                        bRet = false;
+                    }
+                }
+
+                closeReader(reader);
+            }
+
+            return bRet;
+        }
 
         public List<CAttributeType> getAttributeTypes()
         {
