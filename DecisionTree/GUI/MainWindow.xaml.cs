@@ -100,6 +100,30 @@ namespace DecisionTree
 
         /*********************************************************************/
         /// <summary>
+        /// Tooltip abhängig von der View
+        /// </summary>
+        public string vertexTooltip
+        {
+            get 
+            {
+                if (mCurrentView == E_VIEW.E_TREE_INTERACTIVE_VIEW)
+                {
+                    return "Klicken sie hier um das Attribut auszuwählen oder zu ändern.";
+                }
+                else if (mCurrentView == E_VIEW.E_TREE_AUTOMATIC_VIEW)
+                {
+                    return "Klicken sie hier um die Tabelle mit den Werten dieses Knoten zu sehen.";
+                }
+                return "";
+
+            }
+            set
+            {
+            }
+        }
+
+        /*********************************************************************/
+        /// <summary>
         /// 
         /// </summary>
         public string LayoutAlgorithmType
@@ -260,6 +284,7 @@ namespace DecisionTree
             {
                 mGraph = mBusinessLogic.getGraph();
                 NotifyPropertyChanged("VisualGraph");
+                NotifyPropertyChanged("vertexTooltip");
             }
 
             graph.DataContext = this;
