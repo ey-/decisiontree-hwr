@@ -162,7 +162,7 @@
                                                  Click="MenuItem_Click"/>
                     <r:RibbonApplicationMenuItem Name="exitApplication"
                                                  Click="MenuItem_Click"
-                                                 Header="Close"
+                                                 Header="Beenden"
                                                  ImageSource="../Images/quit.png"/>
                 </r:RibbonApplicationMenu>
             </r:Ribbon.ApplicationMenu>

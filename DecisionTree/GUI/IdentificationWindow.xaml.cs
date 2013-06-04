@@ -144,7 +144,17 @@ namespace DecisionTree.GUI
                     col.HeaderStyle = null;
                 }
             }
-            
+        }
+
+        /*********************************************************************/
+        /// <summary>
+        /// Bei Klick auf den schließenbutton wird das Fenster geschlossen.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void closeWindow_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }
