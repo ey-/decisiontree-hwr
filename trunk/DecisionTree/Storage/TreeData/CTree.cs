@@ -12,6 +12,9 @@ namespace DecisionTree.Storage.TreeData
     /// </summary>
     public class CTree
     {
+        const int YES_INDEX = 0;
+        const int NO_INDEX = 1;
+
         CTreeGraph mGraph;
         List<CTreeEdge> mEdgeList;
         List<CTreeVertex> mVertexList;
@@ -107,5 +110,96 @@ namespace DecisionTree.Storage.TreeData
             mEdgeList.Remove(edge);
             return mGraph.RemoveEdge(edge);
         }
+
+        internal void updateVertexValues(Logic.CTableLogic tableLogic)
+        {
+            updateVertexValue(mRoot, tableLogic);   
+        }
+
+        private void updateVertexValue(CTreeVertex vertex, Logic.CTableLogic tableLogic)
+        {
+            vertex.CountObjects = tableLogic.getFilteredTableData(vertex).Count;
+            updateVertexClassCount(vertex, tableLogic);
+            updateVertexEntropy(vertex, tableLogic);
+
+            foreach (CTreeVertex child in vertex.ChildList)
+            {
+                updateVertexValue(child, tableLogic);
+            }
+        }
+
+        private void updateVertexEntropy(CTreeVertex vertex, Logic.CTableLogic tableLogic)
+        {
+            if (vertex.CountObjectsPerClass[YES_INDEX] == 0 || vertex.CountObjectsPerClass[NO_INDEX] == 0)
+            {
+                vertex.Entropy = 0;
+            }
+            else
+            {
+                double yesFactor = (double)vertex.CountObjectsPerClass[YES_INDEX] / (double)vertex.CountObjects;
+                double noFactor = (double)vertex.CountObjectsPerClass[NO_INDEX] / (double)vertex.CountObjects;
+
+                vertex.Entropy = -(yesFactor * Math.Log(yesFactor, 2) + noFactor * Math.Log(noFactor, 2));
+            }
+        }
+
+        private void updateVertexClassCount(CTreeVertex vertex, Logic.CTableLogic tableLogic)
+        {
+            CTableEntryList entryList = tableLogic.getFilteredTableData(vertex);
+            CAttributeType targetAttribute = getTargetAttribute(tableLogic);
+
+            int[] counts = new int[2];
+            counts[YES_INDEX] = 0;
+            counts[NO_INDEX] = 0;
+
+            if (targetAttribute != null)
+            {
+                bool bFirst = true;
+                int targetAttributeIndex = 0;
+                foreach (CTableEntry entry in entryList)
+                {
+                    if (bFirst == true)
+                    {
+                        for (int i = 0; i < entry.Size; i++)
+                        {
+                            if (entry[i].AttributeType.InternalName == targetAttribute.InternalName)
+                            {
+                                targetAttributeIndex = i;
+                            }
+                        }
+                        bFirst = false;
+                    }
+
+                    // TODO Bei Zielattr nicht nur Binär Verzweigen
+                    if (entry[targetAttributeIndex].TableValue == "j")
+                    {
+                        counts[YES_INDEX]++;
+                    }
+                    else if (entry[targetAttributeIndex].TableValue == "n")
+                    {
+                        counts[NO_INDEX]++;
+                    }
+                }
+            }
+
+            vertex.CountObjectsPerClass = counts;
+        }
+
+        private static CAttributeType getTargetAttribute(Logic.CTableLogic tableLogic)
+        {
+            List<CAttributeType> attributeTypeList = tableLogic.getAttributeTypes();
+            CAttributeType targetAttribute = null;
+            foreach (CAttributeType type in attributeTypeList)
+            {
+                if (type.TargetAttribute == true)
+                {
+                    targetAttribute = type;
+                    break;
+                }
+            }
+            return targetAttribute;
+        }
+
+
     }
 }

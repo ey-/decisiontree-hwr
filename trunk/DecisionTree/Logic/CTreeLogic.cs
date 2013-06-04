@@ -76,6 +76,11 @@ namespace DecisionTree.Logic
             }
         }
 
+        public void updateVertexValues()
+        {
+            mTreeHandler.updateVertexValues(mTableLogic);
+        }
+
         protected CTreeVertex addVertex(CTreeVertex parent, CAttributeType type = null)
         {
             return mTreeHandler.addVertex(parent, type);

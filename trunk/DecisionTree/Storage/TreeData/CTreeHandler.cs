@@ -127,5 +127,10 @@ namespace DecisionTree.Storage.TreeData
             return mActiveTree.removeEdge(edge);
         }
 
+        public void updateVertexValues(Logic.CTableLogic tableLogic)
+        {
+            mActiveTree.updateVertexValues(tableLogic);
+        }
+
     }
 }

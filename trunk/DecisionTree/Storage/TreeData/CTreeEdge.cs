@@ -11,7 +11,7 @@ namespace DecisionTree.Storage.TreeData
     /// Klasse zum Speichern einer Verbindung zwischen zwei 
     /// Vertex im Baum
     /// </summary>
-    public class CTreeEdge : TaggedEdge<CTreeVertex, CAttributeValue>//, INotifyPropertyChanged
+    public class CTreeEdge : TaggedEdge<CTreeVertex, CAttributeValue>, INotifyPropertyChanged
     {
         protected CAttributeValue mEdgeValue;
 
@@ -45,7 +45,7 @@ namespace DecisionTree.Storage.TreeData
             return EdgeValue;
         }
 
-        /*
+        
         public event PropertyChangedEventHandler PropertyChanged;
 
         /*********************************************************************/
@@ -53,12 +53,12 @@ namespace DecisionTree.Storage.TreeData
         /// Gibt dem Graphen bescheid das ein Attribut geändert wurde
         /// </summary>
         /// <param name="info">Name des Feldes welches sich geändert hat</param>
-        /*protected void NotifyPropertyChanged(string info)
+        protected void NotifyPropertyChanged(string info)
         {
             if (PropertyChanged != null)
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(info));
             }
-        }*/
+        }
     }
 }

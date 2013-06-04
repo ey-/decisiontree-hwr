@@ -9,7 +9,7 @@ namespace DecisionTree.Storage.TreeData
     /// <summary>
     /// Klasse zum Speichern eines Knoten im Baum
     /// </summary>
-    public class CTreeVertex //: INotifyPropertyChanged
+    public class CTreeVertex : INotifyPropertyChanged
     {
         protected const string NO_RULE_SET_TEXT = "keine Regel festgelegt";
 
@@ -112,12 +112,19 @@ namespace DecisionTree.Storage.TreeData
             get { return (mAttributeType != null) ? mAttributeType.Name : NO_RULE_SET_TEXT; }
         }
 
+        protected int mTotalObjectCount = 0;
         public int CountObjects
         {
             // TODO CTreeVertex::CountObjects
-            get { return 0; }
+            get { return mTotalObjectCount; }
+            set 
+            { 
+                mTotalObjectCount = value;
+                NotifyPropertyChanged("CountObjects");
+            }
         }
 
+        protected int[] mCountObjectsPerClass = new int[1];
         /// <summary>
         /// Nochmal überdenken wie man das schöner machen kann
         /// </summary>
@@ -126,21 +133,28 @@ namespace DecisionTree.Storage.TreeData
             // // TODO CTreeVertex::CountObjectsPerClass
             get 
             {
-                /*int [] ret = new int[2];
-                ret[0] = mNumObjectsYes;
-                ret[1] = mNumObjectsNo;
-                return ret;*/
-                return new int[1];
+                return mCountObjectsPerClass;
+            }
+            set
+            {
+                mCountObjectsPerClass = value;
+                NotifyPropertyChanged("CountObjectsPerClass");
             }
         }
 
+        double mEntropy = 0.0f;
         public double Entropy
         {
             // // TODO CTreeVertex::Entropy
-            get { return 0; }
+            get { return mEntropy; }
+            set 
+            { 
+                mEntropy = value;
+                NotifyPropertyChanged("Entropy");
+            }
         }
 
-        //public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler PropertyChanged;
 
         /*********************************************************************/
         /// <summary>
@@ -149,9 +163,9 @@ namespace DecisionTree.Storage.TreeData
         /// <param name="info">Name des Feldes welches sich geändert hat</param>
         protected void NotifyPropertyChanged(string info)
         {
-           // if (PropertyChanged != null)
+            if (PropertyChanged != null)
             {
-                //PropertyChanged(this, new PropertyChangedEventArgs(info));
+                PropertyChanged(this, new PropertyChangedEventArgs(info));
             }
         }
 
