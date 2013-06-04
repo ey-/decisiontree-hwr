@@ -46,6 +46,7 @@ namespace DecisionTree
         protected CTableEntryList mTableEntryList;
         protected CTreeGraph mGraph;
         protected string layoutAlgorithmType;
+        protected E_VIEW mCurrentView;
         
         /*********************************************************************/
         /// <summary>
@@ -284,6 +285,8 @@ namespace DecisionTree
             viewTableBtn.IsChecked = tableVisibility;
             viewTreeInteractivBtn.IsChecked = treeInteractiveVisibility;
             viewTreeAutomaticBtn.IsChecked = treeAutomaticVisibility;
+
+            mCurrentView = view;
         }
 
         /*********************************************************************/
@@ -330,7 +333,12 @@ namespace DecisionTree
                 VertexControl control = sender as VertexControl;
                 CTreeVertex vertex = control.Vertex as CTreeVertex;
 
-                IdentificationWindow identWindow = new IdentificationWindow(vertex);
+                bool bInteractiveView = true;
+                if (mCurrentView != E_VIEW.E_TREE_INTERACTIVE_VIEW)
+                {
+                    bInteractiveView = false;
+                }
+                IdentificationWindow identWindow = new IdentificationWindow(vertex, bInteractiveView);
                 identWindow.Show();
             }
         }

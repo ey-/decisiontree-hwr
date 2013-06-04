@@ -35,7 +35,7 @@ namespace DecisionTree.GUI
         /// </summary>
         /// <param name="vertexToIdentify">Knoten der Identifiziert werden 
         /// soll</param>
-        public IdentificationWindow(CTreeVertex vertexToIdentify)
+        public IdentificationWindow(CTreeVertex vertexToIdentify, bool bInteractiveView)
         {
             // Sichergehen das nur ein Identifikationsfenster geöffnet ist
             checkSingleIndentificationWindow();
@@ -58,6 +58,21 @@ namespace DecisionTree.GUI
             }
 
             highlightSelectedAttributeColumn();
+
+            // Nur für die Interaktive Ansicht soll der Button eingeblendet werden
+            showButtonBar(bInteractiveView);
+        }
+
+        private void showButtonBar(bool bShowButtons)
+        {
+            if (bShowButtons == true)
+            {
+                chooseAttrBtn.Visibility = Visibility.Visible;
+            }
+            else 
+            {
+                chooseAttrBtn.Visibility = Visibility.Hidden;
+            }
         }
 
         /*********************************************************************/
@@ -86,7 +101,13 @@ namespace DecisionTree.GUI
             get { return mTableEntryList; }
             
         }
-        
+
+        /*********************************************************************/
+        /// <summary>
+        /// Wird aufgerufen sobald der Benutzer auf 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void chooseAttributeBtn_Click(object sender, RoutedEventArgs e)
         {
             CTableColumn selectedColumn = filteredDataGrid.CurrentColumn as CTableColumn;
