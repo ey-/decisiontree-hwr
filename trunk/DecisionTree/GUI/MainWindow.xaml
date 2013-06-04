@@ -194,7 +194,7 @@
             </r:RibbonTab>
 
             <r:RibbonTab Header="Tabellenansicht" ContextualTabGroupHeader="Tabellenansicht">
-                <r:RibbonGroup Header="Debug">
+                <r:RibbonGroup Header="Tabellenfunktionen">
                     <r:RibbonButton Name="btnAddColumn" LargeImageSource="../Images/Add_Collum_Spalte.png" Label="Attribut hinzufügen" Click="RibbonButtonTableView_Click"/>
                     <r:RibbonButton Name="btnRemoveColumn" Label="Attribut entfernen" LargeImageSource="../Images/Remove_Collum_Spalte.png" Click="RibbonButtonTableView_Click" />
                     <r:RibbonButton Name="btnAddRow" Label="Zeile hinzufügen" LargeImageSource="../Images/Add_Row_Zeile.png" Click="RibbonButtonTableView_Click" />
@@ -204,13 +204,13 @@
             </r:RibbonTab>
 
             <r:RibbonTab Header="Baum Interaktiv" ContextualTabGroupHeader="Baum Interaktiv">
-                <r:RibbonGroup Header="Debug">
+                <!--<r:RibbonGroup Header="Debug">
                     <r:RibbonTextBox Label="Testausgabe" />
-                </r:RibbonGroup>
+                </r:RibbonGroup>-->
             </r:RibbonTab>
 
             <r:RibbonTab Header="Baum Automatisch" ContextualTabGroupHeader="Baum Automatisch">
-                <r:RibbonGroup Header="">
+                <r:RibbonGroup Header="Baumfunktionen">
                     <r:RibbonTextBox Name="minObjectCountTextBox" Label="Mindestanzahl Objekte" 
                                      TextChanged="RibbonTextBox_TextChanged" 
                                      KeyDown="minObjectCountTextBox_KeyDown" 
