@@ -30,10 +30,14 @@ namespace DecisionTree.Storage.TableData
         /// <returns>E_DATATYPE der Datentyp des gegebenen Strings</returns>
         protected E_DATATYPE checkDataType(string value)
         {
+            /*
+            // Diese Implementierung ist Fehlerhaft .. da sie jedesmal wenn ein 
+            // Attribut eingefügt wird.. nur diese prüft und nicht den gesamten 
+            // Datenbestand.
             int intvalue;
             double doubleValue;
 
-
+            
             if (int.TryParse(value, out intvalue))
             {
                 return E_DATATYPE.E_INT;
@@ -41,7 +45,7 @@ namespace DecisionTree.Storage.TableData
             if (double.TryParse(value, out doubleValue))
             {
                 return E_DATATYPE.E_FLOAT;
-            }
+            }*/
             return E_DATATYPE.E_STRING;
         }
     }
