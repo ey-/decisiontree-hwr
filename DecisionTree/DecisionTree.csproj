@@ -237,6 +237,15 @@
   <ItemGroup>
     <Resource Include="Images\Datei2.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Baumupdate.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Baumupdateklein.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\zielattribut.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
