@@ -118,29 +118,18 @@ namespace DecisionTree.Storage.TreeData
 
         private void updateVertexValue(CTreeVertex vertex, Logic.CTableLogic tableLogic)
         {
+            CEntropyCalculator entropyCalc = new CEntropyCalculator();
+
             vertex.CountObjects = tableLogic.getFilteredTableData(vertex).Count;
             updateVertexClassCount(vertex, tableLogic);
-            updateVertexEntropy(vertex, tableLogic);
-
+                        
             foreach (CTreeVertex child in vertex.ChildList)
             {
                 updateVertexValue(child, tableLogic);
             }
-        }
 
-        private void updateVertexEntropy(CTreeVertex vertex, Logic.CTableLogic tableLogic)
-        {
-            if (vertex.CountObjectsPerClass[CTreeVertex.YES_INDEX] == 0 || vertex.CountObjectsPerClass[CTreeVertex.NO_INDEX] == 0)
-            {
-                vertex.Entropy = 0;
-            }
-            else
-            {
-                double yesFactor = (double)vertex.CountObjectsPerClass[CTreeVertex.YES_INDEX] / (double)vertex.CountObjects;
-                double noFactor = (double)vertex.CountObjectsPerClass[CTreeVertex.NO_INDEX] / (double)vertex.CountObjects;
-
-                vertex.Entropy = -(yesFactor * Math.Log(yesFactor, 2) + noFactor * Math.Log(noFactor, 2));
-            }
+            vertex.Entropy = entropyCalc.getEntropy(vertex);
+            vertex.WeightedEntropy = entropyCalc.getWeightedEntropy(vertex);
         }
 
         private void updateVertexClassCount(CTreeVertex vertex, Logic.CTableLogic tableLogic)
