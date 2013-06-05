@@ -2,7 +2,8 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:r="clr-namespace:Microsoft.Windows.Controls.Ribbon;assembly=RibbonControlsLibrary"
-        Title="IdentificationWindow" Height="500" Width="600">
+        Title="IdentificationWindow" Height="500" Width="600" Loaded="RibbonWindow_Loaded"
+        Icon="../Images/logo.png">
 
     <r:RibbonWindow.Resources>
         <LinearGradientBrush x:Key="DataGridHeaderBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
@@ -40,7 +41,7 @@
                               Header="Programm">
                 <r:RibbonGroup x:Name="groupAnsichtwechsel" 
                                     Header="Ansichtwechsel">
-                    <r:RibbonButton Name="chooseAttrBtn" Label="Attribut auswählen" Click="chooseAttributeBtn_Click" />
+                    <r:RibbonButton Name="chooseAttrBtn" Label="Attribut auswählen" LargeImageSource="../Images/zielattributauswaehlen.png" Click="chooseAttributeBtn_Click" />
                 </r:RibbonGroup>
             </r:RibbonTab>
         </r:Ribbon>

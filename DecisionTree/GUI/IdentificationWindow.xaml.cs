@@ -156,5 +156,10 @@ namespace DecisionTree.GUI
         {
             this.Close();
         }
+
+        private void RibbonWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
