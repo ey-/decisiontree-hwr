@@ -126,7 +126,7 @@ namespace DecisionTree.Storage.TreeData
             }
         }
 
-        protected int[] mCountObjectsPerClass = new int[1];
+        protected int[] mCountObjectsPerClass = new int[2];
         /// <summary>
         /// Nochmal überdenken wie man das schöner machen kann
         /// </summary>
@@ -144,15 +144,25 @@ namespace DecisionTree.Storage.TreeData
             }
         }
 
-        double mEntropy = 0.0f;
+        double mEntropy = 0.0;
         public double Entropy
         {
-            // // TODO CTreeVertex::Entropy
             get { return mEntropy; }
             set 
             { 
                 mEntropy = value;
                 NotifyPropertyChanged("Entropy");
+            }
+        }
+
+        double mWeightedEntropy = 0.0;
+        public double WeightedEntropy
+        {
+            get { return mWeightedEntropy; }
+            set
+            {
+                mWeightedEntropy = value;
+                NotifyPropertyChanged("WeightedEntropy");
             }
         }
 

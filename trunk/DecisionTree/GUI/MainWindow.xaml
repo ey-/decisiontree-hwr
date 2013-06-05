@@ -43,6 +43,7 @@
                         <RowDefinition />
                         <RowDefinition />
                         <RowDefinition />
+                        <RowDefinition />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
@@ -60,6 +61,9 @@
 
                     <TextBlock Grid.Row="3" Grid.Column="0" Text="Entropie: " />
                     <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Path=Entropy, Mode=OneWay}" />
+                    
+                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Gew. Entropie: " />
+                    <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding Path=WeightedEntropy, Mode=OneWay}" />
                 </Grid>
             </StackPanel>
         </DataTemplate>

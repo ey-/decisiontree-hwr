@@ -170,6 +170,7 @@ namespace DecisionTree
                     // wir haben eine neue Tabelle, also ist noch kein Zielattribut gesetzt 
                     // und man soll nicht auf die Baumansichten wechseln
                     setTreeViewsEnabled(false);
+                    viewToggleButton_Checked(viewTableBtn, null);
 
                     this.Cursor = Cursors.Arrow;
                 }

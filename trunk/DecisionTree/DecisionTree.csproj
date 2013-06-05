@@ -131,6 +131,7 @@
     <Compile Include="Storage\TableData\CSQLiteConnection.cs" />
     <Compile Include="Storage\TableData\CTableConstants.cs" />
     <Compile Include="Storage\TableData\CTableDataManager.cs" />
+    <Compile Include="Storage\TreeData\CEntropyCalculator.cs" />
     <Compile Include="Storage\TreeData\CTree.cs" />
     <Compile Include="Storage\TreeData\CTreeGraph.cs" />
     <Compile Include="Storage\TreeData\CTreeEdge.cs" />
