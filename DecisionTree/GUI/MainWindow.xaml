@@ -203,7 +203,7 @@
                     <r:RibbonButton Name="btnRemoveColumn" Label="Attribut entfernen" LargeImageSource="../Images/Remove_Collum_Spalte.png" Click="RibbonButtonTableView_Click" />
                     <r:RibbonButton Name="btnAddRow" Label="Zeile hinzufügen" LargeImageSource="../Images/Add_Row_Zeile.png" Click="RibbonButtonTableView_Click" />
                     <r:RibbonButton Name="btnRemoveRow" Label="Zeile entfernen" LargeImageSource="../Images/Remove_Row_Zeile.png" Click="RibbonButtonTableView_Click" />
-                    <r:RibbonButton Name="btnSetTargetAttribute" Label="setze Zielattribut" Click="RibbonButtonTableView_Click" />
+                    <r:RibbonButton Name="btnSetTargetAttribute" Label="setze Zielattribut" LargeImageSource="../Images/Zielattribut.png" Click="RibbonButtonTableView_Click" />
                 </r:RibbonGroup>
             </r:RibbonTab>
 
@@ -220,7 +220,7 @@
                                      KeyDown="minObjectCountTextBox_KeyDown" 
                                      Text="1"
                                      />
-                    <r:RibbonButton Name="rerenderGraphBtn" Label="Baum neu berechnen" Click="RibbonButtonAutomaticView_Click" />
+                    <r:RibbonButton Name="rerenderGraphBtn" Label="Baum neu berechnen" LargeImageSource="../Images/Baumupdateklein.png" Click="RibbonButtonAutomaticView_Click" />
                 </r:RibbonGroup>
             </r:RibbonTab>
 
