@@ -252,7 +252,9 @@
             <!-- Baum Interaktiv Ansicht -->
             <ContentControl Grid.Column="1" >
                 <zoom:ZoomControl Name="interactiveGraphZoomer" Zoom="1" MinZoom="0.25" MaxZoom="4" ZoomBoxOpacity="0.5" Background="#FFEBEBEB" >
-                    <local:CTreeElementLayout x:Name="graph" Margin="10" Graph="{Binding Path=VisualGraph}" 
+                    <local:CTreeElementLayout x:Name="graph" Margin="10" Graph="{Binding Path=VisualGraph}"
+                                              AnimationLength="0" IsAnimationEnabled="True" AnimationDisablerEdgeCount="0"
+                                              AnimationDisablerVertexCount="0"
                                              LayoutAlgorithmType="Tree"  OverlapRemovalAlgorithmType="FSA" 
                                              IsEnabled="True"  HighlightAlgorithmType="Simple" AllowDrop="True">
                     </local:CTreeElementLayout>
