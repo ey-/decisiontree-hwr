@@ -46,6 +46,6 @@
             </r:RibbonTab>
         </r:Ribbon>
         
-        <DataGrid Grid.Row="1" ItemsSource="{Binding TableEntryList}" AutoGenerateColumns="False" Name="filteredDataGrid" />
+        <DataGrid IsReadOnly="True" Grid.Row="1" ItemsSource="{Binding TableEntryList}" AutoGenerateColumns="False" Name="filteredDataGrid"/>
     </Grid>
 </r:RibbonWindow>
