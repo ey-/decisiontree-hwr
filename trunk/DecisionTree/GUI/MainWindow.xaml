@@ -11,7 +11,8 @@
         xmlns:extbehaviour="clr-namespace:WPFExtensions.AttachedBehaviours;assembly=WPFExtensions"
         Title="Entscheidungsbaum"
 		x:Name="RibbonWindow"
-		Width="800" Height="600">
+		Width="800" Height="600"
+        Icon="../Images/logo.png">
 
     <r:RibbonWindow.Resources>
         <LinearGradientBrush x:Key="DataGridHeaderBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
