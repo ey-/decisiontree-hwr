@@ -118,7 +118,7 @@ namespace DecisionTree.Logic
             // den Datenpointer auf den Anfang setzen
             csvFile.Position = 0;
             List<CAttributeType> addedColumns = null;
-            using (StreamReader reader = new StreamReader(csvFile))
+            using (StreamReader reader = new StreamReader(csvFile, System.Text.Encoding.Default))
             {
                 // Spalten auslesen und einfügen
                 addedColumns = prepareColumns(reader);
