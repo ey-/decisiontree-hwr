@@ -37,7 +37,7 @@ namespace DecisionTree.Logic
             if (isFileAvailable(csvFilePath) == true)
             {
                 // Datei anlegen
-                using (StreamWriter csvFile = File.CreateText(csvFilePath))
+                using (StreamWriter csvFile = new StreamWriter(csvFilePath,false,Encoding.Default))
                 {
                     // Datenbankdaten in Datei schreiben
                     writeDatabaseData(csvFile);
