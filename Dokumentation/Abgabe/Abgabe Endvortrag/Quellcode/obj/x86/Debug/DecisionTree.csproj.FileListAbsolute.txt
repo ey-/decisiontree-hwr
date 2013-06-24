@@ -1,0 +1,3 @@
+F:\Dropbox\uni\4. Semester\Software Engineering II\Projekt\Dokumentation\Abgabe\Neuer Ordner\Quellcode\obj\x86\Debug\ResolveAssemblyReference.cache
+F:\Dropbox\uni\4. Semester\Software Engineering II\Projekt\Dokumentation\Abgabe\Neuer Ordner\Quellcode\obj\x86\Debug\App.g.cs
+F:\Dropbox\uni\4. Semester\Software Engineering II\Projekt\Dokumentation\Abgabe\Neuer Ordner\Quellcode\obj\x86\Debug\DecisionTree_MarkupCompile.cache

@@ -1,0 +1,265 @@
+﻿<r:RibbonWindow x:Class="DecisionTree.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:r="clr-namespace:Microsoft.Windows.Controls.Ribbon;assembly=RibbonControlsLibrary"
+        xmlns:toolkit="http://schemas.microsoft.com/wpf/2008/toolkit"
+        xmlns:local="clr-namespace:DecisionTree.GUI"
+        xmlns:tree="clr-namespace:DecisionTree.Storage.TreeData"
+        xmlns:graphsharp="clr-namespace:GraphSharp.Controls;assembly=GraphSharp.Controls"
+        xmlns:Converters="clr-namespace:GraphSharp.Converters;assembly=GraphSharp.Controls"
+        xmlns:zoom="clr-namespace:WPFExtensions.Controls;assembly=WPFExtensions"
+        xmlns:extbehaviour="clr-namespace:WPFExtensions.AttachedBehaviours;assembly=WPFExtensions"
+        Title="Entscheidungsbaum"
+		x:Name="RibbonWindow"
+		Width="800" Height="600"
+        Icon="../Images/logo.png">
+
+    <r:RibbonWindow.Resources>
+        <LinearGradientBrush x:Key="DataGridHeaderBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#FFFFFFFF" Offset="0" />
+            <GradientStop Color="#FF8AAEDA" Offset="0.521" />
+            <GradientStop Color="#FFC6D6EC" Offset="0.194" />
+            <GradientStop Color="#FFB4C9E5" Offset="0.811" />
+            <GradientStop Color="#FFB7C8E0" Offset="0.507" />
+            <GradientStop Color="#FFD1DEF0" Offset="1" />
+        </LinearGradientBrush>
+        
+        <Style x:Key="TargetValueColumnHeaderStyle">
+            <Setter Property="Control.Background" Value="{StaticResource DataGridHeaderBackgroundBrush}"/>
+        </Style>
+
+        <Style x:Key="DefaultColumnHeaderStyle">
+            <Setter Property="Control.Background" Value="Gray"/>
+        </Style>
+
+
+        <!-- Beschreibung wie ein Vertex aussieht -->
+        <DataTemplate x:Key="vertexVisualizer" DataType="{x:Type tree:CTreeVertex}">
+            <StackPanel Orientation="Vertical" Margin="10" >
+                <TextBlock Text="{Binding Path=VertexName, Mode=OneWay}" FontWeight="Bold" />
+
+                <Grid >
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Objekte: " />
+                    <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Path=CountObjects, Mode=OneWay}" />
+
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Objekte j: " />
+                    <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Path=CountObjectsPerClass[0], Mode=OneWay}" />
+
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Objekte n: " />
+                    <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Path=CountObjectsPerClass[1], Mode=OneWay}" />
+
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Entropie: " />
+                    <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Path=Entropy, Mode=OneWay}" />
+                    
+                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Gew. Entropie: " />
+                    <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding Path=WeightedEntropy, Mode=OneWay}" />
+                </Grid>
+            </StackPanel>
+        </DataTemplate>
+
+        <Style TargetType="{x:Type graphsharp:VertexControl}">
+            <Style.Resources>
+                <ToolTip x:Key="ToolTipContent">
+                    <StackPanel Name="toolTiptext">
+                        <TextBlock Text="{Binding Path=vertexTooltip}" />
+                    </StackPanel>
+                </ToolTip>
+            </Style.Resources>
+            <Setter Property="ToolTip" Value="{StaticResource ToolTipContent}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type graphsharp:VertexControl}" >
+                        <!--CornerRadius="10,10,10,10"-->
+                        <Border BorderBrush="Black" 
+                                    Background="White"
+							        BorderThickness="1"
+							        Padding="{TemplateBinding Padding}"
+                                    Margin="2">
+                            <!--<Border.Effect>
+                                <DropShadowEffect BlurRadius="2" Color="LightGray" 
+                                    Opacity="0.3" Direction="315"/>
+                            </Border.Effect>-->
+
+                            <StackPanel Orientation="Vertical">
+                                <ContentPresenter Content="{TemplateBinding Vertex}" 
+                                        ContentTemplate="{StaticResource vertexVisualizer}"/>
+                            </StackPanel>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="extbehaviour:DragBehaviour.IsDragEnabled" Value="False" />
+            <EventSetter Event="MouseDoubleClick" Handler="nodeDoubleClicked" />
+        </Style>
+
+        <Converters:EdgeRouteToPathConverter x:Key="routeToPathConverter" />
+        <Style TargetType="{x:Type graphsharp:EdgeControl}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type graphsharp:EdgeControl}">
+                        <Canvas>
+                            <Path Stroke="{TemplateBinding Foreground}"
+                                  StrokeThickness="1"
+                                  MinWidth="1"
+                                  MinHeight="1"
+                                  x:Name="edgePath">
+                                <Path.Data>
+                                    <PathGeometry>
+                                        <PathGeometry.Figures>
+                                            <MultiBinding Converter="{StaticResource routeToPathConverter}">
+                                                <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="Source.(graphsharp:GraphCanvas.X)" />
+                                                <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="Source.(graphsharp:GraphCanvas.Y)" />
+                                                <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="Source.ActualWidth" />
+                                                <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="Source.ActualHeight" />
+                                                <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="Target.(graphsharp:GraphCanvas.X)" />
+                                                <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="Target.(graphsharp:GraphCanvas.Y)" />
+                                                <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="Target.ActualWidth" />
+                                                <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="Target.ActualHeight" />
+                                                <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="RoutePoints" />
+                                            </MultiBinding>
+                                        </PathGeometry.Figures>
+                                    </PathGeometry>
+
+                                </Path.Data>
+                            </Path>
+
+
+
+                            <local:CLabeledEdgeControl Content="{Binding Edge.Tag, RelativeSource={RelativeSource TemplatedParent}}" Foreground="Black" FontSize="24 pt"/>
+                        </Canvas>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </r:RibbonWindow.Resources>
+
+    <Grid x:Name="LayoutRoot">
+        <!-- Aufteilung Ribbon / Inhalt-->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Ribbon Abschnitt -->
+        <r:Ribbon x:Name="Ribbon" >
+            <r:Ribbon.ApplicationMenu>
+                <r:RibbonApplicationMenu SmallImageSource="../Images/Datei2.png">
+                    <r:RibbonApplicationMenuItem Header="Datei öffnen"
+                                                 Name="openFile"
+                                                 ImageSource="../Images/save.png"
+                                                 Click="MenuItem_Click"/>
+                    <r:RibbonApplicationMenuItem Header="Datei speichern"
+                                                 Name="saveFile"
+                                                 ImageSource="../Images/save.png"
+                                                 Click="MenuItem_Click"/>
+                    <r:RibbonApplicationMenuItem Name="exitApplication"
+                                                 Click="MenuItem_Click"
+                                                 Header="Beenden"
+                                                 ImageSource="../Images/quit.png"/>
+                </r:RibbonApplicationMenu>
+            </r:Ribbon.ApplicationMenu>
+            <r:RibbonTab x:Name="tabAnsicht" 
+                              Header="Programm">
+                <r:RibbonGroup x:Name="groupAnsichtwechsel" 
+                                    Header="Ansichtwechsel">
+
+                    <r:RibbonToggleButton 
+                        Name="viewTableBtn" 
+                        Label="Tabellenansicht"
+                        LargeImageSource="../Images/Table.png"
+                        Click="viewToggleButton_Checked" />
+                    <r:RibbonToggleButton 
+                        Name="viewTreeInteractivBtn" 
+                        Label="Baum Interaktiv"
+                        LargeImageSource="../Images/Baum_interaktiv.png"
+                        Click="viewToggleButton_Checked"
+                         />
+                    <r:RibbonToggleButton 
+                        Name="viewTreeAutomaticBtn" 
+                        Label="Baum Automatisch"
+                        LargeImageSource="../Images/Baum_automatisch.png"
+                        Click="viewToggleButton_Checked"
+                         />
+                </r:RibbonGroup>
+
+
+            </r:RibbonTab>
+
+            <r:RibbonTab Header="Tabellenansicht" ContextualTabGroupHeader="Tabellenansicht">
+                <r:RibbonGroup Header="Tabellenfunktionen">
+                    <r:RibbonButton Name="btnAddColumn" LargeImageSource="../Images/Add_Collum_Spalte.png" Label="Attribut hinzufügen" Click="RibbonButtonTableView_Click"/>
+                    <r:RibbonButton Name="btnRemoveColumn" Label="Attribut entfernen" LargeImageSource="../Images/Remove_Collum_Spalte.png" Click="RibbonButtonTableView_Click" />
+                    <r:RibbonButton Name="btnAddRow" Label="Zeile hinzufügen" LargeImageSource="../Images/Add_Row_Zeile.png" Click="RibbonButtonTableView_Click" />
+                    <r:RibbonButton Name="btnRemoveRow" Label="Zeile entfernen" LargeImageSource="../Images/Remove_Row_Zeile.png" Click="RibbonButtonTableView_Click" />
+                    <r:RibbonButton Name="btnSetTargetAttribute" Label="setze Zielattribut" LargeImageSource="../Images/Zielattribut.png" Click="RibbonButtonTableView_Click" />
+                </r:RibbonGroup>
+            </r:RibbonTab>
+
+            <r:RibbonTab Header="Baum Interaktiv" ContextualTabGroupHeader="Baum Interaktiv">
+                <!--<r:RibbonGroup Header="Debug">
+                    <r:RibbonTextBox Label="Testausgabe" />
+                </r:RibbonGroup>-->
+            </r:RibbonTab>
+
+            <r:RibbonTab Header="Baum Automatisch" ContextualTabGroupHeader="Baum Automatisch">
+                <r:RibbonGroup Header="Baumfunktionen">
+                    <r:RibbonTextBox Name="minObjectCountTextBox" Label="Mindestanzahl Objekte" 
+                                     TextChanged="RibbonTextBox_TextChanged" 
+                                     KeyDown="minObjectCountTextBox_KeyDown" 
+                                     Text="1"
+                                     />
+                    <r:RibbonButton Name="rerenderGraphBtn" Label="Baum neu berechnen" LargeImageSource="../Images/Baumupdateklein.png" Click="RibbonButtonAutomaticView_Click" />
+                </r:RibbonGroup>
+            </r:RibbonTab>
+
+            <!-- Festlegen welche Tabs Kontextbezogen sind -->
+            <r:Ribbon.ContextualTabGroups>
+                <r:RibbonContextualTabGroup x:Name="grpTable" Header="Tabellenansicht" Visibility="Visible" Background="Brown" />
+                <r:RibbonContextualTabGroup x:Name="grpTreeInteractive" Header="Baum Interaktiv" Visibility="Visible" Background="Aqua" />
+                <r:RibbonContextualTabGroup x:Name="grpTreeAutomatic" Header="Baum Automatisch" Visibility="Visible" Background="Yellow" />
+            </r:Ribbon.ContextualTabGroups>
+        </r:Ribbon>
+
+        <!-- Abschnitt für die Verschiedenen Ansichten -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions >
+                <local:CColumnDefinitionWithVisibility x:Name="viewTable" Width="100*"/>
+                <local:CColumnDefinitionWithVisibility x:Name="viewTreeInteractiv" Width="100*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Ansichten -->
+            <!-- Tabellenansicht -->
+            <ContentControl Grid.Column="0" >
+                <DataGrid ItemsSource="{Binding TableEntryList}" AutoGenerateColumns="False" Name="datagrid1" >
+                    <DataGrid.Columns>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </ContentControl>
+
+            <!-- Baum Interaktiv Ansicht -->
+            <ContentControl Grid.Column="1" >
+                <zoom:ZoomControl Name="interactiveGraphZoomer" Zoom="1" MinZoom="0.25" MaxZoom="4" ZoomBoxOpacity="0.5" Background="#FFEBEBEB" >
+                    <local:CTreeElementLayout x:Name="graph" Margin="10" Graph="{Binding Path=VisualGraph}"
+                                              AnimationLength="0" IsAnimationEnabled="True" AnimationDisablerEdgeCount="0"
+                                              AnimationDisablerVertexCount="0"
+                                             LayoutAlgorithmType="Tree"  OverlapRemovalAlgorithmType="FSA" 
+                                             IsEnabled="True"  HighlightAlgorithmType="Simple" AllowDrop="True">
+                    </local:CTreeElementLayout>
+                </zoom:ZoomControl>
+            </ContentControl>
+        </Grid>
+    </Grid>
+</r:RibbonWindow>
